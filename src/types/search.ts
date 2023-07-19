@@ -1,5 +1,5 @@
 export interface SearchResponse {
-  series: Series[];
+  series: Series[] | false;
   categories: Category[];
   groups: Group[];
 }

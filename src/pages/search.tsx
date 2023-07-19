@@ -2,6 +2,7 @@ import { SearchBar } from '@/components/search-bar';
 import { toErrorReponse } from '@/lib/utils';
 import { SearchResponse } from '@/types/search';
 import { useQuery } from '@tanstack/react-query';
+import { SearchX } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router-dom';
 
 const fetchSearch = async (search: string): Promise<SearchResponse> => {
@@ -20,7 +21,6 @@ const fetchSearch = async (search: string): Promise<SearchResponse> => {
 export const Search = () => {
   const [searchParams] = useSearchParams();
   const query = searchParams.get('q');
-  console.log(query);
 
   const searchQuery = useQuery({
     queryKey: ['search', query],
@@ -31,12 +31,18 @@ export const Search = () => {
     enabled: searchParams.has('q') && query!.length > 0,
   });
 
-  const series = searchQuery.data?.series ?? [];
+  const series = searchQuery.data?.series || [];
 
   return (
     <>
       <SearchBar defaultValue={query || undefined} />
       <div className='flex flex-col space-y-2 mt-4 mb-2'>
+        {searchQuery.isSuccess && series.length === 0 && (
+          <div className=' flex flex-col items-center self-center'>
+            <SearchX className='h-12 w-12 text-red-600' />
+            <div>Nenhum resultado para a pesquisa...</div>
+          </div>
+        )}
         {series.map((val) => (
           <div
             key={val.id_serie}
