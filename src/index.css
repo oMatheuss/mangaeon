@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: 'Comfortaa';
+    src: url('/fonts/comfortaa-latin-300-normal.woff2') format('woff2');
+    font-weight: 300;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Comfortaa';
+    src: url('/fonts/comfortaa-latin-400-normal.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Comfortaa';
+    src: url('/fonts/comfortaa-latin-500-normal.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Comfortaa';
+    src: url('/fonts/comfortaa-latin-600-normal.woff2') format('woff2');
+    font-weight: 600;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Comfortaa';
+    src: url('/fonts/comfortaa-latin-700-normal.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+  }
+
+  :root {
+    @apply font-comfortaa font-normal leading-6;
+
+    color-scheme: light dark;
+    @apply text-opacity-90 text-white bg-slate-800;
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  @media (prefers-color-scheme: light) {
+    :root {
+      @apply text-gray-800 bg-white;
+    }
+  }
+}
