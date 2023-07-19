@@ -46,18 +46,18 @@ export const Search = () => {
         {series.map((val) => (
           <div
             key={val.id_serie}
-            className='relative w-full h-24 sm:h-36 md:h-48 flex flex-row bg-slate-100 dark:bg-slate-900 rounded'
+            className='relative overflow-hidden w-full h-24 sm:h-36 md:h-48 flex flex-row bg-slate-100 dark:bg-slate-900 rounded'
           >
             <Link
               to={val.link}
-              className='min-w-fit focus:outline outline-indigo-600 outline-1 -outline-offset-1'
+              className='min-w-fit mr-2 focus:outline outline-indigo-600 outline-1 -outline-offset-1'
             >
               <picture>
                 <source srcSet={val.cover_avif} type='image/avif' />
                 <img
                   src={val.cover}
                   alt={val.name}
-                  className='object-contain h-24 sm:h-36 md:h-48 rounded-s mr-2'
+                  className='object-contain h-24 sm:h-36 md:h-48 rounded-s'
                 />
               </picture>
             </Link>
