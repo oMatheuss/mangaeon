@@ -1,22 +1,21 @@
 import { FeaturedScroll } from '@/components/featured-scroll';
 import { Releases } from '@/components/releases';
+import { SearchBar } from '@/components/search-bar';
 import { type ErrorResponse, toErrorReponse } from '@/lib/utils';
 import type { FeaturedResponse } from '@/types/featured';
 import type { ReleasesReponse } from '@/types/releases';
 import { useQuery } from '@tanstack/react-query';
 
-const fetchFeatured = async () => {
+const fetchFeatured = async (): Promise<FeaturedResponse> => {
   const res = await fetch('/api/home/getFeaturedSeries.json');
   if (!res.ok) throw toErrorReponse(res);
-  const feat: FeaturedResponse = await res.json();
-  return feat;
+  return await res.json();
 };
 
-const fetchReleases = async () => {
+const fetchReleases = async (): Promise<ReleasesReponse> => {
   const res = await fetch('/api/home/releases');
   if (!res.ok) throw toErrorReponse(res);
-  const feat: ReleasesReponse = await res.json();
-  return feat;
+  return await res.json();
 };
 
 const ONE_DAY = 1000 * 60 * 60 * 24;
@@ -42,6 +41,7 @@ export const Home = () => {
   return (
     <div className='flex flex-col'>
       <FeaturedScroll featured={featured} />
+      <SearchBar />
       <h1 className='text-2xl mt-8 mb-4'>Lançamentos</h1>
       <Releases releases={releases} />
     </div>

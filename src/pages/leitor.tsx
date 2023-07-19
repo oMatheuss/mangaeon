@@ -10,11 +10,10 @@ type LeitorParams = {
   chap: string;
 };
 
-const fetchImagesLinks = async (id: string) => {
+const fetchImagesLinks = async (id: string): Promise<ImagesResponse> => {
   const res = await fetch(`/api/leitor/pages/${id}.json`);
   if (!res.ok) throw toErrorReponse(res);
-  const imgs: ImagesResponse = await res.json();
-  return imgs;
+  return await res.json();
 };
 
 export const Leitor = () => {
@@ -28,7 +27,7 @@ export const Leitor = () => {
   const images = imagesQuery.data?.images ?? [];
 
   return (
-    <div className='flex flex-col items-center'>
+    <div className='flex flex-col items-center mb-3'>
       <Paginas images={images} />
     </div>
   );

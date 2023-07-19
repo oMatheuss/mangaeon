@@ -5,6 +5,7 @@ import { Layout } from '@/components/layout';
 import { Home } from '@/pages/home';
 import { Leitor } from '@/pages/leitor';
 import { Manga } from '@/pages/manga';
+import { Search } from '@/pages/search';
 
 export const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ export const router = createBrowserRouter([
       {
         path: '/manga/:name/:id',
         element: <Manga />,
+      },
+      {
+        path: '/pesquisa',
+        element: <Search />,
       },
     ],
   },
