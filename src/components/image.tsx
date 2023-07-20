@@ -6,14 +6,21 @@ interface ImageProps {
   src: string;
   alt: string;
   className: string;
+  noImageClass: string;
 }
 
-export const Image = ({ source, src, alt, className }: ImageProps) => {
+export const Image = ({
+  source,
+  src,
+  alt,
+  className,
+  noImageClass,
+}: ImageProps) => {
   const [isErrored, setIsErrored] = useState(false);
   const handleError = () => setIsErrored(true);
 
   if (isErrored) {
-    return <img src={ImageOff} alt={alt} className={'p-4 ' + className} />;
+    return <img src={ImageOff} alt={alt} className={noImageClass} />;
   }
 
   return (

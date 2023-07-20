@@ -6,6 +6,7 @@ import { Home } from '@/pages/home';
 import { Leitor } from '@/pages/leitor';
 import { Manga } from '@/pages/manga';
 import { Search } from '@/pages/search';
+import { Liked } from '@/pages/liked';
 
 export const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ export const router = createBrowserRouter([
       {
         path: '/pesquisa',
         element: <Search />,
+      },
+      {
+        path: '/liked',
+        element: <Liked />,
       },
     ],
   },
