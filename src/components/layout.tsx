@@ -3,10 +3,12 @@ import { Navbar } from '@/components/navbar';
 
 export const Layout = () => {
   return (
-    <div className='container px-3 sm:mx-auto'>
+    <>
       <Navbar />
-      <Outlet />
+      <main className='container px-3 sm:mx-auto'>
+        <Outlet />
+      </main>
       <ScrollRestoration />
-    </div>
+    </>
   );
 };
