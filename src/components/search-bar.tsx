@@ -3,14 +3,16 @@ import { Form } from 'react-router-dom';
 
 interface SearchBarProps {
   defaultValue?: string;
+  replace?: boolean;
 }
 
-export const SearchBar = ({ defaultValue }: SearchBarProps) => {
+export const SearchBar = ({ replace, defaultValue }: SearchBarProps) => {
   return (
     <Form
       method='GET'
       action='/pesquisa'
       className='w-full flex flex-row p-2 group'
+      replace={replace}
     >
       <div className='w-full relative'>
         <Search className='absolute w-6 h-6 top-2 left-2 pointer-events-none group-focus-within:text-indigo-600' />

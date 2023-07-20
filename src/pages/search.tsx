@@ -26,8 +26,6 @@ export const Search = () => {
     queryKey: ['search', query],
     queryFn: () => fetchSearch(query!),
     retry: false,
-    cacheTime: 1000 * 60 * 60, // 1 hora
-    staleTime: 1000 * 60 * 60,
     enabled: searchParams.has('q') && query!.length > 0,
   });
 
@@ -35,7 +33,7 @@ export const Search = () => {
 
   return (
     <>
-      <SearchBar defaultValue={query || undefined} />
+      <SearchBar replace defaultValue={query || undefined} />
       <div className='flex flex-col space-y-2 mt-4 mb-2'>
         {searchQuery.isSuccess && series.length === 0 && (
           <div className=' flex flex-col items-center self-center'>

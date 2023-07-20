@@ -18,21 +18,22 @@ const fetchReleases = async (): Promise<ReleasesReponse> => {
   return await res.json();
 };
 
-const ONE_DAY = 1000 * 60 * 60 * 24;
+const ONE_HOUR = 1000 * 60 * 60;
+const THIRTY_MIN = 1000 * 60 * 30;
 
 export const Home = () => {
   const featuredQuery = useQuery<FeaturedResponse, ErrorResponse>({
     queryKey: ['featured'],
     queryFn: fetchFeatured,
-    cacheTime: ONE_DAY, // 1 dia
-    enabled: true,
+    cacheTime: ONE_HOUR,
+    staleTime: THIRTY_MIN,
   });
 
   const releasesQuery = useQuery<ReleasesReponse, ErrorResponse>({
     queryKey: ['releases'],
     queryFn: fetchReleases,
-    cacheTime: ONE_DAY, // 1 dia
-    enabled: true,
+    cacheTime: ONE_HOUR,
+    staleTime: THIRTY_MIN,
   });
 
   const featured = featuredQuery.data?.featured ?? [];

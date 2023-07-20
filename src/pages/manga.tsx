@@ -30,6 +30,7 @@ export const Manga = () => {
     queryKey: ['chapters', params.id],
     queryFn: ({ pageParam = 1 }) => fetchChaptersList(params.id!, pageParam),
     getNextPageParam: (last) => (!last.chapters ? undefined : last.page + 1),
+    staleTime: 1000 * 60 * 60 * 3,
   });
 
   const chapters = chaptersQuery.data;
@@ -37,7 +38,7 @@ export const Manga = () => {
   return (
     <>
       <h2 className='font-bold text-xl mt-4 mb-2'>Capítulos</h2>
-      <ol className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4'>
+      <ol className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-4'>
         {chapters &&
           chapters.pages
             .filter((x) => Array.isArray(x.chapters))
