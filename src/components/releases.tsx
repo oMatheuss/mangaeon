@@ -1,5 +1,6 @@
 import { Release, Scan } from '@/types/releases';
 import { Link } from 'react-router-dom';
+import { Image } from '@/components/image';
 
 interface ReleasesProps {
   releases: Release[];
@@ -17,14 +18,12 @@ export const Releases = ({ releases }: ReleasesProps) => {
             to={val.link}
             className='focus:outline outline-indigo-600 outline-1 -outline-offset-1'
           >
-            <picture>
-              <source srcSet={val.image_avif} type='image/avif' />
-              <img
-                src={val.image}
-                alt={val.name}
-                className='w-full border-b-2 sm:border-none sm:w-auto h-48 flex-none object-center object-contain'
-              />
-            </picture>
+            <Image
+              source={[val.image_avif, 'image/avif']}
+              src={val.image}
+              alt={val.name}
+              className='w-full border-b-2 sm:border-none sm:w-auto h-48 flex-none object-center object-contain'
+            />
           </Link>
           <div className='p-4 flex flex-col justify-between leading-normal text-center sm:text-left'>
             <h3 className='font-bold text-xl'>
