@@ -12,7 +12,7 @@ export const Paginas = ({ images }: PaginasProps) => {
           <source srcSet={val.avif} type='image/avif' />
           <img
             src={val.legacy}
-            alt={`page ${index}`}
+            alt={`página ${index}`}
             className='w-full object-contain'
           />
         </picture>

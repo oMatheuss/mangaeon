@@ -8,15 +8,15 @@ interface ReleasesProps {
 
 export const Releases = ({ releases }: ReleasesProps) => {
   return (
-    <div className='flex flex-col space-y-7'>
+    <ul className='flex flex-col space-y-7'>
       {releases.map((val) => (
-        <div
+        <li
           key={val.id_serie}
           className='w-full sm:flex sm:h-48 overflow-hidden bg-slate-100 dark:bg-slate-900 rounded'
         >
           <Link
             to={val.link}
-            className='focus:outline outline-indigo-600 outline-1 -outline-offset-1'
+            className='min-w-fit focus:outline outline-indigo-600 outline-1 -outline-offset-1'
           >
             <Image
               source={[val.image_avif, 'image/avif']}
@@ -46,7 +46,7 @@ export const Releases = ({ releases }: ReleasesProps) => {
                 .map((x) => x.name)
                 .join(', ')}
             </h4>
-            <div className='select-none'>
+            <nav className='select-none'>
               {val.chapters.map((chap) => (
                 <Link
                   key={chap.number}
@@ -56,10 +56,10 @@ export const Releases = ({ releases }: ReleasesProps) => {
                   #Capítulo {chap.number}
                 </Link>
               ))}
-            </div>
+            </nav>
           </div>
-        </div>
+        </li>
       ))}
-    </div>
+    </ul>
   );
 };
