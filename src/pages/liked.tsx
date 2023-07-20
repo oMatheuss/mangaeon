@@ -29,7 +29,7 @@ export const Liked = () => {
               <img
                 className='object-contain max-w-fit h-36 rounded-bl'
                 src={x.image}
-                alt={`Imagem de capa de "${x.image}"`}
+                alt={`Imagem de capa de "${x.name}"`}
               />
               <div className='w-full p-4'>
                 <h2 className='font-semibold'>{x.name}</h2>
