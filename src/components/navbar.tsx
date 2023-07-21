@@ -25,7 +25,7 @@ export const Navbar = () => {
 
       if (scrollY > navbarMinOffset && deltaPosition > 0) {
         navRef.current.classList.add('-translate-y-full');
-      } else if (deltaPosition < -70 || scrollY < navbarMinOffset) {
+      } else if (deltaPosition < -30 || scrollY < navbarMinOffset) {
         setOpen(false);
         navRef.current.classList.remove('-translate-y-full');
       }
