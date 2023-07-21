@@ -1,4 +1,5 @@
 import { SearchBar } from '@/components/search-bar';
+import { StarButton } from '@/components/star-button';
 import { toErrorReponse } from '@/lib/utils';
 import { SearchResponse } from '@/types/search';
 import { useQuery } from '@tanstack/react-query';
@@ -52,6 +53,14 @@ export const Search = () => {
             key={val.id_serie}
             className='relative overflow-hidden w-full h-24 sm:h-36 md:h-48 flex flex-row bg-slate-100 dark:bg-slate-900 rounded'
           >
+            <StarButton
+              serie={{
+                id: val.id_serie,
+                image: val.cover,
+                link: val.link,
+                name: val.name,
+              }}
+            />
             <Link
               to={val.link}
               className='min-w-fit mr-2 focus:outline outline-indigo-600 outline-1 -outline-offset-1'

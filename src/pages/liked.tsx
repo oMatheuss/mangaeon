@@ -1,5 +1,5 @@
 import { useLiked } from '@/lib/liked';
-import { Frown, Trash2 } from 'lucide-react';
+import { Frown, StarOff } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export const Liked = () => {
@@ -24,10 +24,10 @@ export const Liked = () => {
               onClick={() => del(x.id)}
             >
               <span className='sr-only'>Excluir</span>
-              <Trash2 />
+              <StarOff />
             </button>
             <Link
-              className='flex items-center hover:bg-slate-200 dark:hover:bg-gray-800'
+              className='h-36 flex items-center hover:bg-slate-200 dark:hover:bg-gray-800'
               to={x.link}
             >
               <img
@@ -35,8 +35,8 @@ export const Liked = () => {
                 src={x.image}
                 alt={`Imagem de capa de "${x.name}"`}
               />
-              <div className='w-full p-4'>
-                <h2 className='font-semibold'>{x.name}</h2>
+              <div className='w-full h-full p-4 overflow-scroll'>
+                <h2 className='font-semibold text-clip'>{x.name}</h2>
               </div>
             </Link>
           </div>

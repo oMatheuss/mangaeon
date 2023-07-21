@@ -1,7 +1,7 @@
 import { Release, Scan } from '@/types/releases';
 import { Link } from 'react-router-dom';
 import { Image } from '@/components/image';
-import { HeartButton } from './heart-button';
+import { StarButton } from './star-button';
 
 interface ReleasesProps {
   releases: Release[];
@@ -15,7 +15,14 @@ export const Releases = ({ releases }: ReleasesProps) => {
           key={val.id_serie}
           className='relative w-full sm:flex sm:h-48 overflow-hidden bg-slate-100 dark:bg-slate-900 rounded'
         >
-          <HeartButton serie={val} />
+          <StarButton
+            serie={{
+              id: val.id_serie,
+              image: val.image,
+              link: val.link,
+              name: val.name,
+            }}
+          />
           <Link
             to={val.link}
             className='min-w-fit focus:outline outline-indigo-600 outline-1 -outline-offset-1'

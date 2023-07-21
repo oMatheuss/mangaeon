@@ -1,7 +1,7 @@
 import { useAtom } from 'jotai';
 import { atomWithStorage } from 'jotai/utils';
 
-interface Liked {
+export interface Liked {
   id: number;
   name: string;
   link: string;
