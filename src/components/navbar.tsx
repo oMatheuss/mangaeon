@@ -1,5 +1,5 @@
 import { BookOpen, Clock, Heart, Home, Menu } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
 const links = [
@@ -11,9 +11,39 @@ const links = [
 export const Navbar = () => {
   const [isOpen, setOpen] = useState(false);
   const toggleOpen = () => setOpen((x) => !x);
+  const navRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    let lastPosition = window.scrollY;
+
+    const handleScroll = () => {
+      if (navRef.current == null) return;
+
+      const scrollY = window.scrollY;
+      const navbarMinOffset = navRef.current.offsetHeight / 2;
+      let deltaPosition = scrollY - lastPosition;
+
+      if (scrollY > navbarMinOffset && deltaPosition > 0) {
+        navRef.current.classList.add('-translate-y-full');
+      } else if (deltaPosition < -70 || scrollY < navbarMinOffset) {
+        setOpen(false);
+        navRef.current.classList.remove('-translate-y-full');
+      }
+
+      lastPosition = scrollY;
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [isOpen]);
 
   return (
-    <nav className='sticky top-0 border-b z-10 backdrop-blur-lg'>
+    <nav
+      ref={navRef}
+      className='sticky top-0 border-b z-10 backdrop-blur-lg transition-transform'
+    >
       <div className='max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto p-4'>
         <Link to='/' className='flex items-center'>
           <BookOpen className='mr-2' />
