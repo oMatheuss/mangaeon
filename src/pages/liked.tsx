@@ -1,14 +1,18 @@
 import { useLiked } from '@/lib/liked';
-import { Trash2 } from 'lucide-react';
+import { Frown, Trash2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export const Liked = () => {
-  const [liked, setLiked] = useLiked();
+  const { liked, del } = useLiked();
 
   return (
     <>
       <h2 className='font-bold text-2xl mt-8 mb-4'>Favoritos</h2>
-      {liked.length === 0 && <span>Nada foi favoritado ainda!</span>}
+      {liked.length === 0 && (
+        <div className='flex flex-row items-center'>
+          <Frown className='h-8 w-8 mr-2 pb-1' /> Nada foi favoritado ainda!
+        </div>
+      )}
       <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-4'>
         {liked.map((x) => (
           <div
@@ -17,7 +21,7 @@ export const Liked = () => {
           >
             <button
               className='absolute top-0 right-0 inline-flex items-center justify-center w-10 h-10 text-gray-800 dark:text-gray-200 rounded-br'
-              onClick={() => setLiked((z) => z.filter((y) => y.id !== x.id))}
+              onClick={() => del(x.id)}
             >
               <span className='sr-only'>Excluir</span>
               <Trash2 />

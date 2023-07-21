@@ -11,5 +11,19 @@ interface Liked {
 export const likedAtom = atomWithStorage<Liked[]>('darkMode', []);
 
 export const useLiked = () => {
-  return useAtom(likedAtom);
+  const [liked, setLiked] = useAtom(likedAtom);
+
+  const exist = (id: number) => {
+    return liked.findIndex((x) => x.id === id) > -1;
+  };
+
+  const add = (serie: Liked): void => {
+    setLiked((x) => [...x, serie]);
+  };
+
+  const del = (id: number): void => {
+    setLiked((x) => x.filter((y) => y.id !== id));
+  };
+
+  return { liked, exist, add, del };
 };

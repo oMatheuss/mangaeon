@@ -1,15 +1,13 @@
 import { Release, Scan } from '@/types/releases';
 import { Link } from 'react-router-dom';
 import { Image } from '@/components/image';
-import { Heart } from 'lucide-react';
-import { useLiked } from '@/lib/liked';
+import { HeartButton } from './heart-button';
 
 interface ReleasesProps {
   releases: Release[];
 }
 
 export const Releases = ({ releases }: ReleasesProps) => {
-  const [liked, setLiked] = useLiked();
   return (
     <ul className='flex flex-col space-y-7'>
       {releases.map((val) => (
@@ -17,35 +15,7 @@ export const Releases = ({ releases }: ReleasesProps) => {
           key={val.id_serie}
           className='relative w-full sm:flex sm:h-48 overflow-hidden bg-slate-100 dark:bg-slate-900 rounded'
         >
-          <button
-            className='absolute top-0 left-0 inline-flex items-center justify-center w-10 h-10 text-red-600 rounded-br'
-            onClick={() => {
-              let serie = liked.find((x) => x.id === val.id_serie);
-              if (serie) {
-                setLiked((x) => x.filter((y) => y.id !== val.id_serie));
-              } else {
-                setLiked((x) => [
-                  ...x,
-                  {
-                    id: val.id_serie,
-                    image: val.image,
-                    link: val.link,
-                    name: val.name,
-                  },
-                ]);
-              }
-            }}
-          >
-            <span className='sr-only'>Favoritar</span>
-            <Heart
-              fill={
-                liked.findIndex((x) => x.id === val.id_serie) > -1
-                  ? 'currentColor'
-                  : 'transparent'
-              }
-              className='w-5 h-5'
-            />
-          </button>
+          <HeartButton serie={val} />
           <Link
             to={val.link}
             className='min-w-fit focus:outline outline-indigo-600 outline-1 -outline-offset-1'

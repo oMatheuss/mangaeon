@@ -6,7 +6,7 @@ interface PaginasProps {
 
 export const Paginas = ({ images }: PaginasProps) => {
   return (
-    <div className='max-w-prose mx-auto flex flex-col space-y-0'>
+    <div className='max-w-prose mx-auto flex flex-col'>
       {images.map((val, index) => (
         <picture key={index}>
           <source srcSet={val.avif} type='image/avif' />
