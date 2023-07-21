@@ -1,3 +1,4 @@
+import { ViewedIcon } from '@/components/viewed-icon';
 import { toErrorReponse } from '@/lib/utils';
 import { Chapter, ChapterResponse } from '@/types/chapters';
 import { useInfiniteQuery } from '@tanstack/react-query';
@@ -56,7 +57,13 @@ export const Manga = () => {
                       <span>Capítulo {chap.number}</span>
                       <span className='font-bold text-xs'>{chap.name}</span>
                     </div>
-                    <div className='proportional-nums'>{chap.date}</div>
+                    <div className='flex flex-col items-end'>
+                      <div className='proportional-nums'>{chap.date}</div>
+                      <ViewedIcon
+                        className='w-4 h-4'
+                        id_chapter={firstScan.id_release}
+                      />
+                    </div>
                   </Link>
                 </li>
               );

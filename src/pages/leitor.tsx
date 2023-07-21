@@ -1,7 +1,9 @@
 import { Paginas } from '@/components/paginas';
 import { type ErrorResponse, toErrorReponse } from '@/lib/utils';
+import { useViewed } from '@/lib/viewed';
 import { ImagesResponse } from '@/types/images';
 import { useQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 type LeitorParams = {
@@ -23,6 +25,12 @@ export const Leitor = () => {
     queryKey: ['leitor', params.id],
     queryFn: () => fetchImagesLinks(params.id!),
   });
+
+  const { add } = useViewed();
+
+  useEffect(() => {
+    add(parseInt(params.id!));
+  }, []);
 
   const images = imagesQuery.data?.images ?? [];
 
