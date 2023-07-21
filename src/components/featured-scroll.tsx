@@ -13,28 +13,27 @@ export const FeaturedScroll = ({ featured }: FeaturedScrollProps) => {
       </div>
       {featured?.map((val) => (
         <div key={val.id_serie} className='snap-center shrink-0'>
-          <div className='shrink-0 w-[calc(100vw-3rem)] sm:w-96 bg-slate-200 dark:bg-slate-950 rounded overflow-hidden shadow-lg'>
+          <div
+            className='relative h-56 shrink-0 w-[calc(100vw-3rem)] sm:w-96 text-slate-100 rounded overflow-hidden shadow-lg'
+            style={{ backgroundColor: `#${val.hex_color || 'acacac'}` }}
+          >
             <Link
               to={val.link}
               className='select-text focus:outline outline-1 outline-indigo-600 -outline-offset-1'
             >
               <img
-                className='w-full bg-center'
+                className='h-full object-contain object-bottom'
                 src={val.featured_image}
                 alt={val.series_name}
               />
             </Link>
-            <div className='px-6 py-4'>
+            <div className='absolute top-0 flex flex-col px-6 py-4 pointer-events-none'>
               <Link className='font-bold text-xl hover:underline' to={val.link}>
                 {val.series_name}
               </Link>
-            </div>
-            <div className='px-6 pt-4 pb-2 select-none'>
-              <span className='inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2'>
-                #Capítulo {val.chapter.number}
-              </span>
-              <span className='inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2'>
-                #{new Date(val.date).toLocaleDateString()}
+              <span className='text-sm'>Capítulo {val.chapter.number}</span>
+              <span className='text-sm'>
+                {new Date(val.date).toLocaleDateString()}
               </span>
             </div>
           </div>
