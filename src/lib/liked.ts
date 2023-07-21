@@ -8,7 +8,7 @@ export interface Liked {
   image: string;
 }
 
-export const likedAtom = atomWithStorage<Liked[]>('darkMode', []);
+export const likedAtom = atomWithStorage<Liked[]>('liked', []);
 
 export const useLiked = () => {
   const [liked, setLiked] = useAtom(likedAtom);
