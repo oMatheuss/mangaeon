@@ -13,7 +13,7 @@ export const Releases = ({ releases }: ReleasesProps) => {
       {releases.map((val) => (
         <li
           key={val.id_serie}
-          className='relative w-full sm:flex sm:h-48 overflow-hidden bg-slate-100 dark:bg-slate-900 rounded'
+          className='relative w-full sm:flex sm:h-48 overflow-hidden bg-slate-100 dark:bg-slate-900 rounded shadow-lg'
         >
           <StarButton
             serie={{
@@ -31,7 +31,7 @@ export const Releases = ({ releases }: ReleasesProps) => {
               source={[val.image_avif, 'image/avif']}
               src={val.image}
               alt={val.name}
-              className='w-full border-b-2 sm:border-none sm:w-auto h-48 flex-none object-center object-contain'
+              className='w-full sm:w-32 h-48 border-b-2 sm:border-none object-contain sm:object-cover'
               noImageClass='mx-auto sm:mx-8 h-16 my-8 sm:my-16'
             />
           </Link>
