@@ -40,7 +40,7 @@ export const Home = () => {
   const releases = releasesQuery.data?.releases ?? [];
 
   return (
-    <div className='flex flex-col'>
+    <div className='flex flex-col my-3'>
       <FeaturedScroll featured={featured} />
       <SearchBar />
       <h1 className='font-bold text-2xl my-4'>Lançamentos</h1>
