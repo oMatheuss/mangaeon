@@ -7,10 +7,7 @@ interface FeaturedScrollProps {
 
 export const FeaturedScroll = ({ featured }: FeaturedScrollProps) => {
   return (
-    <div className='relative w-full flex gap-12 snap-x snap-mandatory overflow-x-auto py-12 bg-slate-100 dark:bg-slate-900 rounded'>
-      <div className='snap-none shrink-0'>
-        <div className='shrink-0 w-1 sm:w-48'></div>
-      </div>
+    <div className='relative w-full flex gap-12 snap-x snap-mandatory overflow-x-auto p-6 bg-slate-100 dark:bg-slate-900 rounded'>
       {featured?.map((val) => (
         <div key={val.id_serie} className='snap-center shrink-0'>
           <div
@@ -22,7 +19,7 @@ export const FeaturedScroll = ({ featured }: FeaturedScrollProps) => {
               className='select-text focus:outline outline-1 outline-indigo-600 -outline-offset-1'
             >
               <img
-                className='h-full object-contain object-bottom'
+                className='h-full object-contain object-bottom mx-auto'
                 src={val.featured_image}
                 alt={val.series_name}
               />
@@ -39,9 +36,6 @@ export const FeaturedScroll = ({ featured }: FeaturedScrollProps) => {
           </div>
         </div>
       ))}
-      <div className='snap-none shrink-0'>
-        <div className='shrink-0 w-4 sm:w-48'></div>
-      </div>
     </div>
   );
 };
