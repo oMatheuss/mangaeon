@@ -43,7 +43,7 @@ export const Search = () => {
             <div>Nenhum resultado para a pesquisa...</div>
           </div>
         )}
-        {searchQuery.isLoading && (
+        {searchQuery.isLoading && searchQuery.isFetching && (
           <div className='flex flex-col items-center self-center'>
             <Loader2 className='animate-spin h-12 w-12' />
             <div>Carregando...</div>
@@ -87,7 +87,10 @@ export const Search = () => {
               </div>
               <div className='relative flex gap-3 scroll-smooth overflow-x-scroll text-xs'>
                 {val.categories.map((cat) => (
-                  <div className='shrink-0 bg-gray-200 rounded-full px-3 py-1 font-semibold text-gray-700'>
+                  <div
+                    key={cat.id_category}
+                    className='shrink-0 bg-gray-200 rounded-full px-3 py-1 font-semibold text-gray-700'
+                  >
                     {cat.name}
                   </div>
                 ))}
