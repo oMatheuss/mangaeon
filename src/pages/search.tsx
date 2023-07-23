@@ -1,3 +1,4 @@
+import { Image } from '@/components/image';
 import { SearchBar } from '@/components/search-bar';
 import { StarButton } from '@/components/star-button';
 import { toErrorReponse } from '@/lib/utils';
@@ -35,7 +36,7 @@ export const Search = () => {
   return (
     <>
       <SearchBar replace defaultValue={query || undefined} />
-      <div className='flex flex-col space-y-2 mt-4 mb-2'>
+      <div className='flex flex-col space-y-2 my-2'>
         {searchQuery.isSuccess && series.length === 0 && (
           <div className='flex flex-col items-center self-center'>
             <SearchX className='h-12 w-12 text-red-600' />
@@ -65,14 +66,13 @@ export const Search = () => {
               to={val.link}
               className='min-w-fit mr-2 focus:outline outline-indigo-600 outline-1 -outline-offset-1'
             >
-              <picture>
-                <source srcSet={val.cover_avif} type='image/avif' />
-                <img
-                  src={val.cover}
-                  alt={val.name}
-                  className='object-contain h-24 sm:h-36 md:h-48 rounded-s'
-                />
-              </picture>
+              <Image
+                source={[val.cover_avif, 'image/avif']}
+                src={val.cover}
+                alt={val.name}
+                className='object-cover w-16 h-24 sm:w-24 sm:h-36 md:w-32 md:h-48 rounded-s'
+                noImageClass='w-8 h-8 mx-4 my-8 sm:mx-8 sm:my-14 md:mx-12 md:my-20'
+              />
             </Link>
             <div className='p-2 overflow-auto flex flex-col justify-between leading-normal'>
               <div>

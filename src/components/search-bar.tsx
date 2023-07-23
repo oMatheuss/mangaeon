@@ -21,12 +21,12 @@ export const SearchBar = ({ replace, defaultValue }: SearchBarProps) => {
           type='search'
           name='q'
           placeholder='Pesquise uma obra'
-          className='w-full bg-inherit border p-2 pl-10 rounded-s focus:border-indigo-600 focus:outline outline-2 outline-indigo-600 -outline-offset-2'
+          className='w-full bg-slate-100 dark:bg-slate-900 p-2 pl-10 rounded-s focus:border-indigo-600 focus:outline outline-2 outline-indigo-600 -outline-offset-2'
         />
       </div>
       <button
         type='submit'
-        className='p-2 border rounded-e focus:outline outline-2 outline-indigo-600 -outline-offset-2'
+        className='p-2 bg-slate-100 dark:bg-slate-900 rounded-e focus:outline outline-2 outline-indigo-600 -outline-offset-2'
       >
         <CornerUpRight className='w-6 h-6' />
       </button>
