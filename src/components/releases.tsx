@@ -2,6 +2,7 @@ import { Release, Scan } from '@/types/releases';
 import { Link } from 'react-router-dom';
 import { Image } from '@/components/image';
 import { StarButton } from './star-button';
+import { ImageOff } from 'lucide-react';
 
 interface ReleasesProps {
   releases: Release[];
@@ -9,7 +10,7 @@ interface ReleasesProps {
 
 export const Releases = ({ releases }: ReleasesProps) => {
   return (
-    <ul className='flex flex-col space-y-7'>
+    <ul className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 mb-4'>
       {releases.map((val) => (
         <li
           key={val.id_serie}
@@ -32,8 +33,11 @@ export const Releases = ({ releases }: ReleasesProps) => {
               src={val.image}
               alt={val.name}
               className='w-full sm:w-32 h-48 border-b-2 sm:border-none object-contain sm:object-cover'
-              noImageClass='mx-auto sm:mx-8 h-16 my-8 sm:my-16'
-            />
+            >
+              <div className='bg-slate-300 dark:bg-slate-700/10 w-full sm:w-32 h-48 flex justify-center items-center'>
+                <ImageOff className='h-10' />
+              </div>
+            </Image>
           </Link>
           <div className='p-4 flex flex-col justify-between leading-normal text-center sm:text-left'>
             <h3 className='font-bold text-xl'>
@@ -60,10 +64,10 @@ export const Releases = ({ releases }: ReleasesProps) => {
               {val.chapters.map((chap) => (
                 <Link
                   key={chap.number}
-                  className='inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mt-2 hover:bg-gray-300'
+                  className='inline-block bg-gray-200 rounded-sm px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mt-2 hover:bg-gray-300'
                   to={chap.url}
                 >
-                  #Capítulo {chap.number}
+                  {chap.number}
                 </Link>
               ))}
             </nav>

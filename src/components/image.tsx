@@ -1,4 +1,3 @@
-import ImageOff from '/image-off.svg';
 import { useState } from 'react';
 
 interface ImageProps {
@@ -6,7 +5,7 @@ interface ImageProps {
   src: string;
   alt: string;
   className: string;
-  noImageClass: string;
+  children: React.ReactNode;
 }
 
 export const Image = ({
@@ -14,14 +13,12 @@ export const Image = ({
   src,
   alt,
   className,
-  noImageClass,
+  children,
 }: ImageProps) => {
   const [isErrored, setIsErrored] = useState(false);
   const handleError = () => setIsErrored(true);
 
-  if (isErrored) {
-    return <img src={ImageOff} alt={alt} className={noImageClass} />;
-  }
+  if (isErrored) return children;
 
   return (
     <picture>

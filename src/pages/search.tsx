@@ -4,7 +4,7 @@ import { StarButton } from '@/components/star-button';
 import { toErrorReponse } from '@/lib/utils';
 import { SearchResponse } from '@/types/search';
 import { useQuery } from '@tanstack/react-query';
-import { Loader2, SearchX } from 'lucide-react';
+import { ImageOff, Loader2, SearchX } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router-dom';
 
 const fetchSearch = async (search: string): Promise<SearchResponse> => {
@@ -71,8 +71,11 @@ export const Search = () => {
                 src={val.cover}
                 alt={val.name}
                 className='object-cover w-16 h-24 sm:w-24 sm:h-36 md:w-32 md:h-48 rounded-s'
-                noImageClass='w-8 h-8 mx-4 my-8 sm:mx-8 sm:my-14 md:mx-12 md:my-20'
-              />
+              >
+                <div className='w-16 h-24 sm:w-24 sm:h-36 md:w-32 md:h-48 bg-slate-300 dark:bg-slate-700/10 flex justify-center items-center'>
+                  <ImageOff className='h-10' />
+                </div>
+              </Image>
             </Link>
             <div className='p-2 overflow-auto flex flex-col justify-between leading-normal'>
               <div>
