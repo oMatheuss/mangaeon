@@ -7,47 +7,53 @@ interface PaginasProps {
   images: Image[];
 }
 
-type ImageStatus = {
-  status: 'OK' | 'ERROR' | 'NOT_FETCHED' | 'REFETCH' | 'SKIPED';
-};
+enum ImageStatus {
+  OK,
+  ERROR,
+  NOT_FETCHED,
+  REFETCH,
+  SKIPED,
+}
 
 export const Paginas = ({ images }: PaginasProps) => {
   const [imagesStatus, setImagesStatus] = useState<ImageStatus[]>([]);
 
   useEffect(() => {
-    setImagesStatus(images.map(() => ({ status: 'NOT_FETCHED' })));
+    setImagesStatus(
+      Array<ImageStatus>(images.length).fill(ImageStatus.NOT_FETCHED)
+    );
   }, [images]);
 
   const handleImgResolve = (success: boolean, page: number) => {
     const idx = page - 1;
-    setImagesStatus((x) => {
-      let newArr = [...x];
+    setImagesStatus((status) => {
+      const newArr = [...status];
       if (success) {
-        x[idx].status = 'OK';
+        newArr[idx] = ImageStatus.OK;
       } else if (
-        x[idx + 1] !== undefined &&
-        x[idx + 1].status !== 'NOT_FETCHED'
+        status[idx + 1] !== undefined &&
+        status[idx + 1] !== ImageStatus.NOT_FETCHED
       ) {
-        x[idx].status = 'SKIPED';
+        newArr[idx] = ImageStatus.SKIPED;
       } else {
-        x[idx].status = 'ERROR';
+        newArr[idx] = ImageStatus.ERROR;
       }
       return newArr;
     });
   };
 
   const handleRetry = (idx: number) => {
-    setImagesStatus((x) => {
-      let newArr = [...x];
-      newArr[idx].status = 'REFETCH';
+    setImagesStatus((status) => {
+      const newArr = [...status];
+      newArr[idx] = ImageStatus.REFETCH;
       return newArr;
     });
   };
 
   const handleSkip = (idx: number) => {
-    setImagesStatus((x) => {
-      let newArr = [...x];
-      newArr[idx].status = 'SKIPED';
+    setImagesStatus((status) => {
+      const newArr = [...status];
+      newArr[idx] = ImageStatus.SKIPED;
       return newArr;
     });
   };
@@ -56,11 +62,11 @@ export const Paginas = ({ images }: PaginasProps) => {
     <div className='max-w-prose mx-auto flex flex-col'>
       {mapUntil(
         imagesStatus,
-        (x, idx) => {
+        (status, idx) => {
           if (
-            x.status === 'OK' ||
-            x.status === 'NOT_FETCHED' ||
-            x.status === 'REFETCH'
+            status === ImageStatus.OK ||
+            status === ImageStatus.NOT_FETCHED ||
+            status === ImageStatus.REFETCH
           ) {
             return (
               <MangaPage
@@ -97,15 +103,15 @@ export const Paginas = ({ images }: PaginasProps) => {
             );
           }
         },
-        (x, idx, arr) =>
-          x.status === 'ERROR' ||
-          x.status === 'NOT_FETCHED' ||
-          (x.status === 'REFETCH' &&
+        (status, idx, arr) =>
+          status === ImageStatus.ERROR ||
+          status === ImageStatus.NOT_FETCHED ||
+          (status === ImageStatus.REFETCH &&
             arr[idx + 1] !== undefined &&
-            arr[idx + 1].status === 'NOT_FETCHED')
+            arr[idx + 1] === ImageStatus.NOT_FETCHED)
       )}
       {imagesStatus.length > 0 &&
-        imagesStatus.every((x) => x.status !== 'NOT_FETCHED') && (
+        imagesStatus.every((status) => status !== ImageStatus.NOT_FETCHED) && (
           <div className='my-3 flex flex-col justify-center items-center'>
             <span>Você chegou ao final do capítulo!</span>
           </div>
