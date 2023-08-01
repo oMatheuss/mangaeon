@@ -1,10 +1,12 @@
-import { BookOpen, Clock, Heart, Home, Menu } from 'lucide-react';
+import { useUser } from '@/lib/user';
+import { BookOpen, Heart, Home, LogIn, LogOut, Menu, User } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import * as Avatar from '@radix-ui/react-avatar';
 
 const links = [
   { icon: Home, text: 'Home', to: '/' },
-  { icon: Clock, text: 'Recentes', to: '/recents' },
+  //{ icon: Clock, text: 'Recentes', to: '/recents' },
   { icon: Heart, text: 'Favoritos', to: '/liked' },
 ];
 
@@ -12,6 +14,8 @@ export const Navbar = () => {
   const [isOpen, setOpen] = useState(false);
   const toggleOpen = () => setOpen((x) => !x);
   const navRef = useRef<HTMLElement>(null);
+
+  const [user] = useUser();
 
   useEffect(() => {
     let lastPosition = window.scrollY;
@@ -37,7 +41,20 @@ export const Navbar = () => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [isOpen]);
+  }, []);
+
+  const signIn = async () => {
+    const { auth, signInWithPopup, GoogleAuthProvider } = await import(
+      '@/lib/auth'
+    );
+    const provider = new GoogleAuthProvider();
+    await signInWithPopup(auth, provider);
+  };
+
+  const signOut = async () => {
+    const { signOut, auth } = await import('@/lib/auth');
+    await signOut(auth);
+  };
 
   return (
     <nav
@@ -59,25 +76,56 @@ export const Navbar = () => {
         </button>
         <div
           aria-expanded={isOpen}
-          className='hidden aria-expanded:block w-full md:block md:w-auto'
+          className='hidden aria-expanded:flex w-full md:flex md:w-auto flex-col md:flex-row p-4 md:p-0 mt-4 md:mt-0 border border-gray-100 rounded-lg bg-gray-50 md:border-0 md:bg-inherit dark:bg-gray-800 md:dark:bg-inherit dark:border-gray-700'
         >
-          <ul className='font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-inherit dark:bg-gray-800 md:dark:bg-inherit dark:border-gray-700'>
+          <ul className='font-medium flex flex-col md:flex-row md:space-x-8 md:mr-8'>
             {links.map((l) => (
               <li key={l.to}>
                 <NavLink
                   to={l.to}
                   className={({ isActive }) =>
                     isActive
-                      ? 'flex items-center pt-2 pb-1 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500'
-                      : 'flex items-center pt-2 pb-1 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent'
+                      ? 'flex items-center py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500'
+                      : 'flex items-center py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent'
                   }
                   aria-current='page'
                 >
-                  <l.icon className='pb-1 mr-2' /> {l.text}
+                  <l.icon className='mr-2' /> {l.text}
                 </NavLink>
               </li>
             ))}
           </ul>
+          <hr className='md:hidden my-2 border-inherit' />
+          {user === null ? (
+            <button
+              className='w-full flex items-center justify-end py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent'
+              onClick={signIn}
+            >
+              Login <LogIn className='ml-2' />
+            </button>
+          ) : (
+            <>
+              <div className='flex flex-row space-x-3 m-3 md:m-0 md:mr-3 md:w-full'>
+                <Avatar.Root>
+                  <Avatar.Image
+                    src={user.photoURL!}
+                    alt={user.displayName!}
+                    className='h-6 w-6 rounded-full outline outline-2 outline-offset-2 outline-current hover:outline-blue-700'
+                  />
+                  <Avatar.Fallback delayMs={600}>
+                    <User />
+                  </Avatar.Fallback>
+                </Avatar.Root>
+                <div className='md:hidden'>{user?.displayName}</div>
+              </div>
+              <button
+                className='w-full flex items-center justify-end py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent'
+                onClick={signOut}
+              >
+                Logout <LogOut className='ml-2' />
+              </button>
+            </>
+          )}
         </div>
       </div>
     </nav>

@@ -10,7 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@radix-ui/react-avatar": "^1.0.3",
     "@tanstack/react-query": "^4.29.25",
+    "firebase": "^10.1.0",
     "jotai": "^2.2.2",
     "lucide-react": "^0.258.0",
     "react": "^18.2.0",
