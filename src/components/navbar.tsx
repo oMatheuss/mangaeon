@@ -29,9 +29,9 @@ export const Navbar = () => {
       const deltaPosition = scrollY - lastPosition;
 
       if (scrollY > navbarMinOffset && deltaPosition > 0) {
-        navRef.current.classList.add(closedClass);
-      } else if (deltaPosition < 0 || scrollY < navbarMinOffset) {
         setOpen(false);
+        navRef.current.classList.add(closedClass);
+      } else if (deltaPosition < 0) {
         navRef.current.classList.remove(closedClass);
       }
 
@@ -69,7 +69,7 @@ export const Navbar = () => {
   return (
     <nav
       ref={navRef}
-      className='sticky top-0 border-b z-10 backdrop-blur-lg transition-transform'
+      className='sticky top-0 border-b z-10 backdrop-blur-lg transition-transform max-h-screen overflow-y-scroll'
     >
       <div className='max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto p-4'>
         <Link to='/' className='flex items-center'>
