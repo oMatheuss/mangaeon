@@ -25,5 +25,5 @@ export const useLiked = () => {
     setLiked((x) => x.filter((y) => y.id !== id));
   };
 
-  return { liked, exist, add, del };
+  return { liked, exist, add, del, set: setLiked };
 };
