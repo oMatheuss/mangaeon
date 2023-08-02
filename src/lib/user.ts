@@ -8,7 +8,6 @@ export const userAtom = atom<User | null>(null);
 userAtom.debugLabel = 'User';
 
 userAtom.onMount = (setAtom) => {
-  console.log('atom is mounted in provider');
   let unsub = onAuthStateChanged(auth, (user) => {
     setAtom(user);
   });

@@ -19,19 +19,20 @@ export const Navbar = () => {
 
   useEffect(() => {
     let lastPosition = window.scrollY;
+    const closedClass = '-translate-y-full';
 
     const handleScroll = () => {
       if (navRef.current == null) return;
 
       const scrollY = window.scrollY;
-      const navbarMinOffset = navRef.current.offsetHeight / 2;
-      let deltaPosition = scrollY - lastPosition;
+      const navbarMinOffset = navRef.current.offsetHeight;
+      const deltaPosition = scrollY - lastPosition;
 
       if (scrollY > navbarMinOffset && deltaPosition > 0) {
-        navRef.current.classList.add('-translate-y-full');
-      } else if (deltaPosition < -30 || scrollY < navbarMinOffset) {
+        navRef.current.classList.add(closedClass);
+      } else if (deltaPosition < 0 || scrollY < navbarMinOffset) {
         setOpen(false);
-        navRef.current.classList.remove('-translate-y-full');
+        navRef.current.classList.remove(closedClass);
       }
 
       lastPosition = scrollY;
@@ -41,7 +42,16 @@ export const Navbar = () => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+
+    /**
+     * *** NOTE ***
+     * 'isOpen' is necessary on dependency array because it will cause react
+     * to call the cleanup function once the navbar is set open.
+     * The result is that the scroll cause by the navbar opening do not trigger
+     * the handleScroll function inside this effect.
+     * *** NOTE ***
+     */
+  }, [isOpen]);
 
   const signIn = async () => {
     const { auth, signInWithPopup, GoogleAuthProvider } = await import(
