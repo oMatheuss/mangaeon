@@ -25,6 +25,7 @@ export const SearchBar = ({ replace, defaultValue }: SearchBarProps) => {
         />
       </div>
       <button
+        aria-label='Pesquisar'
         type='submit'
         className='p-2 bg-slate-100 dark:bg-slate-900 rounded-e focus:outline outline-2 outline-indigo-600 -outline-offset-2'
       >
