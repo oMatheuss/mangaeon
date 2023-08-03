@@ -47,7 +47,7 @@ const LikedCard = ({ liked }: LikedCardProps) => {
     }
   };
   return (
-    <div className='relative w-full border border-light-b dark:border-dark-b rounded-bl-lg rounded-tr-lg bg-light dark:bg-dark shadow-md'>
+    <div className='relative w-full border border-light-b dark:border-dark-b rounded-bl-lg rounded-tr-lg bg-light dark:bg-dark shadow-md hover:bg-light-b dark:hover:bg-dark-b'>
       <button
         className='absolute top-0 right-0 inline-flex items-center justify-center w-10 h-10 text-dark-b dark:text-light-b rounded-br'
         onClick={handleDelete}
@@ -55,10 +55,7 @@ const LikedCard = ({ liked }: LikedCardProps) => {
         <span className='sr-only'>Excluir</span>
         <StarOff />
       </button>
-      <Link
-        className='h-36 flex items-center hover:bg-light-b dark:hover:bg-dark-b'
-        to={liked.link}
-      >
+      <Link className='h-36 flex items-center' to={liked.link}>
         <img
           className='object-cover max-w-fit h-36 w-24 rounded-bl'
           src={liked.image}
