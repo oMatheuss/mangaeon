@@ -41,7 +41,7 @@ export const Releases = () => {
         <button
           disabled={releasesQuery.isFetchingNextPage}
           onClick={() => releasesQuery.fetchNextPage()}
-          className='w-full flex flex-row justify-center md:justify-start border border-light-b dark:border-dark-b p-2 rounded bg-light dark:bg-dark hover:bg-light-b dark:hover:bg-dark-b shadow-lg'
+          className='w-full flex flex-row justify-center md:justify-start border border-light-b dark:border-dark-b p-2 rounded bg-light dark:bg-dark enabled:hover:bg-light-b dark:enabled:hover:bg-dark-b shadow-lg'
         >
           {releasesQuery.isFetchingNextPage ? (
             <Loader2 className='animate-spin' />

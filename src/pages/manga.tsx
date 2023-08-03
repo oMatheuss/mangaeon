@@ -68,14 +68,16 @@ export const Manga = () => {
                 </li>
               );
             })}
-        {chaptersQuery.hasNextPage && (
+        {(chaptersQuery.hasNextPage || chaptersQuery.isLoading) && (
           <li className='sm:col-span-2 lg:col-span-3 xl:col-span-4'>
             <button
-              disabled={chaptersQuery.isFetchingNextPage}
+              disabled={
+                chaptersQuery.isLoading || chaptersQuery.isFetchingNextPage
+              }
               onClick={() => chaptersQuery.fetchNextPage()}
-              className='w-full flex flex-row justify-center md:justify-start border border-light-b dark:border-dark-b p-2 rounded-bl-lg rounded-tr-lg bg-light dark:bg-dark hover:bg-light-b dark:hover:bg-dark-b shadow-md'
+              className='w-full flex flex-row justify-center md:justify-start border border-light-b dark:border-dark-b p-2 rounded-bl-lg rounded-tr-lg bg-light dark:bg-dark enabled:hover:bg-light-b dark:enabled:hover:bg-dark-b shadow-md'
             >
-              {chaptersQuery.isFetchingNextPage ? (
+              {chaptersQuery.isLoading || chaptersQuery.isFetchingNextPage ? (
                 <Loader2 className='animate-spin' />
               ) : (
                 <PlusSquare />
