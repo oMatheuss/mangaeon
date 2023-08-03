@@ -36,7 +36,7 @@ const ReleaseCard = ({ release }: ReleaseCardProps) => {
     .join(', ');
 
   return (
-    <li className='relative w-full sm:flex sm:h-48 overflow-hidden bg-slate-100 dark:bg-slate-900 rounded shadow-lg'>
+    <li className='relative w-full sm:flex sm:h-48 overflow-hidden bg-slate-100 dark:bg-slate-900 border border-gray-200 dark:border-slate-800 rounded shadow-lg'>
       <StarButton
         serie={{
           id: release.id_serie,

@@ -69,7 +69,7 @@ export const Navbar = () => {
   return (
     <nav
       ref={navRef}
-      className='sticky top-0 border-b z-10 backdrop-blur-lg transition-transform max-h-screen overflow-y-scroll'
+      className='sticky top-0 z-10 border-b border-gray-200 dark:border-slate-700 bg-white/90 dark:bg-gray-900/95 transition-transform max-h-screen overflow-y-scroll'
     >
       <div className='max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto p-4'>
         <Link to='/' className='flex items-center'>
@@ -86,9 +86,9 @@ export const Navbar = () => {
         </button>
         <div
           aria-expanded={isOpen}
-          className='hidden aria-expanded:flex w-full md:flex md:w-auto flex-col md:flex-row p-4 md:p-0 mt-4 md:mt-0 border border-gray-100 rounded-lg bg-gray-50 md:border-0 md:bg-inherit dark:bg-gray-800 md:dark:bg-inherit dark:border-gray-700'
+          className='hidden aria-expanded:flex w-full md:flex md:w-auto flex-col md:flex-row p-4 md:p-0 mt-4 md:mt-0 border border-gray-100 rounded-lg bg-gray-50 md:border-0 md:bg-inherit dark:bg-slate-900 shadow md:dark:bg-inherit dark:border-gray-700'
         >
-          <ul className='font-medium flex flex-col md:flex-row md:space-x-8 md:mr-8'>
+          <ul className='font-medium flex flex-col space-y-2 md:space-y-0 md:flex-row md:space-x-8 md:mr-8'>
             {links.map((l) => (
               <li key={l.to}>
                 <NavLink

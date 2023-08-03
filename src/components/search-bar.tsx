@@ -11,7 +11,7 @@ export const SearchBar = ({ replace, defaultValue }: SearchBarProps) => {
     <Form
       method='GET'
       action='/pesquisa'
-      className='w-full flex flex-row py-2 group'
+      className='w-full flex flex-row my-2 group border border-gray-200 dark:border-slate-800 rounded shadow'
       replace={replace}
     >
       <div className='w-full relative'>

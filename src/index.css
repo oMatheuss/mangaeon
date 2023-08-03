@@ -47,7 +47,7 @@
     @apply font-comfortaa font-normal leading-6;
 
     color-scheme: light dark;
-    @apply text-opacity-90 text-white bg-slate-800;
+    @apply text-opacity-90 text-white bg-gray-900;
 
     font-synthesis: none;
     text-rendering: optimizeLegibility;

@@ -52,7 +52,7 @@ export const Search = () => {
         {series.map((val) => (
           <div
             key={val.id_serie}
-            className='relative overflow-hidden w-full h-24 sm:h-36 md:h-48 flex flex-row bg-slate-100 dark:bg-slate-900 rounded'
+            className='relative overflow-hidden w-full h-36 md:h-48 flex flex-row bg-slate-100 dark:bg-slate-900 border border-gray-200 dark:border-slate-800 rounded shadow'
           >
             <StarButton
               serie={{
@@ -70,9 +70,9 @@ export const Search = () => {
                 source={[val.cover_avif, 'image/avif']}
                 src={val.cover}
                 alt={val.name}
-                className='object-cover w-16 h-24 sm:w-24 sm:h-36 md:w-32 md:h-48 rounded-s'
+                className='object-cover w-24 h-36 md:w-32 md:h-48 rounded-s'
               >
-                <div className='w-16 h-24 sm:w-24 sm:h-36 md:w-32 md:h-48 bg-slate-300 dark:bg-slate-700/10 flex justify-center items-center'>
+                <div className='w-24 h-36 md:w-32 md:h-48 bg-slate-300 dark:bg-slate-700/10 flex justify-center items-center'>
                   <ImageOff className='h-10' />
                 </div>
               </Image>
