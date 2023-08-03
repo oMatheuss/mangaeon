@@ -1,5 +1,5 @@
 export interface ReleasesReponse {
-  releases: Release[];
+  releases: Release[] | false;
   _isLoggedIn: boolean;
 }
 

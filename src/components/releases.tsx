@@ -1,20 +1,56 @@
-import { Release, Scan } from '@/types/releases';
+import type { Release, Scan, ReleasesReponse } from '@/types/releases';
 import { Link } from 'react-router-dom';
 import { Image } from '@/components/image';
 import { StarButton } from '@/components/star-button';
-import { ImageOff } from 'lucide-react';
+import { ImageOff, Loader2, PlusSquare } from 'lucide-react';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { toErrorReponse } from '@/lib/utils';
 
-interface ReleasesProps {
-  releases: Release[];
-}
+const fetchReleases = async (page: number) => {
+  const res = await fetch(`/api/home/releases?page=${page}`);
+  if (!res.ok) throw toErrorReponse(res);
+  const result: ReleasesReponse = await res.json();
+  return { releases: result.releases, page };
+};
 
-export const Releases = ({ releases }: ReleasesProps) => {
+const ONE_HOUR = 1000 * 60 * 60;
+const THIRTY_MIN = 1000 * 60 * 30;
+
+export const Releases = () => {
+  const releasesQuery = useInfiniteQuery({
+    queryKey: ['releases'],
+    queryFn: ({ pageParam = 1 }) => fetchReleases(pageParam),
+    getNextPageParam: (last) => (!last.releases ? undefined : last.page + 1),
+    cacheTime: ONE_HOUR,
+    staleTime: THIRTY_MIN,
+  });
+
+  const releases =
+    releasesQuery.data?.pages
+      .filter((x) => Array.isArray(x.releases))
+      .flatMap((x) => x.releases as Release[]) ?? [];
+
   return (
-    <ul className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 mb-4'>
-      {releases.map((val) => (
-        <ReleaseCard key={val.id_serie} release={val} />
-      ))}
-    </ul>
+    <>
+      <ul className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 mb-4'>
+        {releases.map((val) => (
+          <ReleaseCard key={val.id_serie} release={val} />
+        ))}
+      </ul>
+      {releasesQuery.hasNextPage && (
+        <button
+          disabled={releasesQuery.isFetchingNextPage}
+          onClick={() => releasesQuery.fetchNextPage()}
+          className='w-full flex flex-row justify-center md:justify-start border border-light-b dark:border-dark-b p-2 rounded bg-light dark:bg-dark hover:bg-light-b dark:hover:bg-dark-b shadow-lg'
+        >
+          {releasesQuery.isFetchingNextPage ? (
+            <Loader2 className='animate-spin' />
+          ) : (
+            <PlusSquare />
+          )}
+        </button>
+      )}
+    </>
   );
 };
 
