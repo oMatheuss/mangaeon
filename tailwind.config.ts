@@ -1,5 +1,6 @@
 import type { Config } from 'tailwindcss';
 import { fontFamily } from 'tailwindcss/defaultTheme';
+import colors from 'tailwindcss/colors';
 
 const config: Config = {
   content: ['./index.html', './src/**/*.{ts,tsx}'],
@@ -8,6 +9,16 @@ const config: Config = {
     extend: {
       fontFamily: {
         comfortaa: ['Comfortaa', ...fontFamily.sans],
+      },
+      colors: {
+        light: {
+          DEFAULT: colors.gray[100],
+          b: colors.gray[200],
+        },
+        dark: {
+          DEFAULT: colors.slate[950],
+          b: colors.slate[800],
+        },
       },
     },
   },

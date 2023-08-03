@@ -60,7 +60,7 @@ export const LikedActions = ({ userUid }: LikedActions) => {
         <button
           disabled={isLoading}
           onClick={handleSave}
-          className='py-2 px-4 rounded flex justify-center w-full md:w-auto bg-slate-200 dark:bg-slate-900 enabled:hover:bg-green-300 dark:enabled:hover:bg-green-500 border border-current'
+          className='py-2 px-4 rounded flex justify-center w-full md:w-auto bg-light dark:bg-dark enabled:hover:bg-green-300 dark:enabled:hover:bg-green-500 border border-light-b dark:border-dark-b enabled:hover:border-green-400 dark:enabled:hover:border-green-600'
         >
           {isLoading ? (
             <Loader2 className='h-6 w-6 animate-spin' />
@@ -72,7 +72,7 @@ export const LikedActions = ({ userUid }: LikedActions) => {
         <button
           disabled={isLoading}
           onClick={handleSync}
-          className='py-2 px-4 rounded flex justify-center w-full md:w-auto bg-slate-200 dark:bg-slate-900 enabled:hover:bg-yellow-200 dark:enabled:hover:bg-amber-300 border border-current'
+          className='py-2 px-4 rounded flex justify-center w-full md:w-auto bg-light dark:bg-dark enabled:hover:bg-yellow-200 dark:enabled:hover:bg-amber-300 border border-light-b dark:border-dark-b enabled:hover:border-yellow-300 dark:enabled:hover:border-amber-400'
         >
           {isLoading ? (
             <Loader2 className='h-6 w-6 animate-spin' />

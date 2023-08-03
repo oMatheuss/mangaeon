@@ -47,16 +47,16 @@ const LikedCard = ({ liked }: LikedCardProps) => {
     }
   };
   return (
-    <div className='relative w-full border border-slate-200 dark:border-gray-800 rounded-bl-lg rounded-tr-lg bg-slate-100 dark:bg-slate-900 shadow-md'>
+    <div className='relative w-full border border-light-b dark:border-dark-b rounded-bl-lg rounded-tr-lg bg-light dark:bg-dark shadow-md'>
       <button
-        className='absolute top-0 right-0 inline-flex items-center justify-center w-10 h-10 text-gray-800 dark:text-gray-200 rounded-br'
+        className='absolute top-0 right-0 inline-flex items-center justify-center w-10 h-10 text-dark-b dark:text-light-b rounded-br'
         onClick={handleDelete}
       >
         <span className='sr-only'>Excluir</span>
         <StarOff />
       </button>
       <Link
-        className='h-36 flex items-center hover:bg-slate-200 dark:hover:bg-gray-800'
+        className='h-36 flex items-center hover:bg-light-b dark:hover:bg-dark-b'
         to={liked.link}
       >
         <img

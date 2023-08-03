@@ -7,7 +7,7 @@ interface FeaturedScrollProps {
 
 export const FeaturedScroll = ({ featured }: FeaturedScrollProps) => {
   return (
-    <div className='relative w-full flex gap-12 snap-x snap-mandatory overflow-x-auto p-6 bg-slate-100 dark:bg-slate-900 border border-gray-200 dark:border-slate-800 rounded shadow'>
+    <div className='relative w-full flex gap-12 snap-x snap-mandatory overflow-x-auto p-6 bg-light dark:bg-dark border border-light-b dark:border-dark-b rounded shadow'>
       {featured?.map((val) => (
         <div key={val.id_serie} className='snap-center shrink-0'>
           <div

@@ -69,7 +69,7 @@ export const Navbar = () => {
   return (
     <nav
       ref={navRef}
-      className='sticky top-0 z-10 border-b border-gray-200 dark:border-slate-700 bg-white/90 dark:bg-gray-900/95 transition-transform max-h-screen overflow-y-scroll'
+      className='sticky top-0 z-10 border-b border-light-b dark:border-dark-b bg-white/90 dark:bg-gray-900/95 transition-transform max-h-screen overflow-y-scroll'
     >
       <div className='max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto p-4'>
         <Link to='/' className='flex items-center'>
@@ -79,14 +79,14 @@ export const Navbar = () => {
         <button
           onClick={toggleOpen}
           type='button'
-          className='inline-flex items-center w-10 h-10 justify-center rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600'
+          className='inline-flex items-center w-10 h-10 justify-center rounded-lg md:hidden hover:bg-light-b focus:outline-none focus:ring-2 focus:ring-light-b dark:text-gray-400 dark:hover:bg-dark-b dark:focus:ring-dark-b'
         >
           <span className='sr-only'>Abrir o menu</span>
           <Menu className='w-5 h-5' aria-hidden='true' />
         </button>
         <div
           aria-expanded={isOpen}
-          className='hidden aria-expanded:flex w-full md:flex md:w-auto flex-col md:flex-row p-4 md:p-0 mt-4 md:mt-0 border border-gray-100 rounded-lg bg-gray-50 md:border-0 md:bg-inherit dark:bg-slate-900 shadow md:dark:bg-inherit dark:border-gray-700'
+          className='hidden aria-expanded:flex w-full md:flex md:w-auto flex-col md:flex-row p-4 md:p-0 mt-4 md:mt-0 border border-light-b rounded-lg bg-light dark:bg-dark md:border-0 md:bg-inherit shadow md:shadow-none md:dark:bg-inherit dark:border-dark-b'
         >
           <ul className='font-medium flex flex-col space-y-2 md:space-y-0 md:flex-row md:space-x-8 md:mr-8'>
             {links.map((l) => (
@@ -96,7 +96,7 @@ export const Navbar = () => {
                   className={({ isActive }) =>
                     isActive
                       ? 'flex items-center py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500'
-                      : 'flex items-center py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent'
+                      : 'flex items-center py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-dark-b dark:hover:text-white md:dark:hover:bg-transparent'
                   }
                   aria-current='page'
                 >
@@ -108,7 +108,7 @@ export const Navbar = () => {
           <hr className='md:hidden my-2 border-inherit' />
           {user === null ? (
             <button
-              className='w-full flex items-center justify-end py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent'
+              className='w-full flex items-center justify-end py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-dark-b dark:hover:text-white md:dark:hover:bg-transparent'
               onClick={signIn}
             >
               Login <LogIn className='ml-2' />

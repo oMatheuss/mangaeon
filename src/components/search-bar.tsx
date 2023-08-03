@@ -11,7 +11,7 @@ export const SearchBar = ({ replace, defaultValue }: SearchBarProps) => {
     <Form
       method='GET'
       action='/pesquisa'
-      className='w-full flex flex-row my-2 group border border-gray-200 dark:border-slate-800 rounded shadow'
+      className='w-full flex flex-row my-2 group border border-light-b dark:border-dark-b rounded shadow'
       replace={replace}
     >
       <div className='w-full relative'>
@@ -21,13 +21,13 @@ export const SearchBar = ({ replace, defaultValue }: SearchBarProps) => {
           type='search'
           name='q'
           placeholder='Pesquise uma obra'
-          className='w-full bg-slate-100 dark:bg-slate-900 p-2 pl-10 rounded-s focus:border-indigo-600 focus:outline outline-2 outline-indigo-600 -outline-offset-2'
+          className='w-full bg-slate-100 dark:bg-dark p-2 pl-10 rounded-s focus:border-indigo-600 focus:outline outline-2 outline-indigo-600 -outline-offset-2'
         />
       </div>
       <button
         aria-label='Pesquisar'
         type='submit'
-        className='p-2 bg-slate-100 dark:bg-slate-900 rounded-e focus:outline outline-2 outline-indigo-600 -outline-offset-2'
+        className='p-2 bg-slate-100 dark:bg-dark rounded-e focus:outline outline-2 outline-indigo-600 -outline-offset-2'
       >
         <CornerUpRight className='w-6 h-6' />
       </button>

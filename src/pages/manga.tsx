@@ -51,7 +51,7 @@ export const Manga = () => {
                   <Link
                     title={`Ler capítulo ${chap.number}`}
                     to={firstScan.link}
-                    className='w-full flex flex-row justify-between items-center border border-slate-200 dark:border-gray-800 p-2 rounded-bl-lg rounded-tr-lg bg-slate-100 dark:bg-slate-900 hover:bg-slate-200 dark:hover:bg-gray-800 shadow-md'
+                    className='w-full flex flex-row justify-between items-center border border-slate-200 dark:border-gray-800 p-2 rounded-bl-lg rounded-tr-lg bg-light dark:bg-dark hover:bg-slate-200 dark:hover:bg-gray-800 shadow-md'
                   >
                     <div className='flex flex-col'>
                       <span>Capítulo {chap.number}</span>
@@ -73,7 +73,7 @@ export const Manga = () => {
             <button
               disabled={chaptersQuery.isFetchingNextPage}
               onClick={() => chaptersQuery.fetchNextPage()}
-              className='w-full flex flex-row justify-center md:justify-start border border-slate-200 dark:border-gray-800 p-2 rounded-bl-lg rounded-tr-lg bg-slate-100 dark:bg-slate-900 hover:bg-slate-200 dark:hover:bg-gray-800 shadow-md'
+              className='w-full flex flex-row justify-center md:justify-start border border-slate-200 dark:border-gray-800 p-2 rounded-bl-lg rounded-tr-lg bg-light dark:bg-dark hover:bg-slate-200 dark:hover:bg-gray-800 shadow-md'
             >
               {chaptersQuery.isFetchingNextPage ? (
                 <Loader2 className='animate-spin' />

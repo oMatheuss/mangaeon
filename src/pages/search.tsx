@@ -52,7 +52,7 @@ export const Search = () => {
         {series.map((val) => (
           <div
             key={val.id_serie}
-            className='relative overflow-hidden w-full h-36 md:h-48 flex flex-row bg-slate-100 dark:bg-slate-900 border border-gray-200 dark:border-slate-800 rounded shadow'
+            className='relative overflow-hidden w-full h-36 md:h-48 flex flex-row bg-light dark:bg-dark border border-light-b dark:border-dark-b rounded shadow'
           >
             <StarButton
               serie={{
