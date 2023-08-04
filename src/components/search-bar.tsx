@@ -21,7 +21,7 @@ export const SearchBar = ({ replace, defaultValue }: SearchBarProps) => {
           type='search'
           name='q'
           placeholder='Pesquise uma obra'
-          className='w-full border border-inherit border-e-0 bg-slate-100 dark:bg-dark p-2 pl-10 rounded-s focus:border-indigo-600 focus:outline outline-2 outline-indigo-600 -outline-offset-2'
+          className='w-full border border-inherit border-e-0 bg-slate-100 dark:bg-dark p-2 pl-10 rounded-s focus:border-indigo-600 focus:outline outline-2 outline-indigo-600 -outline-offset-2 caret-indigo-600'
         />
       </div>
       <button

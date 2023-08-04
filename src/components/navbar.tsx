@@ -1,8 +1,9 @@
 import { useUser } from '@/lib/user';
-import { BookOpen, Heart, Home, LogIn, LogOut, Menu, User } from 'lucide-react';
+import { BookOpen, Heart, Home, LogIn, LogOut, User } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import * as Avatar from '@radix-ui/react-avatar';
+import { MenuButton } from './menu-button';
 
 const links = [
   { icon: Home, text: 'Home', to: '/' },
@@ -82,7 +83,7 @@ export const Navbar = () => {
           className='inline-flex items-center w-10 h-10 justify-center rounded-lg md:hidden hover:bg-light-b focus:outline-none focus:ring-2 focus:ring-light-b dark:text-gray-400 dark:hover:bg-dark-b dark:focus:ring-dark-b'
         >
           <span className='sr-only'>Abrir o menu</span>
-          <Menu className='w-5 h-5' aria-hidden='true' />
+          <MenuButton active={isOpen} className='w-5 h-5' />
         </button>
         <div
           aria-expanded={isOpen}
