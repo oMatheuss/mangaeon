@@ -61,4 +61,8 @@
       @apply text-gray-800 bg-white;
     }
   }
+
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
 }
