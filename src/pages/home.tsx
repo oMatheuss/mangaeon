@@ -28,7 +28,6 @@ export const Home = () => {
     <div className='flex flex-col my-3'>
       <FeaturedScroll featured={featured} />
       <SearchBar />
-      <h1 className='font-bold text-2xl my-4'>Lançamentos</h1>
       <Releases />
     </div>
   );

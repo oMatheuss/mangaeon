@@ -5,9 +5,10 @@ import { StarButton } from '@/components/star-button';
 import { ImageOff, Loader2, PlusSquare } from 'lucide-react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { toErrorReponse } from '@/lib/utils';
+import { useState } from 'react';
 
-const fetchReleases = async (page: number) => {
-  const res = await fetch(`/api/home/releases?page=${page}`);
+const fetchReleases = async (page: number, type: string) => {
+  const res = await fetch(`/api/home/releases?page=${page}&type=${type}`);
   if (!res.ok) throw toErrorReponse(res);
   const result: ReleasesReponse = await res.json();
   return { releases: result.releases, page };
@@ -17,9 +18,11 @@ const ONE_HOUR = 1000 * 60 * 60;
 const THIRTY_MIN = 1000 * 60 * 30;
 
 export const Releases = () => {
+  const [releaseType, setReleaseType] = useState('manga');
+
   const releasesQuery = useInfiniteQuery({
-    queryKey: ['releases'],
-    queryFn: ({ pageParam = 1 }) => fetchReleases(pageParam),
+    queryKey: ['releases', releaseType],
+    queryFn: ({ pageParam = 1 }) => fetchReleases(pageParam, releaseType),
     getNextPageParam: (last) => (!last.releases ? undefined : last.page + 1),
     cacheTime: ONE_HOUR,
     staleTime: THIRTY_MIN,
@@ -32,6 +35,17 @@ export const Releases = () => {
 
   return (
     <>
+      <div className='flex justify-between pb-1 my-4 border-b border-light-b dark:border-dark-b'>
+        <h1 className='font-bold text-xl sm:text-2xl'>Lançamentos</h1>
+        <select
+          className='bg-light dark:bg-dark border border-light-b dark:border-dark-b shadow-lg rounded px-2 overflow-hidden'
+          value={releaseType}
+          onChange={(e) => setReleaseType(e.target.value)}
+        >
+          <option value='manga'>Mangá</option>
+          <option value='manhua'>Manhua</option>
+        </select>
+      </div>
       <ul className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 mb-4'>
         {releases.map((val) => (
           <ReleaseCard key={val.id_serie} release={val} />
