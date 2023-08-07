@@ -41,6 +41,8 @@ export const Releases = () => {
         <Select value={releaseType} onChange={setReleaseType}>
           <option value='manga'>Mangá</option>
           <option value='manhua'>Manhua</option>
+          <option value='webtoon'>Webtoon</option>
+          <option value='novel'>Novel</option>
         </Select>
       </div>
       <ul className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 mb-4'>
