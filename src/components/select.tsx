@@ -1,0 +1,25 @@
+import { ChevronDown } from 'lucide-react';
+
+interface SelectProps {
+  value: string;
+  onChange: (value: string) => void;
+  children: React.ReactNode;
+}
+
+export const Select = ({ value, onChange, children }: SelectProps) => {
+  const handleOnChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    onChange(e.target.value);
+  };
+  return (
+    <div className='relative h-full flex flex-row justify-between items-center group'>
+      <select
+        className='bg-light dark:bg-dark border border-light-b dark:border-dark-b shadow-lg rounded py-1 ps-2 pe-9 overflow-hidden appearance-none focus:border-indigo-600 focus:outline outline-2 outline-indigo-600 -outline-offset-2 caret-indigo-600'
+        value={value}
+        onChange={handleOnChange}
+      >
+        {children}
+      </select>
+      <ChevronDown className='pointer-events-none absolute right-2 h-5 w-5 group-focus-within:text-indigo-600' />
+    </div>
+  );
+};

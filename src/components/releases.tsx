@@ -1,6 +1,7 @@
 import type { Release, Scan, ReleasesReponse } from '@/types/releases';
 import { Link } from 'react-router-dom';
 import { Image } from '@/components/image';
+import { Select } from '@/components/select';
 import { StarButton } from '@/components/star-button';
 import { ImageOff, Loader2, PlusSquare } from 'lucide-react';
 import { useInfiniteQuery } from '@tanstack/react-query';
@@ -35,16 +36,12 @@ export const Releases = () => {
 
   return (
     <>
-      <div className='flex justify-between pb-1 my-4 border-b border-light-b dark:border-dark-b'>
-        <h1 className='font-bold text-xl sm:text-2xl'>Lançamentos</h1>
-        <select
-          className='bg-light dark:bg-dark border border-light-b dark:border-dark-b shadow-lg rounded px-2 overflow-hidden'
-          value={releaseType}
-          onChange={(e) => setReleaseType(e.target.value)}
-        >
+      <div className='flex justify-between items-end pb-1 my-4 border-b border-light-b dark:border-dark-b'>
+        <h2 className='font-bold text-xl sm:text-2xl'>Lançamentos</h2>
+        <Select value={releaseType} onChange={setReleaseType}>
           <option value='manga'>Mangá</option>
           <option value='manhua'>Manhua</option>
-        </select>
+        </Select>
       </div>
       <ul className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 mb-4'>
         {releases.map((val) => (
