@@ -104,9 +104,16 @@ const ReleaseCard = ({ release }: ReleaseCardProps) => {
           alt={release.name}
           className='w-full sm:w-32 h-48 border-b-2 sm:border-none object-contain sm:object-cover'
         >
-          <div className='bg-slate-300 dark:bg-slate-700/10 w-full sm:w-32 h-48 flex justify-center items-center'>
-            <ImageOff className='h-10' />
-          </div>
+          <Image
+            source={[release.image_thumb_avif, 'image/avif']}
+            src={release.image_thumb}
+            alt={release.name}
+            className='w-full sm:w-32 h-48 border-b-2 sm:border-none object-contain sm:object-cover'
+          >
+            <div className='bg-slate-300 dark:bg-slate-700/10 w-full sm:w-32 h-48 flex justify-center items-center'>
+              <ImageOff className='h-10' />
+            </div>
+          </Image>
         </Image>
       </Link>
       <div className='p-4 flex flex-col justify-between leading-normal text-center sm:text-left'>
