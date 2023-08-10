@@ -11,10 +11,10 @@ export const FeaturedScroll = ({ featured }: FeaturedScrollProps) => {
       {featured?.map((val) => (
         <div key={val.id_serie} className='w-full snap-center shrink-0'>
           <div
-            className='relative h-full shrink-0 w-full text-slate-100 overflow-hidden'
+            className='relative h-full shrink-0 w-full text-slate-100 overflow-hidden shadow-inner shadow-black/50'
             style={{
               backgroundImage:
-                'repeating-linear-gradient(90deg, transparent, transparent 35px, rgba(255,255,255,.1) 35px, rgba(255,255,255,.1) 70px)',
+                'repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,.1) 35px, rgba(255,255,255,.1) 70px)',
               backgroundColor: `#${val.hex_color || 'acacac'}`,
             }}
           >
