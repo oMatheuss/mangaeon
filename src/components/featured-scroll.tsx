@@ -7,19 +7,19 @@ interface FeaturedScrollProps {
 
 export const FeaturedScroll = ({ featured }: FeaturedScrollProps) => {
   return (
-    <div className='relative w-full flex gap-12 snap-x snap-mandatory overflow-x-auto p-6 bg-light dark:bg-dark border border-light-b dark:border-dark-b rounded shadow'>
+    <div className='relative w-full h-64 flex snap-x snap-mandatory overflow-x-auto bg-light dark:bg-dark border border-light-b dark:border-dark-b rounded shadow'>
       {featured?.map((val) => (
-        <div key={val.id_serie} className='snap-center shrink-0'>
+        <div key={val.id_serie} className='w-full snap-center shrink-0'>
           <div
-            className='relative h-56 shrink-0 w-[calc(100vw-3rem)] sm:w-96 text-slate-100 rounded overflow-hidden shadow-lg'
+            className='relative h-full shrink-0 w-full text-slate-100 overflow-hidden'
             style={{ backgroundColor: `#${val.hex_color || 'acacac'}` }}
           >
             <Link
               to={val.link}
-              className='select-text focus:outline outline-1 outline-indigo-600 -outline-offset-1'
+              className='min-w-fit select-text focus:outline outline-1 outline-indigo-600 -outline-offset-1'
             >
               <img
-                className='h-full object-contain object-bottom mx-auto'
+                className='h-full w-full object-contain object-bottom'
                 src={val.featured_image}
                 alt={val.series_name}
               />
