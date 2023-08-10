@@ -13,9 +13,9 @@ export const FeaturedScroll = ({ featured }: FeaturedScrollProps) => {
           <div
             className='relative h-full shrink-0 w-full text-slate-100 overflow-hidden'
             style={{
-              backgroundColor: `#${val.hex_color || 'acacac'}`,
               backgroundImage:
-                'repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,.1) 35px, rgba(255,255,255,.1) 70px)',
+                'repeating-linear-gradient(90deg, transparent, transparent 35px, rgba(255,255,255,.1) 35px, rgba(255,255,255,.1) 70px)',
+              backgroundColor: `#${val.hex_color || 'acacac'}`,
             }}
           >
             <Link
