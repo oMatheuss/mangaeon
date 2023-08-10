@@ -62,24 +62,27 @@ export const Search = () => {
                 name: val.name,
               }}
             />
-            <Link
-              to={val.link}
-              className='min-w-fit mr-2 focus:outline outline-indigo-600 outline-1 -outline-offset-1'
-            >
+            <div className='min-w-fit mr-2 bg-slate-300 dark:bg-slate-700/10'>
               <Image
-                source={[val.cover_avif, 'image/avif']}
-                src={val.cover}
+                sources={[
+                  { src: val.cover_avif, type: 'image/avif' },
+                  { src: val.cover_thumb_avif, type: 'image/avif' },
+                  { src: val.cover, type: 'image/jpg' },
+                  { src: val.cover_thumb, type: 'image/jpg' },
+                ]}
                 alt={val.name}
                 className='object-cover w-24 h-36 md:w-32 md:h-48 rounded-s'
-              >
-                <div className='w-24 h-36 md:w-32 md:h-48 bg-slate-300 dark:bg-slate-700/10 flex justify-center items-center'>
-                  <ImageOff className='h-10' />
-                </div>
-              </Image>
-            </Link>
+                fallback={
+                  <div className='w-24 h-36 md:w-32 md:h-48 flex justify-center items-center'>
+                    <ImageOff className='h-10' />
+                  </div>
+                }
+                loading='lazy'
+              />
+            </div>
             <div className='p-2 overflow-auto flex flex-col justify-between leading-normal'>
               <div>
-                <h2 className='font-bold text-lg truncate'>
+                <h2 className='font-bold text-lg line-clamp-3'>
                   <Link to={val.link} className='hover:underline'>
                     {val.name}
                   </Link>

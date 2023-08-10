@@ -1,33 +1,31 @@
 import { useState } from 'react';
 
-interface ImageProps {
-  source: [src: string, type: string];
-  src: string;
-  alt: string;
-  className: string;
-  children: React.ReactNode;
+interface ImageProps
+  extends Omit<
+    React.DetailedHTMLProps<
+      React.ImgHTMLAttributes<HTMLImageElement>,
+      HTMLImageElement
+    >,
+    'src' | 'onError' | 'children'
+  > {
+  sources: { src: string; type: string }[];
+  fallback: React.ReactNode;
 }
 
-export const Image = ({
-  source,
-  src,
-  alt,
-  className,
-  children,
-}: ImageProps) => {
+export const Image = ({ sources, fallback, ...props }: ImageProps) => {
   const [isErrored, setIsErrored] = useState(false);
   const handleError = () => setIsErrored(true);
 
-  if (isErrored) return children;
+  if (isErrored) return fallback;
 
   return (
     <picture>
-      <source srcSet={source[0]} type={source[1]} />
+      {sources.map((v, i) => (
+        <source key={i} srcSet={v.src} type={v.type} />
+      ))}
       <img
-        loading='lazy'
-        src={src}
-        alt={alt}
-        className={className}
+        {...props}
+        src={sources[sources.length - 1].src}
         onError={handleError}
       />
     </picture>

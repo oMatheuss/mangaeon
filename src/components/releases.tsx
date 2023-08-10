@@ -46,8 +46,8 @@ export const Releases = () => {
         </Select>
       </div>
       <ul className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 mb-4'>
-        {releases.map((val) => (
-          <ReleaseCard key={val.id_serie} release={val} />
+        {releases.map((val, idx) => (
+          <ReleaseCard key={`${val.id_serie}-${idx}`} release={val} />
         ))}
       </ul>
       {releasesQuery.hasNextPage && (
@@ -85,7 +85,7 @@ const ReleaseCard = ({ release }: ReleaseCardProps) => {
     .join(', ');
 
   return (
-    <li className='relative w-full sm:flex sm:h-48 overflow-hidden bg-light dark:bg-dark border border-light-b dark:border-dark-b rounded shadow-lg'>
+    <li className='relative sm:flex sm:h-48 overflow-hidden bg-light dark:bg-dark border border-light-b dark:border-dark-b rounded shadow-lg'>
       <StarButton
         serie={{
           id: release.id_serie,
@@ -94,38 +94,38 @@ const ReleaseCard = ({ release }: ReleaseCardProps) => {
           name: release.name,
         }}
       />
-      <Link
-        to={release.link}
-        className='min-w-fit focus:outline outline-indigo-600 outline-1 -outline-offset-1'
-      >
+      <div className='min-w-fit bg-slate-300 dark:bg-slate-700/10'>
         <Image
-          source={[release.image_avif, 'image/avif']}
-          src={release.image}
+          sources={[
+            { src: release.image_avif, type: 'image/avif' },
+            { src: release.image_thumb_avif, type: 'image/avif' },
+            { src: release.image, type: 'image/jpg' },
+            { src: release.image_thumb, type: 'image/jpg' },
+          ]}
           alt={release.name}
-          className='w-full sm:w-32 h-48 border-b-2 sm:border-none object-contain sm:object-cover'
-        >
-          <Image
-            source={[release.image_thumb_avif, 'image/avif']}
-            src={release.image_thumb}
-            alt={release.name}
-            className='w-full sm:w-32 h-48 border-b-2 sm:border-none object-contain sm:object-cover'
-          >
-            <div className='bg-slate-300 dark:bg-slate-700/10 w-full sm:w-32 h-48 flex justify-center items-center'>
+          className='w-full sm:w-32 h-48 object-contain sm:object-cover'
+          fallback={
+            <div className='w-full sm:w-32 h-48 flex justify-center items-center'>
               <ImageOff className='h-10' />
             </div>
-          </Image>
-        </Image>
-      </Link>
-      <div className='p-4 flex flex-col justify-between leading-normal text-center sm:text-left'>
-        <h3 className='font-bold text-xl'>
-          <Link to={release.link} className='hover:underline'>
+          }
+          loading='lazy'
+        />
+      </div>
+      <div className='flex flex-col overflow-hidden p-4'>
+        <h3 className='font-bold text-xl sm:max-h-24 max-w-fit line-clamp-3 tracking-tight'>
+          <Link
+            to={release.link}
+            title={release.name}
+            className='hover:underline'
+          >
             {release.name}
           </Link>
         </h3>
-        <h4 className='font-light text-current text-opacity-25 text-sm'>
+        <h4 className='font-light text-current text-opacity-25 text-sm truncate'>
           {scans}
         </h4>
-        <nav className='select-none'>
+        <nav className='select-none mt-auto'>
           {release.chapters.map((chap) => (
             <Link
               key={chap.number}
