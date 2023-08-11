@@ -38,10 +38,10 @@ export const MostReadScroll = () => {
         {mostRead.map((item) => (
           <MostReadCard key={item.id_serie} item={item} />
         ))}
-        {mostReadQuery.hasNextPage && (
+        {(mostReadQuery.hasNextPage || mostReadQuery.isLoading) && (
           <MosteReadSkeleton
             onClick={mostReadQuery.fetchNextPage}
-            isLoading={mostReadQuery.isFetchingNextPage}
+            isLoading={mostReadQuery.hasNextPage || mostReadQuery.isLoading}
           />
         )}
       </ul>
