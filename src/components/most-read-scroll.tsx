@@ -41,7 +41,9 @@ export const MostReadScroll = () => {
         {(mostReadQuery.hasNextPage || mostReadQuery.isLoading) && (
           <MosteReadSkeleton
             onClick={mostReadQuery.fetchNextPage}
-            isLoading={mostReadQuery.hasNextPage || mostReadQuery.isLoading}
+            isLoading={
+              mostReadQuery.isFetchingNextPage || mostReadQuery.isLoading
+            }
           />
         )}
       </ul>
