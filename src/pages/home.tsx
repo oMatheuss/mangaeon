@@ -26,8 +26,8 @@ export const Home = () => {
 
   return (
     <div className='flex flex-col my-3'>
-      <FeaturedScroll featured={featured} />
       <SearchBar />
+      <FeaturedScroll featured={featured} />
       <Releases />
     </div>
   );

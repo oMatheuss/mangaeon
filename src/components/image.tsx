@@ -8,24 +8,29 @@ interface ImageProps
     >,
     'src' | 'onError' | 'children'
   > {
-  sources: { src: string; type: string }[];
+  sources: { src: string; type: string }[][];
   fallback: React.ReactNode;
 }
 
 export const Image = ({ sources, fallback, ...props }: ImageProps) => {
+  const [imageGroup, setImageGroup] = useState(0);
   const [isErrored, setIsErrored] = useState(false);
-  const handleError = () => setIsErrored(true);
+  const handleError = () => {
+    let newIdx = imageGroup + 1;
+    if (newIdx < sources.length) setImageGroup(newIdx);
+    else setIsErrored(true);
+  };
 
   if (isErrored) return fallback;
 
   return (
     <picture>
-      {sources.map((v, i) => (
+      {sources[imageGroup].map((v, i) => (
         <source key={i} srcSet={v.src} type={v.type} />
       ))}
       <img
         {...props}
-        src={sources[sources.length - 1].src}
+        src={sources[imageGroup][sources.length - 1].src}
         onError={handleError}
       />
     </picture>

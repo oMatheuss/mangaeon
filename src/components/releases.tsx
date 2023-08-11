@@ -97,10 +97,14 @@ const ReleaseCard = ({ release }: ReleaseCardProps) => {
       <div className='min-w-fit bg-slate-300 dark:bg-slate-700/10'>
         <Image
           sources={[
-            { src: release.image_avif, type: 'image/avif' },
-            { src: release.image_thumb_avif, type: 'image/avif' },
-            { src: release.image, type: 'image/jpg' },
-            { src: release.image_thumb, type: 'image/jpg' },
+            [
+              { src: release.image_avif, type: 'image/avif' },
+              { src: release.image, type: 'image/jpg' },
+            ],
+            [
+              { src: release.image_thumb_avif, type: 'image/avif' },
+              { src: release.image_thumb, type: 'image/jpg' },
+            ],
           ]}
           alt={release.name}
           className='w-full sm:w-32 h-48 object-contain sm:object-cover'

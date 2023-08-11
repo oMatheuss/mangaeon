@@ -65,10 +65,14 @@ export const Search = () => {
             <div className='min-w-fit mr-2 bg-slate-300 dark:bg-slate-700/10'>
               <Image
                 sources={[
-                  { src: val.cover_avif, type: 'image/avif' },
-                  { src: val.cover_thumb_avif, type: 'image/avif' },
-                  { src: val.cover, type: 'image/jpg' },
-                  { src: val.cover_thumb, type: 'image/jpg' },
+                  [
+                    { src: val.cover_avif, type: 'image/avif' },
+                    { src: val.cover, type: 'image/jpg' },
+                  ],
+                  [
+                    { src: val.cover_thumb_avif, type: 'image/avif' },
+                    { src: val.cover_thumb, type: 'image/jpg' },
+                  ],
                 ]}
                 alt={val.name}
                 className='object-cover w-24 h-36 md:w-32 md:h-48 rounded-s'
