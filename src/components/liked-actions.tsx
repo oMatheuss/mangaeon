@@ -38,9 +38,11 @@ export const LikedActions = ({ userUid }: LikedActions) => {
     const { db, collection, getDocs } = await import('@/lib/firestore');
 
     try {
-      let cloudLiked = await getDocs(collection(db, 'users', userUid, 'liked'));
-      let newArr = cloudLiked.docs.map((x) => {
-        let data = x.data();
+      const cloudLiked = await getDocs(
+        collection(db, 'users', userUid, 'liked')
+      );
+      const newArr = cloudLiked.docs.map((x) => {
+        const data = x.data();
         return { id: Number(x.id), ...data } as LikedType;
       });
 

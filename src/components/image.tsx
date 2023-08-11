@@ -16,7 +16,7 @@ export const Image = ({ sources, fallback, ...props }: ImageProps) => {
   const [imageGroup, setImageGroup] = useState(0);
   const [isErrored, setIsErrored] = useState(false);
   const handleError = () => {
-    let newIdx = imageGroup + 1;
+    const newIdx = imageGroup + 1;
     if (newIdx < sources.length) setImageGroup(newIdx);
     else setIsErrored(true);
   };

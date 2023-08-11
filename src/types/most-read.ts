@@ -1,5 +1,5 @@
 export interface MostReadResponse {
-  most_read: MostRead[];
+  most_read: MostRead[] | false;
   _isLoggedIn: boolean;
 }
 
