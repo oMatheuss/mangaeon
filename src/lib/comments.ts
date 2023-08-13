@@ -1,4 +1,12 @@
-import { db, collection, onSnapshot, Timestamp, addDoc } from '@/lib/firestore';
+import {
+  db,
+  collection,
+  onSnapshot,
+  Timestamp,
+  addDoc,
+  deleteDoc,
+  doc,
+} from '@/lib/firestore';
 import { CommentModel } from '@/types/comment';
 
 export const listenComments = (
@@ -60,4 +68,15 @@ export const postComment = async (
     ...comment,
     time: Timestamp.now(),
   } as Omit<CommentModel, 'id'>);
+};
+
+export const deleteComment = async (id_chapter: number, id_comment: string) => {
+  const refDoc = doc(
+    db,
+    'leitor',
+    id_chapter.toString(),
+    'comments',
+    id_comment.toString()
+  );
+  await deleteDoc(refDoc);
 };

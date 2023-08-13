@@ -1,3 +1,4 @@
+import { SecondaryAlert } from '@/components/alert';
 import { LikedActions } from '@/components/liked-actions';
 import { LikedList } from '@/components/liked-list';
 import { useUser } from '@/lib/user';
@@ -16,9 +17,7 @@ export const Liked = () => {
       {isLogged ? (
         <LikedActions userUid={user.uid} />
       ) : (
-        <div className='my-3 w-full bg-green-300 dark:bg-green-500 p-2 rounded text-center'>
-          <span>Faça login para salvar seus favoritos!</span>
-        </div>
+        <SecondaryAlert text='Faça login para salvar seus favoritos!' />
       )}
       <LikedList />
     </>
