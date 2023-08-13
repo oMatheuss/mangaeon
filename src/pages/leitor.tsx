@@ -1,3 +1,4 @@
+import { CommentSection } from '@/components/comment-section';
 import { Paginas } from '@/components/paginas';
 import { type ErrorResponse, toErrorReponse } from '@/lib/utils';
 import { useViewed } from '@/lib/viewed';
@@ -27,9 +28,10 @@ export const Leitor = () => {
   });
 
   const { add } = useViewed();
+  const idChapter = parseInt(params.id!);
 
   useEffect(() => {
-    add(parseInt(params.id!));
+    add(idChapter);
   }, []);
 
   const images = imagesQuery.data?.images ?? [];
@@ -37,6 +39,7 @@ export const Leitor = () => {
   return (
     <div className='flex flex-col items-center mb-3'>
       <Paginas images={images} />
+      <CommentSection idChapter={idChapter} />
     </div>
   );
 };

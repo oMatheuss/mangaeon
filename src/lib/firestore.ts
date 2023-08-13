@@ -10,4 +10,7 @@ export {
   setDoc,
   writeBatch,
   deleteDoc,
+  onSnapshot,
+  Timestamp,
+  addDoc,
 } from 'firebase/firestore';
