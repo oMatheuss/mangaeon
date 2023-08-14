@@ -65,4 +65,16 @@
   html {
     -webkit-tap-highlight-color: transparent;
   }
+
+  ::-webkit-scrollbar {
+    @apply w-2 h-2;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-slate-500 rounded-md;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-slate-700 bg-opacity-50 rounded-md;
+  }
 }

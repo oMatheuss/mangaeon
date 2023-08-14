@@ -70,7 +70,7 @@ export const Navbar = () => {
   return (
     <nav
       ref={navRef}
-      className='sticky top-0 z-10 border-b border-light-b dark:border-dark-b bg-white/90 dark:bg-gray-900/95 transition-transform max-h-screen overflow-y-scroll'
+      className='sticky top-0 z-10 border-b border-light-b dark:border-dark-b bg-white/90 dark:bg-gray-900/95 transition-transform max-h-screen'
     >
       <div className='max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto p-4'>
         <Link to='/' className='flex items-center'>
