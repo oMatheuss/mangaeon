@@ -2,7 +2,7 @@ import { deleteComment, listenComments, postComment } from '@/lib/comments';
 import { useUser } from '@/lib/user';
 import { CommentModel } from '@/types/comment';
 import * as Avatar from '@radix-ui/react-avatar';
-import { Send, Trash2 } from 'lucide-react';
+import { MessagesSquare, Send, Trash2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { SecondaryAlert, SuccessAlert } from './alert';
 
@@ -16,10 +16,13 @@ export const CommentSection = ({ idChapter }: CommentSectionProps) => {
   const [isLoading, setLoading] = useState(false);
   const [comments, setComments] = useState<CommentModel[]>([]);
   const [commented, setCommented] = useState(false);
+  const [showComments, setShowComments] = useState(false);
 
   useEffect(() => {
-    return listenComments(idChapter, setComments);
-  }, [idChapter]);
+    if (showComments) {
+      return listenComments(idChapter, setComments);
+    }
+  }, [idChapter, showComments]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -34,10 +37,18 @@ export const CommentSection = ({ idChapter }: CommentSectionProps) => {
     });
     setLoading(false);
     setCommented(true);
+    setShowComments(true);
+  };
+
+  const handleShowComments = () => {
+    setShowComments(true);
   };
 
   return (
     <>
+      <div className='w-full flex justify-between items-end pb-1 my-4 border-b border-light-b dark:border-dark-b'>
+        <h2 className='font-bold text-xl sm:text-2xl'>Comentários</h2>
+      </div>
       {user === null ? (
         <SecondaryAlert text='Faça login para poder comentar!' />
       ) : !commented ? (
@@ -45,19 +56,25 @@ export const CommentSection = ({ idChapter }: CommentSectionProps) => {
       ) : (
         <SuccessAlert text='Muito obrigado pelo comentário!' />
       )}
-      <div className='w-full flex justify-between items-end pb-1 my-4 border-b border-light-b dark:border-dark-b'>
-        <h2 className='font-bold text-xl sm:text-2xl'>Comentários</h2>
-      </div>
       <div className='w-full flex flex-col space-y-3 my-3'>
-        {comments.map((comment) => (
-          <CommentCard
-            key={comment.id}
-            comment={comment}
-            idChapter={idChapter}
-            enableDelete={comment.userid === user?.uid}
-          />
-        ))}
-        {comments.length === 0 && (
+        {showComments && comments.length > 0 ? (
+          comments.map((comment) => (
+            <CommentCard
+              key={comment.id}
+              comment={comment}
+              idChapter={idChapter}
+              enableDelete={comment.userid === user?.uid}
+            />
+          ))
+        ) : !showComments ? (
+          <button
+            className='flex flex-row items-center p-2 rounded hover:bg-light-b dark:hover:bg-dark-b self-center'
+            onClick={handleShowComments}
+          >
+            <MessagesSquare className='w-7 h-7 m-auto mr-2 text-blue-500 dark:text-blue-600' />
+            Ver comentários
+          </button>
+        ) : (
           <SecondaryAlert text='Nenhum comentário ainda!' />
         )}
       </div>
@@ -128,6 +145,7 @@ const CommentForm = ({ onSubmit, isLoading }: CommentFormProps) => {
           name='message'
           cols={3}
           maxLength={100}
+          required
           className='p-2 resize-none rounded-md border border-light-b dark:border-dark-b bg-slate-100 dark:bg-dark focus:outline focus:border-indigo-600 outline-2 outline-indigo-600 -outline-offset-2 caret-indigo-600 shadow'
         ></textarea>
       </label>

@@ -12,7 +12,7 @@ export const SuccessAlert = ({ text }: AlertProps) => {
 
 export const SecondaryAlert = ({ text }: AlertProps) => {
   return (
-    <div className='mb-3 w-full bg-slate-200 dark:bg-slate-400 p-2 rounded text-center'>
+    <div className='mb-3 w-full bg-slate-200 dark:bg-slate-500 p-2 rounded text-center'>
       <span>{text}</span>
     </div>
   );

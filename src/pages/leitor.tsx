@@ -39,7 +39,6 @@ export const Leitor = () => {
   return (
     <div className='flex flex-col items-center mb-3'>
       <Paginas images={images} />
-      <hr className='w-full border border-light-b dark:border-dark-b rounded my-3' />
       <CommentSection idChapter={idChapter} />
     </div>
   );
