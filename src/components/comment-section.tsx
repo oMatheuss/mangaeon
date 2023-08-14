@@ -138,24 +138,27 @@ interface CommentFormProps {
 
 const CommentForm = ({ onSubmit, isLoading }: CommentFormProps) => {
   return (
-    <form onSubmit={onSubmit} className='w-full my-2 flex flex-col mb-3'>
-      <label className='w-full flex flex-col'>
-        Adicionar comentário
-        <textarea
-          name='message'
-          cols={3}
-          maxLength={100}
-          required
-          className='p-2 resize-none rounded-md border border-light-b dark:border-dark-b bg-slate-100 dark:bg-dark focus:outline focus:border-indigo-600 outline-2 outline-indigo-600 -outline-offset-2 caret-indigo-600 shadow'
-        ></textarea>
-      </label>
-      <button
-        type='submit'
-        disabled={isLoading}
-        className='w-full sm:w-auto h-10 p-3 mt-2 flex flex-row items-center justify-center self-end rounded border border-light-b dark:border-dark-b bg-slate-100 dark:bg-dark focus:outline focus:border-indigo-600 outline-2 outline-indigo-600 -outline-offset-2 caret-indigo-600 shadow hover:bg-opacity-50'
-      >
-        <Send className='h-5 w-5 mr-2' /> Enviar
-      </button>
+    <form
+      onSubmit={onSubmit}
+      className='w-full my-2 flex flex-col shadow-md overflow-hidden rounded-md border border-light-b dark:border-dark-b'
+    >
+      <textarea
+        name='message'
+        cols={3}
+        maxLength={100}
+        required
+        placeholder='Adicione um comentário ao capítulo...'
+        className='p-2 resize-y rounded-t-md bg-light dark:bg-dark focus:outline focus:border-indigo-600 outline-2 outline-indigo-600 -outline-offset-2 caret-indigo-600'
+      ></textarea>
+      <div className='flex flex-row border-t border-inherit'>
+        <button
+          type='submit'
+          disabled={isLoading}
+          className='m-2 px-2 py-1 text-light flex flex-row items-center rounded focus:outline focus:border-indigo-600 outline-2 outline-indigo-600 -outline-offset-2 bg-blue-400 dark:bg-blue-500 hover:bg-opacity-50'
+        >
+          <Send className='h-5 w-5 mr-2' /> Enviar
+        </button>
+      </div>
     </form>
   );
 };
