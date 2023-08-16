@@ -126,14 +126,14 @@ const ReleaseCard = ({ release }: ReleaseCardProps) => {
             {release.name}
           </Link>
         </h3>
-        <h4 className='font-light text-current text-opacity-25 text-sm truncate'>
+        <h4 className='font-bold text-opacity-75 text-slate-900 dark:text-slate-400 text-sm truncate'>
           {scans}
         </h4>
-        <nav className='select-none mt-auto'>
+        <nav className='mt-auto inline-flex flex-wrap h-[2.25rem] overflow-hidden text-sm font-semibold text-gray-700'>
           {release.chapters.map((chap) => (
             <Link
               key={chap.number}
-              className='inline-block bg-gray-200 rounded-sm px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mt-2 hover:bg-gray-300'
+              className='mt-2 mr-2 px-2 py-1 bg-gray-200 rounded-tr-md rounded-b-md hover:bg-gray-300'
               to={chap.url}
             >
               {chap.number}
