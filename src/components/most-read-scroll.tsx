@@ -31,10 +31,10 @@ export const MostReadScroll = () => {
 
   return (
     <>
-      <div className='flex justify-between items-end pb-1 my-4 border-b border-light-b dark:border-dark-b'>
+      <div className='flex justify-between items-end mt-8 mb-4 border-b border-light-b dark:border-dark-b'>
         <h2 className='font-bold text-xl sm:text-2xl'>Mais Lidos</h2>
       </div>
-      <ul className='w-full h-56 overflow-x-scroll grid grid-flow-col auto-cols-max gap-x-3'>
+      <ul className='w-full pb-4 overflow-x-auto grid grid-flow-col auto-cols-max gap-x-3'>
         {mostRead.map((item) => (
           <MostReadCard key={item.id_serie} item={item} />
         ))}
@@ -57,9 +57,9 @@ interface MostReadCardProps {
 
 const MostReadCard = ({ item }: MostReadCardProps) => {
   return (
-    <li className='relative overflow-hidden shadow-lg rounded-lg border-2 border-light-b dark:border-dark-b hover:brightness-75'>
+    <li className='relative flex flex-col items-center overflow-hidden shadow-md bg-slate-300 dark:bg-slate-700/10 rounded-lg border border-light-b dark:border-dark-b'>
       <Link to={item.link}>
-        <div className='min-w-fit bg-slate-300 dark:bg-slate-700/10'>
+        <div className='min-w-fit overflow-hidden dark:shadow-dark-b shadow-md'>
           <Image
             sources={[
               [
@@ -72,16 +72,24 @@ const MostReadCard = ({ item }: MostReadCardProps) => {
               ],
             ]}
             alt={item.serie_name}
-            className='w-36 h-56 object-cover object-center'
+            className='w-32 h-48 object-cover object-center transition-transform hover:scale-110'
             fallback={
-              <div className='w-36 h-56 flex justify-center items-center'>
-                <ImageOff className='h-10' />
+              <div className='w-32 h-48 flex justify-center items-center'>
+                <ImageOff className='h-10 w-10' />
               </div>
             }
             loading='lazy'
           />
         </div>
       </Link>
+      <div className='flex items-center h-16 w-32 px-2'>
+        <Link
+          to={item.link}
+          className='line-clamp-3 w-full text-xs text-center font-bold tracking-wide hover:underline'
+        >
+          {item.serie_name}
+        </Link>
+      </div>
     </li>
   );
 };
@@ -93,18 +101,16 @@ interface MosteReadSkeletonProps {
 
 const MosteReadSkeleton = ({ isLoading, onClick }: MosteReadSkeletonProps) => {
   return (
-    <li className='group relative overflow-hidden shadow-lg rounded-lg border-2 border-light-b dark:border-dark-b cursor-pointer'>
+    <li className='group relative overflow-hidden shadow-lg rounded-lg border border-light-b dark:border-dark-b cursor-pointer'>
       <button
         onClick={onClick}
-        className='min-w-fit bg-slate-300 dark:bg-slate-700 group-hover:bg-opacity-30'
+        className='flex justify-center items-center w-32 h-64 bg-slate-300 dark:bg-slate-700 group-hover:bg-opacity-30'
       >
-        <div className='w-36 h-56 flex justify-center items-center'>
-          {isLoading ? (
-            <Loader2 className='h-10 w-10 animate-spin' />
-          ) : (
-            <Plus className='h-10 w-10 rounded-full shadow-xl group-hover:bg-light-b dark:group-hover:bg-dark-b transition-transform group-hover:rotate-90' />
-          )}
-        </div>
+        {isLoading ? (
+          <Loader2 className='h-10 w-10 animate-spin' />
+        ) : (
+          <Plus className='h-10 w-10 rounded-full shadow-xl group-hover:bg-light-b dark:group-hover:bg-dark-b transition-transform group-hover:rotate-90' />
+        )}
       </button>
     </li>
   );

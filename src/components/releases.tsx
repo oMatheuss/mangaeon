@@ -36,7 +36,7 @@ export const Releases = () => {
 
   return (
     <>
-      <div className='flex justify-between items-end pb-1 my-4 border-b border-light-b dark:border-dark-b'>
+      <div className='flex justify-between items-end pb-1 mt-4 mb-3 border-b border-light-b dark:border-dark-b'>
         <h2 className='font-bold text-xl sm:text-2xl'>Lançamentos</h2>
         <Select value={releaseType} onChange={setReleaseType}>
           <option value='manga'>Mangá</option>
