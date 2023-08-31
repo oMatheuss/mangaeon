@@ -26,7 +26,7 @@ export const CommentSection = ({ idChapter }: CommentSectionProps) => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    let formData = new FormData(e.currentTarget);
+    const formData = new FormData(e.currentTarget);
     if (!user) return;
 
     setLoading(true);
@@ -94,7 +94,7 @@ const CommentCard = ({
   enableDelete,
 }: CommentCardProps) => {
   const handleDelete = () => {
-    deleteComment(idChapter, comment.id);
+    deleteComment(idChapter, comment.id).catch(console.error);
   };
 
   return (

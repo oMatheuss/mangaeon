@@ -8,7 +8,7 @@ export const userAtom = atom<User | null>(null);
 userAtom.debugLabel = 'User';
 
 userAtom.onMount = (setAtom) => {
-  let unsub = onAuthStateChanged(auth, (user) => {
+  const unsub = onAuthStateChanged(auth, (user) => {
     setAtom(user);
   });
   return unsub;
