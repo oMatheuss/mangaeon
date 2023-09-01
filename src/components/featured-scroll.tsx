@@ -24,14 +24,15 @@ export const FeaturedScroll = () => {
 
   const featured = featuredQuery.data?.featured ?? [];
 
+  const wrapperRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const observerCallback: IntersectionObserverCallback = (entries) => {
     const firstElement = entries[0].target as HTMLDivElement;
     const targetColor = firstElement.style.backgroundColor;
 
-    if (containerRef.current) {
-      containerRef.current.style.setProperty('--featured-shadow', targetColor);
+    if (wrapperRef.current) {
+      wrapperRef.current.style.setProperty('--featured-color', targetColor);
     }
   };
 
@@ -54,13 +55,15 @@ export const FeaturedScroll = () => {
   }, [featured]);
 
   return (
-    <div
-      ref={containerRef}
-      className='relative w-full h-64 flex snap-x snap-mandatory overflow-x-auto bg-light dark:bg-dark border border-light-b dark:border-dark-b rounded transition-[filter] duration-500 drop-shadow-[0px_0px_30px_var(--featured-shadow)]'
-    >
-      {featured?.map((val) => (
-        <FeaturedCard key={val.id_chapter} item={val} />
-      ))}
+    <div ref={wrapperRef} className='featured-effect'>
+      <div
+        ref={containerRef}
+        className='w-full h-64 flex snap-x snap-mandatory overflow-x-auto bg-inherit rounded'
+      >
+        {featured?.map((val) => (
+          <FeaturedCard key={val.id_chapter} item={val} />
+        ))}
+      </div>
     </div>
   );
 };
@@ -72,7 +75,7 @@ interface FeaturedCardProps {
 const FeaturedCard = ({ item }: FeaturedCardProps) => {
   return (
     <div
-      className='snap-center relative h-full w-full shrink-0 text-slate-100 overflow-hidden shadow-inner shadow-black/50'
+      className='snap-center relative h-full w-full shrink-0 text-slate-100 overflow-hidden'
       style={{
         backgroundImage:
           'repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,.1) 35px, rgba(255,255,255,.1) 70px)',
