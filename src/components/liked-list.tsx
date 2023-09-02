@@ -1,7 +1,7 @@
 import { useLiked, Liked } from '@/lib/liked';
 import { useUser } from '@/lib/user';
 import { Frown, StarOff } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 export const LikedList = () => {
   const { liked } = useLiked();
@@ -55,7 +55,7 @@ const LikedCard = ({ liked }: LikedCardProps) => {
         <span className='sr-only'>Excluir</span>
         <StarOff />
       </button>
-      <Link className='h-36 flex items-center' to={liked.link}>
+      <Link className='h-36 flex items-center' href={liked.link}>
         <img
           className='object-cover max-w-fit h-36 w-24 rounded-bl'
           src={liked.image}

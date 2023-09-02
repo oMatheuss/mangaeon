@@ -3,7 +3,7 @@ import '@/index.css';
 import type { Metadata } from 'next';
 import { Footer } from '@/components/footer';
 import { Navbar } from '@/components/navbar';
-import { QCProvider } from '@/components/query-client-provider';
+import { ClientProviders } from '@/components/client-providers';
 
 interface RootLayoutProps {
   children: React.ReactNode;
@@ -19,11 +19,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang='pt-BR'>
       <body>
-        <Navbar />
-        <main className='container px-3 sm:mx-auto'>
-          <QCProvider>{children}</QCProvider>
-        </main>
-        <Footer />
+        <ClientProviders>
+          <Navbar />
+          <main className='container px-3 sm:mx-auto'>{children}</main>
+          <Footer />
+        </ClientProviders>
       </body>
     </html>
   );

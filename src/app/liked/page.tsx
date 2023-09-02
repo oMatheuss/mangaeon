@@ -1,10 +1,12 @@
+'use client';
+
 import { SecondaryAlert } from '@/components/alert';
 import { LikedActions } from '@/components/liked-actions';
 import { LikedList } from '@/components/liked-list';
 import { useUser } from '@/lib/user';
 import { Star } from 'lucide-react';
 
-export const Liked = () => {
+export default function Liked() {
   const [user] = useUser();
   const isLogged = user !== null;
 
@@ -22,4 +24,4 @@ export const Liked = () => {
       <LikedList />
     </>
   );
-};
+}
