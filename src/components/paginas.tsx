@@ -1,3 +1,5 @@
+'use client';
+
 import { mapUntil } from '@/lib/utils';
 import { Image } from '@/types/images';
 import { Loader2, RefreshCwOff, RotateCcw } from 'lucide-react';

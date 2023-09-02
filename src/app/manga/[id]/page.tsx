@@ -1,14 +1,12 @@
+'use client';
+
 import { ViewedIcon } from '@/components/viewed-icon';
 import { toErrorReponse } from '@/lib/utils';
 import { Chapter, ChapterResponse } from '@/types/chapters';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { Loader2, PlusSquare } from 'lucide-react';
-import { Link, useParams } from 'react-router-dom';
-
-type MangaParams = {
-  name: string;
-  id: string;
-};
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const fetchChaptersList = async (id: string, page: number) => {
   const res = await fetch(
@@ -25,11 +23,12 @@ const fetchChaptersList = async (id: string, page: number) => {
 };
 
 export const Manga = () => {
-  const params = useParams<MangaParams>();
+  const router = useRouter();
+  const { id } = router.query as { id: string };
 
   const chaptersQuery = useInfiniteQuery({
-    queryKey: ['chapters', params.id],
-    queryFn: ({ pageParam = 1 }) => fetchChaptersList(params.id!, pageParam),
+    queryKey: ['chapters', id],
+    queryFn: ({ pageParam = 1 }) => fetchChaptersList(id, pageParam),
     getNextPageParam: (last) => (!last.chapters ? undefined : last.page + 1),
     staleTime: 1000 * 60 * 60 * 3,
   });
@@ -50,7 +49,7 @@ export const Manga = () => {
                 <li key={chap.id_chapter}>
                   <Link
                     title={`Ler capítulo ${chap.number}`}
-                    to={firstScan.link}
+                    href={firstScan.link}
                     className='w-full flex flex-row justify-between items-center border border-slate-200 dark:border-gray-800 p-2 rounded-bl-lg rounded-tr-lg bg-light dark:bg-dark hover:bg-slate-200 dark:hover:bg-gray-800 shadow-md'
                   >
                     <div className='flex flex-col'>

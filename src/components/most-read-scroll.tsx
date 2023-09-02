@@ -1,6 +1,8 @@
+'use client';
+
 import type { MostRead, MostReadResponse } from '@/types/most-read';
 import { Image } from '@/components/image';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { ImageOff, Loader2, Plus } from 'lucide-react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { toErrorReponse } from '@/lib/utils';
@@ -58,7 +60,7 @@ interface MostReadCardProps {
 const MostReadCard = ({ item }: MostReadCardProps) => {
   return (
     <li className='relative flex flex-col items-center overflow-hidden shadow-md bg-slate-300 dark:bg-slate-700/10 rounded-lg border border-light-b dark:border-dark-b'>
-      <Link to={item.link}>
+      <Link href={item.link}>
         <div className='min-w-fit overflow-hidden dark:shadow-dark-b shadow-md'>
           <Image
             sources={[
@@ -84,7 +86,7 @@ const MostReadCard = ({ item }: MostReadCardProps) => {
       </Link>
       <div className='flex items-center h-16 w-32 px-2'>
         <Link
-          to={item.link}
+          href={item.link}
           className='line-clamp-3 w-full text-xs text-center font-bold tracking-wide hover:underline'
         >
           {item.serie_name}

@@ -1,7 +1,9 @@
+'use client';
+
 import { useUser } from '@/lib/user';
 import { BookOpen, Heart, Home, LogIn, LogOut, User } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import Link from 'next/link';
 import * as Avatar from '@radix-ui/react-avatar';
 import { AnimatedMenuIcon } from './animated-menu-icon';
 
@@ -73,7 +75,7 @@ export const Navbar = () => {
       className='sticky top-0 z-10 border-b border-light-b dark:border-dark-b bg-white/90 dark:bg-gray-900/95 transition-transform max-h-screen'
     >
       <div className='max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto p-4'>
-        <Link to='/' className='flex items-center'>
+        <Link href='/' className='flex items-center'>
           <BookOpen className='mr-2' />
           <span>MANGÁ LIVRE</span>
         </Link>
@@ -92,17 +94,18 @@ export const Navbar = () => {
           <ul className='font-medium flex flex-col space-y-2 md:space-y-0 md:flex-row md:space-x-8 md:mr-8'>
             {links.map((l) => (
               <li key={l.to}>
-                <NavLink
-                  to={l.to}
-                  className={({ isActive }) =>
+                <Link
+                  href={l.to}
+                  className='flex items-center py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-dark-b dark:hover:text-white md:dark:hover:bg-transparent'
+                  aria-current='page'
+                >
+                  {/*className={({ isActive }) =>
                     isActive
                       ? 'flex items-center py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500'
                       : 'flex items-center py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-dark-b dark:hover:text-white md:dark:hover:bg-transparent'
-                  }
-                  aria-current='page'
-                >
+                  }*/}
                   <l.icon className='mr-2' /> {l.text}
-                </NavLink>
+                </Link>
               </li>
             ))}
           </ul>

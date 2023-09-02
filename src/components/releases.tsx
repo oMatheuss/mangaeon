@@ -1,5 +1,7 @@
+'use client';
+
 import type { Release, Scan, ReleasesReponse } from '@/types/releases';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Image } from '@/components/image';
 import { Select } from '@/components/select';
 import { StarButton } from '@/components/star-button';
@@ -119,7 +121,7 @@ const ReleaseCard = ({ release }: ReleaseCardProps) => {
       <div className='flex flex-col overflow-hidden p-4'>
         <h3 className='font-bold text-xl sm:max-h-24 max-w-fit line-clamp-3 tracking-tight'>
           <Link
-            to={release.link}
+            href={release.link}
             title={release.name}
             className='hover:underline'
           >
@@ -134,7 +136,7 @@ const ReleaseCard = ({ release }: ReleaseCardProps) => {
             <Link
               key={chap.number}
               className='mt-2 mr-2 px-2 py-1 bg-gray-200 rounded-tr-md rounded-b-md hover:bg-gray-300'
-              to={chap.url}
+              href={chap.url}
             >
               {chap.number}
             </Link>

@@ -4,14 +4,8 @@ import { type ErrorResponse, toErrorReponse } from '@/lib/utils';
 import { useViewed } from '@/lib/viewed';
 import { ImagesResponse } from '@/types/images';
 import { useQuery } from '@tanstack/react-query';
+import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-
-type LeitorParams = {
-  name: string;
-  id: string;
-  chap: string;
-};
 
 const fetchImagesLinks = async (id: string): Promise<ImagesResponse> => {
   const res = await fetch(`/api/leitor/pages/${id}.json`);
@@ -20,15 +14,16 @@ const fetchImagesLinks = async (id: string): Promise<ImagesResponse> => {
 };
 
 export const Leitor = () => {
-  const params = useParams<LeitorParams>();
+  const router = useRouter();
+  const { id } = router.query as { id: string };
 
   const imagesQuery = useQuery<ImagesResponse, ErrorResponse>({
-    queryKey: ['leitor', params.id],
-    queryFn: () => fetchImagesLinks(params.id!),
+    queryKey: ['leitor', id],
+    queryFn: () => fetchImagesLinks(id),
   });
 
   const { add } = useViewed();
-  const idChapter = parseInt(params.id!);
+  const idChapter = parseInt(id);
 
   useEffect(() => {
     add(idChapter);

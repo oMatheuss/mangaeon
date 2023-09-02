@@ -1,5 +1,4 @@
 import { CornerUpRight, Search } from 'lucide-react';
-import { Form } from 'react-router-dom';
 
 interface SearchBarProps {
   defaultValue?: string;
@@ -8,11 +7,10 @@ interface SearchBarProps {
 
 export const SearchBar = ({ replace, defaultValue }: SearchBarProps) => {
   return (
-    <Form
+    <form
       method='GET'
       action='/pesquisa'
       className='w-full flex flex-row my-2 group border-light-b dark:border-dark-b rounded shadow'
-      replace={replace}
     >
       <div className='w-full relative border-inherit'>
         <Search className='absolute w-6 h-6 top-2 left-2 pointer-events-none group-focus-within:text-indigo-600' />
@@ -31,6 +29,6 @@ export const SearchBar = ({ replace, defaultValue }: SearchBarProps) => {
       >
         <CornerUpRight className='w-6 h-6' />
       </button>
-    </Form>
+    </form>
   );
 };

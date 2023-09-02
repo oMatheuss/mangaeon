@@ -1,29 +1,14 @@
+'use client';
+
 import { Featured } from '@/types/featured';
-import { Link } from 'react-router-dom';
-import { type ErrorResponse, toErrorReponse } from '@/lib/utils';
-import type { FeaturedResponse } from '@/types/featured';
-import { useQuery } from '@tanstack/react-query';
 import { useEffect, useRef } from 'react';
+import Link from 'next/link';
 
-const fetchFeatured = async (): Promise<FeaturedResponse> => {
-  const res = await fetch('/api/home/getFeaturedSeries.json');
-  if (!res.ok) throw toErrorReponse(res);
-  return await res.json();
-};
+interface FeaturedScrollProps {
+  featured: Featured[];
+}
 
-const ONE_HOUR = 1000 * 60 * 60;
-const THIRTY_MIN = 1000 * 60 * 30;
-
-export const FeaturedScroll = () => {
-  const featuredQuery = useQuery<FeaturedResponse, ErrorResponse>({
-    queryKey: ['featured'],
-    queryFn: fetchFeatured,
-    cacheTime: ONE_HOUR,
-    staleTime: THIRTY_MIN,
-  });
-
-  const featured = featuredQuery.data?.featured ?? [];
-
+export const FeaturedScroll = ({ featured }: FeaturedScrollProps) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLUListElement>(null);
 
@@ -83,7 +68,7 @@ const FeaturedCard = ({ item }: FeaturedCardProps) => {
       }}
     >
       <Link
-        to={item.link}
+        href={item.link}
         className='min-w-fit select-text focus:outline outline-1 outline-indigo-600 -outline-offset-1'
       >
         <img
@@ -93,7 +78,7 @@ const FeaturedCard = ({ item }: FeaturedCardProps) => {
         />
       </Link>
       <div className='absolute top-0 flex flex-col px-6 py-4 pointer-events-none'>
-        <Link className='font-bold text-xl hover:underline' to={item.link}>
+        <Link className='font-bold text-xl hover:underline' href={item.link}>
           {item.series_name}
         </Link>
         <span className='text-sm'>Capítulo {item.chapter.number}</span>

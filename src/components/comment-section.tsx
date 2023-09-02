@@ -1,3 +1,5 @@
+'use client';
+
 import { deleteComment, listenComments, postComment } from '@/lib/comments';
 import { useUser } from '@/lib/user';
 import { CommentModel } from '@/types/comment';
