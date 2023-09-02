@@ -7,14 +7,26 @@ import { toErrorReponse } from '@/lib/utils';
 import type { FeaturedResponse } from '@/types/featured';
 import { MostReadResponse } from '@/types/most-read';
 
+const ONE_DAY = 86400;
+
 const fetchFeatured = async (): Promise<FeaturedResponse> => {
-  const res = await fetch('https://mangalivre.net/home/getFeaturedSeries.json');
+  const res = await fetch(
+    'https://mangalivre.net/home/getFeaturedSeries.json',
+    {
+      next: { revalidate: ONE_DAY },
+    }
+  );
   if (!res.ok) throw toErrorReponse(res);
   return (await res.json()) as FeaturedResponse;
 };
 
 const fetchMostRead = async (page: number) => {
-  const res = await fetch(`https://mangalivre.net/home/most_read?page=${page}`);
+  const res = await fetch(
+    `https://mangalivre.net/home/most_read?page=${page}`,
+    {
+      next: { revalidate: ONE_DAY },
+    }
+  );
   if (!res.ok) throw toErrorReponse(res);
   return (await res.json()) as MostReadResponse;
 };
