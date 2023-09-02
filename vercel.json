@@ -2,5 +2,6 @@
   "rewrites": [
     { "source": "/api/:path*", "destination": "https://mangalivre.net/:path*" },
     { "source": "/(.*)", "destination": "index.html" }
-  ]
+  ],
+  "regions": ["gru1"]
 }
