@@ -61,7 +61,6 @@ export default function Search() {
               serie={{
                 id: val.id_serie,
                 image: val.cover,
-                link: `/manga/${val.id_serie}`,
                 name: val.name,
               }}
             />

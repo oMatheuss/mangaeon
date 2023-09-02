@@ -94,7 +94,6 @@ const ReleaseCard = ({ release }: ReleaseCardProps) => {
         serie={{
           id: release.id_serie,
           image: release.image,
-          link: linkSerie,
           name: release.name,
         }}
       />

@@ -4,7 +4,6 @@ import { atomWithStorage } from 'jotai/utils';
 export interface Liked {
   id: number;
   name: string;
-  link: string;
   image: string;
 }
 

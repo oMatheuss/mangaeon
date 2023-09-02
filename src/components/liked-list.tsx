@@ -55,7 +55,7 @@ const LikedCard = ({ liked }: LikedCardProps) => {
         <span className='sr-only'>Excluir</span>
         <StarOff />
       </button>
-      <Link className='h-36 flex items-center' href={liked.link}>
+      <Link className='h-36 flex items-center' href={`/manga/${liked.id}`}>
         <img
           className='object-cover max-w-fit h-36 w-24 rounded-bl'
           src={liked.image}

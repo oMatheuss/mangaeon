@@ -19,9 +19,9 @@ export const LikedActions = ({ userUid }: LikedActions) => {
     try {
       const batch = writeBatch(db);
 
-      for (const { id, image, link, name } of liked) {
+      for (const { id, image, name } of liked) {
         const likedRef = doc(db, 'users', userUid, 'liked', id.toString());
-        batch.set(likedRef, { image, link, name });
+        batch.set(likedRef, { image, name });
       }
 
       await batch.commit();
