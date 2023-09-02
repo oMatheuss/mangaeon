@@ -25,7 +25,7 @@ export const FeaturedScroll = () => {
   const featured = featuredQuery.data?.featured ?? [];
 
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLUListElement>(null);
 
   const observerCallback: IntersectionObserverCallback = (entries) => {
     const firstElement = entries[0].target as HTMLDivElement;
@@ -55,16 +55,16 @@ export const FeaturedScroll = () => {
   }, [featured]);
 
   return (
-    <div ref={wrapperRef} className='featured-effect'>
-      <div
+    <section ref={wrapperRef} className='featured-effect'>
+      <ul
         ref={containerRef}
         className='w-full h-64 flex snap-x snap-mandatory overflow-x-auto bg-inherit rounded'
       >
         {featured?.map((val) => (
           <FeaturedCard key={val.id_chapter} item={val} />
         ))}
-      </div>
-    </div>
+      </ul>
+    </section>
   );
 };
 
@@ -74,7 +74,7 @@ interface FeaturedCardProps {
 
 const FeaturedCard = ({ item }: FeaturedCardProps) => {
   return (
-    <div
+    <li
       className='snap-center relative h-full w-full shrink-0 text-slate-100 overflow-hidden'
       style={{
         backgroundImage:
@@ -101,6 +101,6 @@ const FeaturedCard = ({ item }: FeaturedCardProps) => {
           {new Date(item.date).toLocaleDateString()}
         </span>
       </div>
-    </div>
+    </li>
   );
 };
