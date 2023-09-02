@@ -1,3 +1,5 @@
+'use client';
+
 import { Image } from '@/components/image';
 import { SearchBar } from '@/components/search-bar';
 import { StarButton } from '@/components/star-button';
@@ -5,7 +7,8 @@ import { toErrorReponse } from '@/lib/utils';
 import { SearchResponse } from '@/types/search';
 import { useQuery } from '@tanstack/react-query';
 import { ImageOff, Loader2, SearchX } from 'lucide-react';
-import { Link, useSearchParams } from 'react-router-dom';
+import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 
 const fetchSearch = async (search: string): Promise<SearchResponse> => {
   const res = await fetch('/api/lib/search/series.json', {
@@ -20,8 +23,8 @@ const fetchSearch = async (search: string): Promise<SearchResponse> => {
   return await res.json();
 };
 
-export const Search = () => {
-  const [searchParams] = useSearchParams();
+export default function Search() {
+  const searchParams = useSearchParams();
   const query = searchParams.get('q');
 
   const searchQuery = useQuery({
@@ -35,7 +38,7 @@ export const Search = () => {
 
   return (
     <>
-      <SearchBar replace defaultValue={query || undefined} />
+      <SearchBar defaultValue={query || undefined} />
       <div className='flex flex-col space-y-2 my-2'>
         {searchQuery.isSuccess && series.length === 0 && (
           <div className='flex flex-col items-center self-center'>
@@ -58,7 +61,7 @@ export const Search = () => {
               serie={{
                 id: val.id_serie,
                 image: val.cover,
-                link: val.link,
+                link: `/manga/${val.id_serie}`,
                 name: val.name,
               }}
             />
@@ -87,7 +90,10 @@ export const Search = () => {
             <div className='p-2 overflow-auto flex flex-col justify-between leading-normal'>
               <div>
                 <h2 className='font-bold text-lg line-clamp-3'>
-                  <Link to={val.link} className='hover:underline'>
+                  <Link
+                    href={`/manga/${val.id_serie}`}
+                    className='hover:underline'
+                  >
                     {val.name}
                   </Link>
                 </h2>
@@ -104,4 +110,4 @@ export const Search = () => {
       </div>
     </>
   );
-};
+}

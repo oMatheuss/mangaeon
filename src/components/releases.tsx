@@ -86,13 +86,15 @@ const ReleaseCard = ({ release }: ReleaseCardProps) => {
     .map((x) => x.name)
     .join(', ');
 
+  const linkSerie = `/link/${release.id_serie}`;
+
   return (
     <li className='relative sm:flex sm:h-48 overflow-hidden bg-light dark:bg-dark border border-light-b dark:border-dark-b rounded shadow-lg'>
       <StarButton
         serie={{
           id: release.id_serie,
           image: release.image,
-          link: release.link,
+          link: linkSerie,
           name: release.name,
         }}
       />
@@ -121,7 +123,7 @@ const ReleaseCard = ({ release }: ReleaseCardProps) => {
       <div className='flex flex-col overflow-hidden p-4'>
         <h3 className='font-bold text-xl sm:max-h-24 max-w-fit line-clamp-3 tracking-tight'>
           <Link
-            href={release.link}
+            href={linkSerie}
             title={release.name}
             className='hover:underline'
           >
@@ -136,7 +138,7 @@ const ReleaseCard = ({ release }: ReleaseCardProps) => {
             <Link
               key={chap.number}
               className='mt-2 mr-2 px-2 py-1 bg-gray-200 rounded-tr-md rounded-b-md hover:bg-gray-300'
-              href={chap.url}
+              href={`/ler/${chap.url.split('/')[4]}`}
             >
               {chap.number}
             </Link>

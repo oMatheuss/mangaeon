@@ -1,10 +1,11 @@
+'use client';
+
 import { CommentSection } from '@/components/comment-section';
 import { Paginas } from '@/components/paginas';
 import { type ErrorResponse, toErrorReponse } from '@/lib/utils';
 import { useViewed } from '@/lib/viewed';
 import { ImagesResponse } from '@/types/images';
 import { useQuery } from '@tanstack/react-query';
-import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
 const fetchImagesLinks = async (id: string): Promise<ImagesResponse> => {
@@ -13,17 +14,14 @@ const fetchImagesLinks = async (id: string): Promise<ImagesResponse> => {
   return await res.json();
 };
 
-export const Leitor = () => {
-  const router = useRouter();
-  const { id } = router.query as { id: string };
-
+export default function Leitor({ params }: { params: { id: string } }) {
   const imagesQuery = useQuery<ImagesResponse, ErrorResponse>({
-    queryKey: ['leitor', id],
-    queryFn: () => fetchImagesLinks(id),
+    queryKey: ['leitor', params.id],
+    queryFn: () => fetchImagesLinks(params.id),
   });
 
   const { add } = useViewed();
-  const idChapter = parseInt(id);
+  const idChapter = parseInt(params.id);
 
   useEffect(() => {
     add(idChapter);
@@ -37,4 +35,4 @@ export const Leitor = () => {
       <CommentSection idChapter={idChapter} />
     </div>
   );
-};
+}

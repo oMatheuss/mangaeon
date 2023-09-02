@@ -2,10 +2,9 @@ import { CornerUpRight, Search } from 'lucide-react';
 
 interface SearchBarProps {
   defaultValue?: string;
-  replace?: boolean;
 }
 
-export const SearchBar = ({ replace, defaultValue }: SearchBarProps) => {
+export const SearchBar = ({ defaultValue }: SearchBarProps) => {
   return (
     <form
       method='GET'

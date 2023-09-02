@@ -17,11 +17,19 @@ const fetchMostRead = async (page: number) => {
 const ONE_HOUR = 1000 * 60 * 60;
 const THIRTY_MIN = 1000 * 60 * 30;
 
-export const MostReadScroll = () => {
+interface MostReadScrollProps {
+  initialMostRead: MostRead[];
+}
+
+export const MostReadScroll = ({ initialMostRead }: MostReadScrollProps) => {
   const mostReadQuery = useInfiniteQuery({
     queryKey: ['most_read'],
     queryFn: ({ pageParam = 1 }) => fetchMostRead(pageParam),
     getNextPageParam: (last) => (!last.mostRead ? undefined : last.page + 1),
+    initialData: () => ({
+      pageParams: [1],
+      pages: [{ mostRead: initialMostRead, page: 1 }],
+    }),
     cacheTime: ONE_HOUR,
     staleTime: THIRTY_MIN,
   });
@@ -58,9 +66,10 @@ interface MostReadCardProps {
 }
 
 const MostReadCard = ({ item }: MostReadCardProps) => {
+  const link = `/manga/${item.id_serie}`;
   return (
     <li className='relative flex flex-col items-center overflow-hidden shadow-md bg-slate-300 dark:bg-slate-700/10 rounded-lg border border-light-b dark:border-dark-b'>
-      <Link href={item.link}>
+      <Link href={link}>
         <div className='min-w-fit overflow-hidden dark:shadow-dark-b shadow-md'>
           <Image
             sources={[
@@ -86,7 +95,7 @@ const MostReadCard = ({ item }: MostReadCardProps) => {
       </Link>
       <div className='flex items-center h-16 w-32 px-2'>
         <Link
-          href={item.link}
+          href={link}
           className='line-clamp-3 w-full text-xs text-center font-bold tracking-wide hover:underline'
         >
           {item.serie_name}

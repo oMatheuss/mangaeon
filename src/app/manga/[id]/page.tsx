@@ -6,7 +6,6 @@ import { Chapter, ChapterResponse } from '@/types/chapters';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { Loader2, PlusSquare } from 'lucide-react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 
 const fetchChaptersList = async (id: string, page: number) => {
   const res = await fetch(
@@ -22,13 +21,10 @@ const fetchChaptersList = async (id: string, page: number) => {
   return { chapters: chps.chapters, page };
 };
 
-export const Manga = () => {
-  const router = useRouter();
-  const { id } = router.query as { id: string };
-
+export default function Manga({ params }: { params: { id: string } }) {
   const chaptersQuery = useInfiniteQuery({
-    queryKey: ['chapters', id],
-    queryFn: ({ pageParam = 1 }) => fetchChaptersList(id, pageParam),
+    queryKey: ['chapters', params.id],
+    queryFn: ({ pageParam = 1 }) => fetchChaptersList(params.id, pageParam),
     getNextPageParam: (last) => (!last.chapters ? undefined : last.page + 1),
     staleTime: 1000 * 60 * 60 * 3,
   });
@@ -43,30 +39,9 @@ export const Manga = () => {
           chapters.pages
             .filter((x) => Array.isArray(x.chapters))
             .flatMap((x) => x.chapters as Chapter[])
-            .map((chap) => {
-              const firstScan = Object.entries(chap.releases)[0][1];
-              return (
-                <li key={chap.id_chapter}>
-                  <Link
-                    title={`Ler capítulo ${chap.number}`}
-                    href={firstScan.link}
-                    className='w-full flex flex-row justify-between items-center border border-slate-200 dark:border-gray-800 p-2 rounded-bl-lg rounded-tr-lg bg-light dark:bg-dark hover:bg-slate-200 dark:hover:bg-gray-800 shadow-md'
-                  >
-                    <div className='flex flex-col'>
-                      <span>Capítulo {chap.number}</span>
-                      <span className='font-bold text-xs'>{chap.name}</span>
-                    </div>
-                    <div className='flex flex-col items-end'>
-                      <div className='proportional-nums'>{chap.date}</div>
-                      <ViewedIcon
-                        className='w-4 h-4'
-                        id_chapter={firstScan.id_release}
-                      />
-                    </div>
-                  </Link>
-                </li>
-              );
-            })}
+            .map((chap) => (
+              <ChapterCard key={chap.id_chapter} chapter={chap} />
+            ))}
         {(chaptersQuery.hasNextPage || chaptersQuery.isLoading) && (
           <li className='sm:col-span-2 lg:col-span-3 xl:col-span-4'>
             <button
@@ -86,5 +61,32 @@ export const Manga = () => {
         )}
       </ol>
     </>
+  );
+}
+
+interface ChapterCardProps {
+  chapter: Chapter;
+}
+
+const ChapterCard = ({ chapter }: ChapterCardProps) => {
+  const firstScan = Object.entries(chapter.releases)[0][1];
+  const link = `/ler/${firstScan.id_release}`;
+  return (
+    <li key={chapter.id_chapter}>
+      <Link
+        title={`Ler capítulo ${chapter.number}`}
+        href={link}
+        className='w-full flex flex-row justify-between items-center border border-slate-200 dark:border-gray-800 p-2 rounded-bl-lg rounded-tr-lg bg-light dark:bg-dark hover:bg-slate-200 dark:hover:bg-gray-800 shadow-md'
+      >
+        <div className='flex flex-col'>
+          <span>Capítulo {chapter.number}</span>
+          <span className='font-bold text-xs'>{chapter.name}</span>
+        </div>
+        <div className='flex flex-col items-end'>
+          <div className='proportional-nums'>{chapter.date}</div>
+          <ViewedIcon className='w-4 h-4' id_chapter={firstScan.id_release} />
+        </div>
+      </Link>
+    </li>
   );
 };
