@@ -10,7 +10,7 @@ Uma versão funcionando deste projeto pode ser encontrado em https://mangalivre.
 
 ## DESENVOLVIMENTO
 
-Este projeto usa [Vite/React](https://vitejs.dev/). Para executar localmente, clone o projeto e execute:
+Este projeto usa [Next.js](https://nextjs.org/). Para executar localmente, clone o projeto e execute:
 
 ```console
 $ npm install && npm run dev
