@@ -86,7 +86,7 @@ const ReleaseCard = ({ release }: ReleaseCardProps) => {
     .map((x) => x.name)
     .join(', ');
 
-  const linkSerie = `/link/${release.id_serie}`;
+  const linkSerie = `/manga/${release.id_serie}`;
 
   return (
     <li className='relative sm:flex sm:h-48 overflow-hidden bg-light dark:bg-dark border border-light-b dark:border-dark-b rounded shadow-lg'>
