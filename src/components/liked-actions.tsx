@@ -3,11 +3,11 @@ import { type Liked as LikedType, useLiked } from '@/lib/liked';
 import { DownloadCloud, Loader2, Save } from 'lucide-react';
 import { useState } from 'react';
 
-interface LikedActions {
+interface LikedActionsProps {
   userUid: string;
 }
 
-export const LikedActions = ({ userUid }: LikedActions) => {
+export const LikedActions = ({ userUid }: LikedActionsProps) => {
   const { liked, set } = useLiked();
 
   const [isLoading, setLoading] = useState(false);

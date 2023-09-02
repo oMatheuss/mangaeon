@@ -25,7 +25,7 @@ export default function Leitor({ params }: { params: { id: string } }) {
 
   useEffect(() => {
     add(idChapter);
-  }, []);
+  }, [add, idChapter]);
 
   const images = imagesQuery.data?.images ?? [];
 
