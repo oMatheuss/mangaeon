@@ -5,9 +5,10 @@ import { SearchBar } from '@/components/search-bar';
 import { toErrorReponse } from '@/lib/utils';
 
 import type { FeaturedResponse } from '@/types/featured';
-import { MostReadResponse } from '@/types/most-read';
+import type { MostReadResponse } from '@/types/most-read';
 
 const ONE_DAY = 86400;
+export const preferredRegion = 'gru1';
 
 const fetchFeatured = async (): Promise<FeaturedResponse> => {
   const res = await fetch(
