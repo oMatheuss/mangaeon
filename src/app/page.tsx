@@ -17,18 +17,20 @@ const fetchFeatured = async (): Promise<FeaturedResponse> => {
       next: { revalidate: ONE_DAY },
     }
   );
-  if (!res.ok) throw toErrorReponse(res);
+  if (res.status === 403) return { _isLoggedIn: false, featured: [] };
+  else if (!res.ok) throw toErrorReponse(res);
   return (await res.json()) as FeaturedResponse;
 };
 
-const fetchMostRead = async (page: number) => {
+const fetchMostRead = async (page: number): Promise<MostReadResponse> => {
   const res = await fetch(
     `https://mangalivre.net/home/most_read?page=${page}`,
     {
       next: { revalidate: ONE_DAY },
     }
   );
-  if (!res.ok) throw toErrorReponse(res);
+  if (res.status === 403) return { _isLoggedIn: false, most_read: [] };
+  else if (!res.ok) throw toErrorReponse(res);
   return (await res.json()) as MostReadResponse;
 };
 
