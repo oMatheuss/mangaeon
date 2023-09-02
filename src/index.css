@@ -98,7 +98,7 @@
     z-index: -1;
 
     transition-property: -webkit-filter;
-    transition-property: filter;
+    transition-property: filter, background-color;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 500ms;
 
@@ -106,7 +106,7 @@
 
     background-color: var(--featured-color);
 
-    -webkit-filter: drop-shadow(0 0 80px var(--featured-color));
-    filter: drop-shadow(0 0 80px var(--featured-color));
+    -webkit-filter: opacity(0.5) drop-shadow(0 0 40px var(--featured-color));
+    filter: opacity(0.5) drop-shadow(0 0 40px var(--featured-color));
   }
 }
