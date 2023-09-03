@@ -85,7 +85,7 @@ const FeaturedCard = ({ item }: FeaturedCardProps) => {
         </Link>
         <span className='text-sm'>Capítulo {item.chapter.number}</span>
         <span className='text-sm'>
-          {new Date(item.date).toLocaleDateString()}
+          {new Date(item.date).toLocaleDateString('pt-BR')}
         </span>
       </div>
     </li>

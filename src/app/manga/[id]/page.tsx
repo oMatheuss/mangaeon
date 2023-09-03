@@ -1,19 +1,15 @@
-'use client';
-
-import { ViewedIcon } from '@/components/viewed-icon';
+import { ChapterList } from '@/components/chapter-list';
 import { toErrorReponse } from '@/lib/utils';
-import { Chapter, ChapterResponse } from '@/types/chapters';
-import { useInfiniteQuery } from '@tanstack/react-query';
-import { Loader2, PlusSquare } from 'lucide-react';
-import Link from 'next/link';
+import { ChapterResponse } from '@/types/chapters';
 
 const fetchChaptersList = async (id: string, page: number) => {
   const res = await fetch(
-    `/api/series/chapters_list.json?id_serie=${id}&page=${page}`,
+    `https://mangalivre.net/series/chapters_list.json?id_serie=${id}&page=${page}`,
     {
       headers: {
         'X-Requested-With': 'XMLHttpRequest',
       },
+      next: { revalidate: 3600 },
     }
   );
   if (!res.ok) throw toErrorReponse(res);
@@ -21,72 +17,8 @@ const fetchChaptersList = async (id: string, page: number) => {
   return { chapters: chps.chapters, page };
 };
 
-export default function Manga({ params }: { params: { id: string } }) {
-  const chaptersQuery = useInfiniteQuery({
-    queryKey: ['chapters', params.id],
-    queryFn: ({ pageParam = 1 }) => fetchChaptersList(params.id, pageParam),
-    getNextPageParam: (last) => (!last.chapters ? undefined : last.page + 1),
-    staleTime: 1000 * 60 * 60 * 3,
-  });
+export default async function Manga({ params }: { params: { id: string } }) {
+  const initial = await fetchChaptersList(params.id, 1);
 
-  const chapters = chaptersQuery.data;
-
-  return (
-    <>
-      <h2 className='font-bold text-xl mt-4 mb-2'>Capítulos</h2>
-      <ol className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-4'>
-        {chapters &&
-          chapters.pages
-            .filter((x) => Array.isArray(x.chapters))
-            .flatMap((x) => x.chapters as Chapter[])
-            .map((chap) => (
-              <ChapterCard key={chap.id_chapter} chapter={chap} />
-            ))}
-        {(chaptersQuery.hasNextPage || chaptersQuery.isLoading) && (
-          <li className='sm:col-span-2 lg:col-span-3 xl:col-span-4'>
-            <button
-              disabled={
-                chaptersQuery.isLoading || chaptersQuery.isFetchingNextPage
-              }
-              onClick={() => chaptersQuery.fetchNextPage()}
-              className='w-full flex flex-row justify-center md:justify-start border border-light-b dark:border-dark-b p-2 rounded-bl-lg rounded-tr-lg bg-light dark:bg-dark enabled:hover:bg-light-b dark:enabled:hover:bg-dark-b shadow-md'
-            >
-              {chaptersQuery.isLoading || chaptersQuery.isFetchingNextPage ? (
-                <Loader2 className='animate-spin' />
-              ) : (
-                <PlusSquare />
-              )}
-            </button>
-          </li>
-        )}
-      </ol>
-    </>
-  );
+  return <ChapterList id={params.id} initialData={initial} />;
 }
-
-interface ChapterCardProps {
-  chapter: Chapter;
-}
-
-const ChapterCard = ({ chapter }: ChapterCardProps) => {
-  const firstScan = Object.entries(chapter.releases)[0][1];
-  const link = `/ler/${firstScan.id_release}`;
-  return (
-    <li key={chapter.id_chapter}>
-      <Link
-        title={`Ler capítulo ${chapter.number}`}
-        href={link}
-        className='w-full flex flex-row justify-between items-center border border-slate-200 dark:border-gray-800 p-2 rounded-bl-lg rounded-tr-lg bg-light dark:bg-dark hover:bg-slate-200 dark:hover:bg-gray-800 shadow-md'
-      >
-        <div className='flex flex-col'>
-          <span>Capítulo {chapter.number}</span>
-          <span className='font-bold text-xs'>{chapter.name}</span>
-        </div>
-        <div className='flex flex-col items-end'>
-          <div className='proportional-nums'>{chapter.date}</div>
-          <ViewedIcon className='w-4 h-4' id_chapter={firstScan.id_release} />
-        </div>
-      </Link>
-    </li>
-  );
-};
