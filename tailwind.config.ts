@@ -8,7 +8,7 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        comfortaa: ['Comfortaa', ...fontFamily.sans],
+        comfortaa: ['var(--font-comfortaa)', ...fontFamily.sans],
       },
       colors: {
         light: {
