@@ -37,6 +37,10 @@ export const metadata: Metadata = {
     'mobile-web-app-capable': 'yes',
   },
   manifest: '/site.webmanifest',
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
+    { media: '(prefers-color-scheme: dark)', color: '#111827' },
+  ],
 };
 
 export default function RootLayout({ children }: RootLayoutProps) {
