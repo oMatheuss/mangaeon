@@ -10,9 +10,33 @@ interface RootLayoutProps {
 }
 
 export const metadata: Metadata = {
-  title: 'MangaLivre - Clone',
+  title: { default: 'MangaLivre', template: '%s - ML' },
   description: 'Leitor de Mangás',
-  icons: [{ rel: 'icon', type: 'image/svg+xml', url: '/logo.svg' }],
+  icons: [
+    { rel: 'apple-touch-icon', sizes: '180x180', url: '/apple-touch-icon.png' },
+    {
+      rel: 'icon',
+      type: 'image/png',
+      sizes: '32x32',
+      url: '/favicon-32x32.png',
+    },
+    {
+      rel: 'icon',
+      type: 'image/png',
+      sizes: '16x16',
+      url: '/favicon-16x16.png',
+    },
+  ],
+  appleWebApp: {
+    capable: true,
+    title: 'Mangá Livre',
+    statusBarStyle: 'black-translucent',
+  },
+  applicationName: 'Mangá Livre',
+  other: {
+    'mobile-web-app-capable': 'yes',
+  },
+  manifest: '/site.webmanifest',
 };
 
 export default function RootLayout({ children }: RootLayoutProps) {
