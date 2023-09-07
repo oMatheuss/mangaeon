@@ -124,7 +124,7 @@ export const Navbar = () => {
           <div className='hidden md:block h-10 w-[1px] mx-6 bg-light-b dark:bg-dark-b'></div>
           {user === null ? (
             <button
-              className='w-full flex items-center justify-end py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-dark-b dark:hover:text-white md:dark:hover:bg-transparent'
+              className='flex items-center justify-end py-2 px-3 text-gray-900 rounded-lg hover:bg-light-b focus:outline-none focus:ring-2 focus:ring-light-b dark:text-gray-400 dark:hover:bg-dark-b dark:focus:ring-dark-b'
               onClick={signIn}
             >
               Login <LogIn className='ml-2' />
