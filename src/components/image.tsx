@@ -23,14 +23,18 @@ export const Image = ({ sources, fallback, ...props }: ImageProps) => {
 
   if (isErrored) return fallback;
 
+  const arr = [...sources[imageGroup]];
+  const last = arr.pop()!;
+
   return (
     <picture>
-      {sources[imageGroup].map((v, i) => (
+      {arr.map((v, i) => (
         <source key={i} srcSet={v.src} type={v.type} />
       ))}
       <img
         {...props}
-        src={sources[imageGroup][sources.length - 1].src}
+        key={`${last.src}/${imageGroup}`}
+        src={last.src}
         onError={handleError}
       />
     </picture>
