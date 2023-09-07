@@ -7,6 +7,9 @@ const config: Config = {
   darkMode: 'media',
   theme: {
     extend: {
+      screens: {
+        pwa: { raw: '(display-mode: standalone)' },
+      },
       fontFamily: {
         comfortaa: ['var(--font-comfortaa)', ...fontFamily.sans],
       },
