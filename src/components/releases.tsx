@@ -89,7 +89,7 @@ const ReleaseCard = ({ release }: ReleaseCardProps) => {
   const linkSerie = `/manga/${release.id_serie}`;
 
   return (
-    <li className='relative sm:flex sm:h-48 overflow-hidden bg-light dark:bg-dark border border-light-b dark:border-dark-b rounded shadow-lg'>
+    <li className='relative sm:flex sm:h-48 overflow-hidden bg-light dark:bg-dark border border-light-b dark:border-dark-b rounded-lg shadow-lg'>
       <StarButton
         serie={{
           id: release.id_serie,
@@ -129,7 +129,7 @@ const ReleaseCard = ({ release }: ReleaseCardProps) => {
             {release.name}
           </Link>
         </h3>
-        <h4 className='font-bold text-opacity-75 text-slate-900 dark:text-slate-400 text-sm truncate'>
+        <h4 className='font-bold text-opacity-75 text-slate-900 dark:text-slate-400 text-sm line-clamp-2'>
           {scans}
         </h4>
         <nav className='mt-auto inline-flex flex-wrap h-[2.25rem] overflow-hidden text-sm font-semibold text-gray-700'>
