@@ -1,14 +1,28 @@
+'use client';
+
 import { CornerUpRight, Search } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 interface SearchBarProps {
   defaultValue?: string;
 }
 
 export const SearchBar = ({ defaultValue }: SearchBarProps) => {
+  const router = useRouter();
+
+  const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const searchParams = new URLSearchParams();
+    searchParams.set('q', formData.get('q') as string);
+    router.push('/pesquisa?' + searchParams.toString());
+  };
+
   return (
     <form
       method='GET'
       action='/pesquisa'
+      onSubmit={handleSearch}
       className='w-full flex flex-row my-2 group border-light-b dark:border-dark-b rounded shadow'
     >
       <div className='w-full relative border-inherit'>
