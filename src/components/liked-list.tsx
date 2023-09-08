@@ -61,8 +61,8 @@ const LikedCard = ({ liked }: LikedCardProps) => {
           src={liked.image}
           alt={`Imagem de capa de "${liked.name}"`}
         />
-        <div className='w-full h-full p-4 overflow-scroll'>
-          <h3 className='font-semibold text-clip'>{liked.name}</h3>
+        <div className='w-full h-full p-4'>
+          <h3 className='font-semibold line-clamp-4'>{liked.name}</h3>
         </div>
       </Link>
     </div>
