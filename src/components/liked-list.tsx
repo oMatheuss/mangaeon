@@ -4,7 +4,27 @@ import { Frown, StarOff } from 'lucide-react';
 import Link from 'next/link';
 
 export const LikedList = () => {
-  const { liked } = useLiked();
+  const { liked, del, add } = useLiked();
+  const [user] = useUser();
+
+  const handleDelete = async (id: number) => {
+    const target = { ...liked.find((x) => x.id === id)! };
+    del(target.id); // optimistic delete
+
+    if (user !== null) {
+      const { db, doc, deleteDoc } = await import('@/lib/firestore');
+
+      const docRef = doc(db, 'users', user.uid, 'liked', target.id.toString());
+
+      deleteDoc(docRef).catch(() => {
+        add(target); // rollback optimistic delete
+        alert(
+          'Ops! Ocorreu um erro ao excluir da nuvem. Tente novamente mais tarde.'
+        );
+      });
+    }
+  };
+
   return (
     <>
       {liked.length === 0 && (
@@ -14,7 +34,7 @@ export const LikedList = () => {
       )}
       <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-4'>
         {liked.map((x) => (
-          <LikedCard key={x.id} liked={x} />
+          <LikedCard key={x.id} liked={x} onDelete={handleDelete} />
         ))}
       </div>
     </>
@@ -23,29 +43,11 @@ export const LikedList = () => {
 
 interface LikedCardProps {
   liked: Liked;
+  onDelete: (id: number) => void;
 }
 
-const LikedCard = ({ liked }: LikedCardProps) => {
-  const { del, add } = useLiked();
-  const [user] = useUser();
-
-  const handleDelete = async () => {
-    const oldLiked = { ...liked };
-    del(oldLiked.id); // optimistic delete
-
-    if (user !== null) {
-      const { db, doc, deleteDoc } = await import('@/lib/firestore');
-
-      const docRef = doc(db, 'users', user.uid, 'liked', liked.id.toString());
-
-      deleteDoc(docRef).catch(() => {
-        add(oldLiked); // rollback optimistic delete
-        alert(
-          'Ops! Ocorreu um erro ao excluir da nuvem. Tente novamente mais tarde.'
-        );
-      });
-    }
-  };
+const LikedCard = ({ liked, onDelete }: LikedCardProps) => {
+  const handleDelete = () => onDelete(liked.id);
   return (
     <div className='relative w-full border border-light-b dark:border-dark-b rounded-bl-lg rounded-tr-lg bg-light dark:bg-dark shadow-md hover:bg-light-b dark:hover:bg-dark-b'>
       <button
