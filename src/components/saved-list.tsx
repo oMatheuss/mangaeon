@@ -4,8 +4,8 @@ import { useEffect, useMemo, useState } from 'react';
 import { SecondaryAlert } from './alert';
 import { useOfflineApi } from './offline-api-context';
 import { SavedChapter } from '@/types/saved-chapter';
-import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
+import { OfflineChaptersDialog } from './offline-chapters-dialog';
 
 export const SavedList = () => {
   const offlineApi = useOfflineApi();
@@ -32,6 +32,14 @@ export const SavedList = () => {
     [chapterList]
   );
 
+  const [openDialog, setOpenDialog] = useState(false);
+  const [targetChapters, setTargetChapters] = useState<SavedChapter[]>();
+
+  const handleOpenModal = (idx: number) => {
+    setOpenDialog(true);
+    setTargetChapters(groupedBy[idx].chapters);
+  };
+
   if (onLoading) return 'Loading...';
 
   return (
@@ -40,7 +48,7 @@ export const SavedList = () => {
         <SecondaryAlert text='Nenhuma obra foi salva ainda.' />
       )}
       <ul className='divide-y divide-gray-200 dark:divide-gray-700'>
-        {groupedBy.map((chapters) => (
+        {groupedBy.map((chapters, idx) => (
           <li key={chapters.mangaId} className='py-3 sm:py-4'>
             <div className='flex items-center space-x-4'>
               <div className='flex-1 min-w-0'>
@@ -51,18 +59,23 @@ export const SavedList = () => {
                   {chapters.chapters.length} capítulos salvos
                 </p>
               </div>
-              <Link
-                href={`/manga/${chapters.mangaId}`}
-                scroll={false}
-                aria-label={`Ver capítulos do manga ${chapters.chapters[0].name}`}
+              <button
+                onClick={() => handleOpenModal(idx)}
+                aria-label={`Ver capítulos do mangá ${chapters.chapters[0].name}`}
                 className='w-8 h-8 inline-flex items-center justify-center text-base text-gray-900 rounded-full hover:bg-light-b focus:outline-none focus:ring-2 focus:ring-light-b dark:text-gray-400 dark:hover:bg-dark-b dark:focus:ring-dark-b'
               >
                 <ArrowRight className='w-6 h-6' />
-              </Link>
+              </button>
             </div>
           </li>
         ))}
       </ul>
+
+      <OfflineChaptersDialog
+        chapterList={targetChapters || []}
+        open={openDialog}
+        onOpenChange={setOpenDialog}
+      />
     </>
   );
 };

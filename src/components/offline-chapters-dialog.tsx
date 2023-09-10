@@ -1,29 +1,23 @@
 'use client';
 
-import { useOfflineApi } from '@/components/offline-api-context';
 import type { SavedChapter } from '@/types/saved-chapter';
-import { useEffect, useState } from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
 import { ArrowRight, XIcon } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
-export default function MangaModal({ params }: { params: { id: string } }) {
-  const router = useRouter();
-  const offlineApi = useOfflineApi();
-  const [chapterList, setChapterList] = useState<SavedChapter[]>([]);
-  //const [onLoading, setLoading] = useState(true);
+interface MangaModalProps {
+  chapterList: SavedChapter[];
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}
 
-  useEffect(() => {
-    const id = parseInt(params.id);
-    offlineApi.getChapters().then((val) => {
-      setChapterList(val.filter((x) => x.mangaId === id));
-    });
-    //.finally(() => setLoading(false));
-  }, [offlineApi]);
-
+export const OfflineChaptersDialog = ({
+  chapterList,
+  onOpenChange,
+  open,
+}: MangaModalProps) => {
   return (
-    <Dialog.Root open={true} onOpenChange={(open) => !open && router.back()}>
+    <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Portal>
         <Dialog.Overlay className='z-20 bg-black/30 data-[state=open]:animate-overlayShow fixed inset-0' />
         <Dialog.Content className='z-30 data-[state=open]:animate-contentShow fixed top-[50%] left-[50%] max-h-[85vh] w-[90vw] max-w-[450px] translate-x-[-50%] translate-y-[-50%] rounded-lg bg-light dark:bg-dark p-[25px] shadow-lg focus:outline-none'>
@@ -70,4 +64,4 @@ export default function MangaModal({ params }: { params: { id: string } }) {
       </Dialog.Portal>
     </Dialog.Root>
   );
-}
+};
