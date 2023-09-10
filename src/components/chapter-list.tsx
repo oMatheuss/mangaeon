@@ -4,8 +4,9 @@ import { ViewedIcon } from '@/components/viewed-icon';
 import { toErrorReponse } from '@/lib/utils';
 import { Chapter, ChapterResponse } from '@/types/chapters';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { Loader2, PlusSquare } from 'lucide-react';
+import { HardDriveDownload, Loader2, PlusSquare } from 'lucide-react';
 import Link from 'next/link';
+import { useOfflineApi } from './offline-api-context';
 
 const fetchChaptersList = async (id: string, page: number) => {
   const res = await fetch(
@@ -38,6 +39,24 @@ export const ChapterList = ({ id, initialData }: ChapterListProps) => {
     staleTime: 1000 * 60 * 60 * 3,
   });
 
+  const offlineApi = useOfflineApi();
+
+  const handleDownload = (chapter: Chapter) => {
+    offlineApi
+      .putChapter(
+        {
+          chapter: chapter.number,
+          chapterId: chapter.id_chapter,
+          downloaded: false,
+          link: '',
+          mangaId: chapter.id_serie,
+          name: chapter.name,
+        },
+        []
+      )
+      .then(() => console.log('here'));
+  };
+
   const chapters = chaptersQuery.data;
 
   return (
@@ -49,7 +68,11 @@ export const ChapterList = ({ id, initialData }: ChapterListProps) => {
             .filter((x) => Array.isArray(x.chapters))
             .flatMap((x) => x.chapters as Chapter[])
             .map((chap) => (
-              <ChapterCard key={chap.id_chapter} chapter={chap} />
+              <ChapterCard
+                key={chap.id_chapter}
+                chapter={chap}
+                onDownload={handleDownload}
+              />
             ))}
         {(chaptersQuery.hasNextPage || chaptersQuery.isLoading) && (
           <li className='sm:col-span-2 lg:col-span-3 xl:col-span-4'>
@@ -75,27 +98,41 @@ export const ChapterList = ({ id, initialData }: ChapterListProps) => {
 
 interface ChapterCardProps {
   chapter: Chapter;
+  onDownload: (chapter: Chapter) => void;
 }
 
-const ChapterCard = ({ chapter }: ChapterCardProps) => {
+const ChapterCard = ({ chapter, onDownload }: ChapterCardProps) => {
   const firstScan = Object.entries(chapter.releases)[0][1];
   const link = `/ler/${firstScan.id_release}`;
+
+  const download = () => onDownload(chapter);
+
   return (
-    <li key={chapter.id_chapter}>
-      <Link
-        title={`Ler capítulo ${chapter.number}`}
-        href={link}
-        className='w-full flex flex-row justify-between items-center border border-slate-200 dark:border-gray-800 p-2 rounded-bl-lg rounded-tr-lg bg-light dark:bg-dark hover:bg-slate-200 dark:hover:bg-gray-800 shadow-md'
-      >
-        <div className='flex flex-col'>
-          <span>Capítulo {chapter.number}</span>
-          <span className='font-bold text-xs'>{chapter.name}</span>
-        </div>
-        <div className='flex flex-col items-end'>
-          <div className='proportional-nums'>{chapter.date}</div>
+    <li className='w-full flex flex-row justify-between items-center border border-slate-200 dark:border-gray-800 p-2 rounded-bl-lg rounded-tr-lg bg-light dark:bg-dark shadow-md'>
+      <div className='flex flex-col'>
+        <Link
+          title={`Ler capítulo ${chapter.number}`}
+          href={link}
+          className='hover:underline'
+        >
+          Capítulo {chapter.number}
+        </Link>
+        <span className='font-bold text-xs opacity-75'>{chapter.name}</span>
+      </div>
+      <div className='flex flex-col items-end'>
+        <div className='proportional-nums'>{chapter.date}</div>
+        <div className='flex flex-row space-x-3 items-center'>
           <ViewedIcon className='w-4 h-4' id_chapter={firstScan.id_release} />
+          <button
+            onClick={download}
+            aria-label='download'
+            aria-description={`Fazer download do capítulo ${chapter.number}`}
+            className=''
+          >
+            <HardDriveDownload className='w-4 h-4' />
+          </button>
         </div>
-      </Link>
+      </div>
     </li>
   );
 };

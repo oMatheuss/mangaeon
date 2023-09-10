@@ -114,6 +114,7 @@ const MosteReadSkeleton = ({ isLoading, onClick }: MosteReadSkeletonProps) => {
   return (
     <li className='group relative overflow-hidden shadow-lg rounded-lg border border-light-b dark:border-dark-b cursor-pointer'>
       <button
+        aria-label='Carregar mais'
         onClick={onClick}
         className='flex justify-center items-center w-32 h-64 bg-slate-300 dark:bg-slate-700 group-hover:bg-opacity-30'
       >
