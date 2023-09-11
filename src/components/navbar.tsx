@@ -9,7 +9,6 @@ import {
   LogIn,
   LogOut,
   User,
-  WifiOff,
 } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
@@ -19,7 +18,6 @@ import { useRouter } from 'next/navigation';
 
 const links = [
   { icon: Home, text: 'Home', to: '/' },
-  { icon: WifiOff, text: 'Offline', to: '/offline' },
   { icon: Heart, text: 'Favoritos', to: '/liked' },
 ];
 

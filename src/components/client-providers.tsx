@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Provider as JotaiProvider } from 'jotai';
-import { OfflineApiProvider } from './offline-api-context';
 
 export const ClientProviders = ({
   children,
@@ -14,7 +13,7 @@ export const ClientProviders = ({
   return (
     <QueryClientProvider client={client}>
       <JotaiProvider>
-        <OfflineApiProvider>{children}</OfflineApiProvider>
+        {children}
       </JotaiProvider>
     </QueryClientProvider>
   );
