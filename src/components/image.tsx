@@ -12,7 +12,7 @@ interface ImageProps
   fallback: React.ReactNode;
 }
 
-export const Image = ({ sources, fallback, ...props }: ImageProps) => {
+export const Image = ({ sources, fallback, alt, ...props }: ImageProps) => {
   const [imageGroup, setImageGroup] = useState(0);
   const [isErrored, setIsErrored] = useState(false);
   const handleError = () => {
@@ -35,6 +35,7 @@ export const Image = ({ sources, fallback, ...props }: ImageProps) => {
         {...props}
         key={`${last.src}/${imageGroup}`}
         src={last.src}
+        alt={alt || ''}
         onError={handleError}
       />
     </picture>
