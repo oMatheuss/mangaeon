@@ -7,7 +7,7 @@ import { toErrorReponse } from '@/lib/utils';
 import type { FeaturedResponse } from '@/types/featured';
 import type { MostReadResponse } from '@/types/most-read';
 
-export const revalidate = 86400;
+export const revalidate = 21600;
 
 const fetchFeatured = async (): Promise<FeaturedResponse> => {
   const res = await fetch('https://mangalivre.net/home/getFeaturedSeries.json');
