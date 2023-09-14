@@ -2,6 +2,8 @@ import { ChapterList } from '@/components/chapter-list';
 import { toErrorReponse } from '@/lib/utils';
 import { ChapterResponse } from '@/types/chapters';
 
+export const revalidate = 3600;
+
 const fetchChaptersList = async (id: string, page: number) => {
   const res = await fetch(
     `https://mangalivre.net/series/chapters_list.json?id_serie=${id}&page=${page}`,
@@ -9,7 +11,6 @@ const fetchChaptersList = async (id: string, page: number) => {
       headers: {
         'X-Requested-With': 'XMLHttpRequest',
       },
-      next: { revalidate: 3600 },
     }
   );
   if (!res.ok) throw toErrorReponse(res);

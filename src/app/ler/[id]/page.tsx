@@ -3,10 +3,10 @@ import { CommentSection } from '@/components/comment-section';
 import { Paginas } from '@/components/paginas';
 import { ImagesResponse } from '@/types/images';
 
+export const revalidate = 3600;
+
 const fetchImagesLinks = async (id: string): Promise<ImagesResponse> => {
-  const res = await fetch(`https://mangalivre.net/leitor/pages/${id}.json`, {
-    next: { revalidate: 3600 },
-  });
+  const res = await fetch(`https://mangalivre.net/leitor/pages/${id}.json`);
   if (!res.ok) throw res;
   return (await res.json()) as ImagesResponse;
 };
