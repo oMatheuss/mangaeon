@@ -26,7 +26,7 @@ export const Select = ({
     <div className='relative h-full flex flex-row justify-between items-center group'>
       <select
         {...props}
-        className='bg-light dark:bg-dark border border-light-b dark:border-dark-b shadow-lg rounded py-1 ps-2 pe-9 overflow-hidden appearance-none focus:border-indigo-600 focus:outline outline-2 outline-indigo-600 -outline-offset-2 caret-indigo-600'
+        className='bg-base-300 border border-base-200 shadow-lg rounded py-1 ps-2 pe-9 overflow-hidden appearance-none focus:border-indigo-600 focus:outline outline-2 outline-indigo-600 -outline-offset-2 caret-indigo-600'
         value={value}
         onChange={handleOnChange}
       >

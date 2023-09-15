@@ -81,11 +81,11 @@ export const Navbar = () => {
   return (
     <nav
       ref={navRef}
-      className='sticky top-0 z-10 border-b border-light-b dark:border-dark-b bg-white/90 dark:bg-gray-900/95 transition-transform max-h-screen'
+      className='sticky top-0 z-10 bg-base-100/95 backdrop-blur shadow transition-transform max-h-screen'
     >
       <div className='max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto px-4 py-2'>
         <button
-          className='hidden pwa:inline-flex items-center w-10 h-10 justify-center rounded-lg hover:bg-light-b focus:outline-none focus:ring-2 focus:ring-light-b dark:text-gray-400 dark:hover:bg-dark-b dark:focus:ring-dark-b'
+          className='hidden pwa:inline-flex items-center w-10 h-10 justify-center rounded-lg hover:bg-base-content/10 focus:outline-none focus:ring-2'
           onClick={router.back}
         >
           <ArrowLeft className='w-8 h-8' />
@@ -96,21 +96,21 @@ export const Navbar = () => {
         <button
           onClick={toggleOpen}
           type='button'
-          className='inline-flex items-center w-10 h-10 justify-center rounded-lg md:hidden hover:bg-light-b focus:outline-none focus:ring-2 focus:ring-light-b dark:text-gray-400 dark:hover:bg-dark-b dark:focus:ring-dark-b'
+          className='inline-flex items-center w-10 h-10 justify-center rounded-lg md:hidden hover:bg-base-content/10 focus:outline-none focus:ring-2'
         >
           <span className='sr-only'>Abrir o menu</span>
           <AnimatedMenuIcon active={isOpen} className='w-8 h-8' />
         </button>
         <div
           aria-expanded={isOpen}
-          className='hidden aria-expanded:flex w-full md:flex md:w-auto flex-col md:flex-row p-4 md:p-0 mt-4 md:mt-0 border border-light-b rounded-lg bg-light dark:bg-dark md:border-0 md:bg-inherit shadow md:shadow-none md:dark:bg-inherit dark:border-dark-b'
+          className='hidden aria-expanded:flex w-full md:flex md:w-auto flex-col md:flex-row p-4 md:p-0 mt-4 md:mt-0 border border-base-content/10 rounded-lg bg-light dark:bg-dark md:border-0 md:bg-inherit shadow md:shadow-none md:dark:bg-inherit dark:border-dark-b'
         >
           <ul className='font-medium leading-none flex md:items-center flex-col space-y-2 md:space-y-0 md:flex-row md:space-x-8'>
             {links.map((l) => (
               <li key={l.to}>
                 <Link
                   href={l.to}
-                  className='flex items-center py-2 px-3 text-gray-900 rounded hover:bg-light-b md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-dark-b dark:hover:text-white md:dark:hover:bg-transparent'
+                  className='flex items-center py-2 px-3 rounded hover:bg-base-content/10 md:hover:bg-transparent md:border-0 md:hover:text-primary md:p-0'
                   aria-current='page'
                 >
                   <l.icon className='mr-2' />
@@ -119,11 +119,11 @@ export const Navbar = () => {
               </li>
             ))}
           </ul>
-          <hr className='md:hidden my-2 border-inherit' />
-          <div className='hidden md:block h-10 w-[1px] mx-6 bg-light-b dark:bg-dark-b'></div>
+          <hr className='md:hidden my-2 border-base-content/10' />
+          <div className='hidden md:block h-10 w-[1px] mx-6 bg-base-content/10'></div>
           {user === null ? (
             <button
-              className='flex items-center justify-end py-2 px-3 text-gray-900 rounded-lg hover:bg-light-b focus:outline-none focus:ring-2 focus:ring-light-b dark:text-gray-400 dark:hover:bg-dark-b dark:focus:ring-dark-b'
+              className='flex items-center justify-end py-2 px-3 rounded-lg hover:bg-base-content/10 focus:outline-none focus:ring-2'
               onClick={signIn}
             >
               Login <LogIn className='ml-2' />
@@ -144,7 +144,7 @@ export const Navbar = () => {
                 <div className='md:hidden'>{user?.displayName}</div>
               </div>
               <button
-                className='flex items-center justify-end py-2 px-3 text-gray-900 rounded-lg hover:bg-light-b focus:outline-none focus:ring-2 focus:ring-light-b dark:text-gray-400 dark:hover:bg-dark-b dark:focus:ring-dark-b'
+                className='flex items-center justify-end py-2 px-3 rounded-lg hover:bg-base-content/10 focus:outline-none focus:ring-2'
                 onClick={signOut}
               >
                 Logout <LogOut className='ml-2' />

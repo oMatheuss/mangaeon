@@ -38,7 +38,7 @@ export const Releases = () => {
 
   return (
     <>
-      <div className='flex justify-between items-end pb-1 mt-4 mb-3 border-b border-light-b dark:border-dark-b'>
+      <div className='flex justify-between items-end pb-1 mt-4 mb-3 border-b border-base-content/10'>
         <h2 className='font-bold text-xl sm:text-2xl'>Lançamentos</h2>
         <Select
           value={releaseType}
@@ -60,7 +60,7 @@ export const Releases = () => {
         <button
           disabled={releasesQuery.isFetchingNextPage}
           onClick={() => releasesQuery.fetchNextPage()}
-          className='w-full flex flex-row justify-center md:justify-start border border-light-b dark:border-dark-b p-2 rounded bg-light dark:bg-dark enabled:hover:bg-light-b dark:enabled:hover:bg-dark-b shadow-lg'
+          className='w-full flex flex-row justify-center md:justify-start bg-base-300 border border-base-200 p-2 rounded enabled:hover:bg-base-300/50 shadow-lg'
         >
           {releasesQuery.isFetchingNextPage ? (
             <Loader2 className='animate-spin' />
@@ -93,7 +93,7 @@ const ReleaseCard = ({ release }: ReleaseCardProps) => {
   const linkSerie = `/manga/${release.id_serie}`;
 
   return (
-    <li className='relative sm:flex sm:h-48 overflow-hidden bg-light dark:bg-dark border border-light-b dark:border-dark-b rounded-lg shadow-lg'>
+    <li className='relative sm:flex sm:h-48 overflow-hidden bg-base-300 border border-base-200 rounded-lg shadow-lg'>
       <StarButton
         serie={{
           id: release.id_serie,
@@ -101,7 +101,7 @@ const ReleaseCard = ({ release }: ReleaseCardProps) => {
           name: release.name,
         }}
       />
-      <div className='min-w-fit bg-slate-300 dark:bg-slate-700/10'>
+      <div className='min-w-fit bg-base-200'>
         <Image
           sources={[
             [
@@ -140,7 +140,7 @@ const ReleaseCard = ({ release }: ReleaseCardProps) => {
           {release.chapters.map((chap) => (
             <Link
               key={chap.number}
-              className='mt-2 mr-2 px-2 py-1 bg-gray-200 rounded-tr-md rounded-b-md hover:bg-gray-300'
+              className='mt-2 mr-2 px-2 py-1 text-neutral-content bg-neutral rounded-tr-md rounded-b-md hover:bg-neutral-focus'
               href={`/ler/${chap.url.split('/')[4]}`}
             >
               {chap.number}

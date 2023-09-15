@@ -41,7 +41,7 @@ export const MostReadScroll = ({ initialMostRead }: MostReadScrollProps) => {
 
   return (
     <>
-      <div className='flex justify-between items-end mt-8 mb-4 border-b border-light-b dark:border-dark-b'>
+      <div className='flex justify-between items-end mt-8 mb-4 border-b border-base-content/10'>
         <h2 className='font-bold text-xl sm:text-2xl'>Mais Lidos</h2>
       </div>
       <ul className='w-full pb-4 overflow-x-auto grid grid-flow-col auto-cols-max gap-x-3'>
@@ -68,7 +68,7 @@ interface MostReadCardProps {
 const MostReadCard = ({ item }: MostReadCardProps) => {
   const link = `/manga/${item.id_serie}`;
   return (
-    <li className='relative flex flex-col items-center overflow-hidden shadow-md bg-slate-300 dark:bg-slate-700/10 rounded-lg border border-light-b dark:border-dark-b'>
+    <li className='relative flex flex-col items-center overflow-hidden shadow-md bg-base-300 rounded-lg border border-base-200'>
       <Link href={link}>
         <div className='min-w-fit overflow-hidden dark:shadow-dark-b shadow-md'>
           <Image
@@ -112,16 +112,16 @@ interface MosteReadSkeletonProps {
 
 const MosteReadSkeleton = ({ isLoading, onClick }: MosteReadSkeletonProps) => {
   return (
-    <li className='group relative overflow-hidden shadow-lg rounded-lg border border-light-b dark:border-dark-b cursor-pointer'>
+    <li className='group relative overflow-hidden shadow-lg rounded-lg border border-base-200 cursor-pointer'>
       <button
         aria-label='Carregar mais'
         onClick={onClick}
-        className='flex justify-center items-center w-32 h-64 bg-slate-300 dark:bg-slate-700 group-hover:bg-opacity-30'
+        className='flex justify-center items-center w-32 h-64 group-hover:bg-opacity-80 bg-base-300'
       >
         {isLoading ? (
           <Loader2 className='h-10 w-10 animate-spin' />
         ) : (
-          <Plus className='h-10 w-10 rounded-full shadow-xl group-hover:bg-light-b dark:group-hover:bg-dark-b transition-transform group-hover:rotate-90' />
+          <Plus className='h-10 w-10 rounded-full shadow-xl transition-transform group-hover:rotate-90' />
         )}
       </button>
     </li>

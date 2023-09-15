@@ -48,7 +48,7 @@ export const CommentSection = ({ idChapter }: CommentSectionProps) => {
 
   return (
     <>
-      <div className='w-full flex justify-between items-end pb-1 my-4 border-b border-light-b dark:border-dark-b'>
+      <div className='w-full flex justify-between items-end pb-1 my-4 border-b border-base-content/10'>
         <h2 className='font-bold text-xl sm:text-2xl'>Comentários</h2>
       </div>
       {user === null ? (
@@ -100,19 +100,17 @@ const CommentCard = ({
   };
 
   return (
-    <div className='w-full border-b border-light-b dark:border-dark-b'>
+    <div className='w-full border-b border-base-content/10'>
       <div className='flex flex-row items-center'>
         <Avatar.Root className='mr-4 inline-flex h-10 w-10 select-none items-center justify-center rounded-full overflow-hidden align-middle'>
-          <Avatar.Fallback className='text-light dark:text-dark leading-1 flex h-full w-full items-center justify-center bg-dark-b dark:bg-light-b text-sm font-medium'>
+          <Avatar.Fallback className='leading-1 flex h-full w-full items-center justify-center bg-base-200 text-sm font-medium'>
             {comment.username[0]}
           </Avatar.Fallback>
         </Avatar.Root>
         <span className='font-bold text-md me-3'>{comment.username}</span>
       </div>
       <div className='ml-12 m-3'>
-        <div className='mb-3 font-semibold text-gray-600 dark:text-gray-500'>
-          {comment.message}
-        </div>
+        <div className='mb-3 font-semibold'>{comment.message}</div>
         <div className='w-full flex flex-row justify-between items-center'>
           <div className='text-sm tabular-nums'>
             {comment.time.toDate().toLocaleDateString()}
@@ -121,7 +119,7 @@ const CommentCard = ({
           </div>
           {enableDelete && (
             <button
-              className='w-6 h-6 rounded hover:bg-light-b dark:hover:bg-dark-b'
+              className='w-6 h-6 rounded hover:bg-base-content/10'
               onClick={handleDelete}
             >
               <Trash2 className='w-5 h-5 m-auto text-red-500 dark:text-red-600' />
@@ -142,7 +140,7 @@ const CommentForm = ({ onSubmit, isLoading }: CommentFormProps) => {
   return (
     <form
       onSubmit={onSubmit}
-      className='w-full my-2 flex flex-col shadow-md overflow-hidden rounded-md border border-light-b dark:border-dark-b'
+      className='w-full my-2 flex flex-col shadow-md overflow-hidden rounded-md border border-base-200'
     >
       <textarea
         name='message'
@@ -150,13 +148,13 @@ const CommentForm = ({ onSubmit, isLoading }: CommentFormProps) => {
         maxLength={100}
         required
         placeholder='Adicione um comentário ao capítulo...'
-        className='p-2 resize-y rounded-t-md bg-light dark:bg-dark focus:outline focus:border-indigo-600 outline-2 outline-indigo-600 -outline-offset-2 caret-indigo-600'
+        className='p-2 resize-y rounded-t-md bg-base-300 focus:outline focus:border-primary outline-2 outline-primary -outline-offset-2 caret-primary'
       ></textarea>
       <div className='flex flex-row border-t border-inherit'>
         <button
           type='submit'
           disabled={isLoading}
-          className='m-2 px-2 py-1 text-light flex flex-row items-center rounded focus:outline focus:border-indigo-600 outline-2 outline-indigo-600 -outline-offset-2 bg-blue-400 dark:bg-blue-500 hover:bg-opacity-50'
+          className='m-2 px-2 py-1 text-primary-content flex flex-row items-center rounded focus:outline outline-offset-2 focus:border-primary outline-2 outline-primary bg-primary hover:bg-primary-focus'
         >
           <Send className='h-5 w-5 mr-2' /> Enviar
         </button>

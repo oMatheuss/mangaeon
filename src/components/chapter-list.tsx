@@ -49,10 +49,7 @@ export const ChapterList = ({ id, initialData }: ChapterListProps) => {
             .filter((x) => Array.isArray(x.chapters))
             .flatMap((x) => x.chapters as Chapter[])
             .map((chap) => (
-              <ChapterCard
-                key={chap.id_chapter}
-                chapter={chap}
-              />
+              <ChapterCard key={chap.id_chapter} chapter={chap} />
             ))}
         {(chaptersQuery.hasNextPage || chaptersQuery.isLoading) && (
           <li className='sm:col-span-2 lg:col-span-3 xl:col-span-4'>
@@ -61,7 +58,7 @@ export const ChapterList = ({ id, initialData }: ChapterListProps) => {
                 chaptersQuery.isLoading || chaptersQuery.isFetchingNextPage
               }
               onClick={() => chaptersQuery.fetchNextPage()}
-              className='w-full flex flex-row justify-center md:justify-start border border-light-b dark:border-dark-b p-2 rounded-bl-lg rounded-tr-lg bg-light dark:bg-dark enabled:hover:bg-light-b dark:enabled:hover:bg-dark-b shadow-md'
+              className='w-full flex flex-row justify-center md:justify-start border border-base-200 p-2 rounded-bl-lg rounded-tr-lg bg-base-300 enabled:hover:bg-base-300/50'
             >
               {chaptersQuery.isLoading || chaptersQuery.isFetchingNextPage ? (
                 <Loader2 className='animate-spin' />
@@ -85,7 +82,7 @@ const ChapterCard = ({ chapter }: ChapterCardProps) => {
   const link = `/ler/${firstScan.id_release}`;
 
   return (
-    <li className='w-full flex flex-row justify-between items-center border border-slate-200 dark:border-gray-800 p-2 rounded-bl-lg rounded-tr-lg bg-light dark:bg-dark shadow-md'>
+    <li className='w-full flex flex-row justify-between items-center border border-base-200 p-2 rounded-bl-lg rounded-tr-lg bg-base-300 shadow-md'>
       <div className='flex flex-col'>
         <Link
           title={`Ler capítulo ${chapter.number}`}

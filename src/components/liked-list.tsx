@@ -49,9 +49,9 @@ interface LikedCardProps {
 const LikedCard = ({ liked, onDelete }: LikedCardProps) => {
   const handleDelete = () => onDelete(liked.id);
   return (
-    <div className='relative w-full border border-light-b dark:border-dark-b rounded-bl-lg rounded-tr-lg bg-light dark:bg-dark shadow-md hover:bg-light-b dark:hover:bg-dark-b'>
+    <div className='relative w-full border border-base-200 rounded-bl-lg rounded-tr-lg bg-base-300 shadow-md hover:bg-base-300/50'>
       <button
-        className='absolute top-0 right-0 inline-flex items-center justify-center w-10 h-10 text-dark-b dark:text-light-b rounded-br'
+        className='absolute top-0 right-0 inline-flex items-center justify-center w-10 h-10 rounded-br'
         onClick={handleDelete}
       >
         <span className='sr-only'>Excluir</span>
