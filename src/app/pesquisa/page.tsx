@@ -102,7 +102,10 @@ export default function Search() {
               </div>
               <div className='inline-flex space-x-2 h-6 overflow-y-hidden flex-wrap'>
                 {val.categories.map((x) => (
-                  <span className='text-xs whitespace-nowrap p-1 rounded bg-neutral text-neutral-content max-w-fit'>
+                  <span
+                    key={x.id_category}
+                    className='text-xs whitespace-nowrap p-1 rounded bg-neutral text-neutral-content max-w-fit'
+                  >
                     {x.name}
                   </span>
                 ))}

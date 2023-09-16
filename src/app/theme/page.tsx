@@ -44,6 +44,7 @@ export default function Theme() {
         {themes.map((theme) => {
           return (
             <ThemeButton
+              key={theme}
               theme={theme}
               data-theme={theme}
               className='flex border border-base-content/20 hover:outline focus:outline outline-base-content/40 -outline-offset-2 rounded shadow cursor-pointer'
