@@ -8,12 +8,13 @@ import {
   Home,
   LogIn,
   LogOut,
+  MenuIcon,
   User,
+  XIcon,
 } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import * as Avatar from '@radix-ui/react-avatar';
-import { AnimatedMenuIcon } from './animated-menu-icon';
 import { useRouter } from 'next/navigation';
 
 const links = [
@@ -96,10 +97,11 @@ export const Navbar = () => {
         <button
           onClick={toggleOpen}
           type='button'
-          className='inline-flex items-center w-10 h-10 justify-center rounded-lg md:hidden hover:bg-base-content/10 focus:outline-none focus:ring-2'
+          className='w-10 h-10 rounded-lg md:hidden hover:bg-base-content/10 focus:outline-none focus:ring-2 swap swap-flip'
         >
-          <span className='sr-only'>Abrir o menu</span>
-          <AnimatedMenuIcon active={isOpen} className='w-8 h-8' />
+          <input type='checkbox' checked={isOpen} readOnly />
+          <MenuIcon className='w-8 h-8 swap-off fill-current' />
+          <XIcon className='w-8 h-8 swap-on fill-current' />
         </button>
         <div
           aria-expanded={isOpen}
