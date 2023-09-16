@@ -55,7 +55,7 @@ export default function Search() {
         {series.map((val) => (
           <div
             key={val.id_serie}
-            className='relative overflow-hidden w-full h-36 md:h-48 flex flex-row bg-light dark:bg-dark border border-light-b dark:border-dark-b rounded shadow'
+            className='relative overflow-hidden w-full h-36 md:h-48 flex flex-row bg-base-200 border border-base-content/20 rounded shadow'
           >
             <StarButton
               serie={{
@@ -64,7 +64,7 @@ export default function Search() {
                 name: val.name,
               }}
             />
-            <div className='min-w-fit mr-2 bg-slate-300 dark:bg-slate-700/10'>
+            <div className='min-w-fit mr-2'>
               <Image
                 sources={[
                   [
@@ -86,7 +86,7 @@ export default function Search() {
                 loading='lazy'
               />
             </div>
-            <div className='p-2 overflow-auto flex flex-col justify-between leading-normal'>
+            <div className='w-full p-2 overflow-auto flex flex-col justify-between leading-normal'>
               <div>
                 <h2 className='font-bold text-lg line-clamp-3'>
                   <Link
@@ -96,12 +96,16 @@ export default function Search() {
                     {val.name}
                   </Link>
                 </h2>
-                <h3 className='font-bold text-xs text-gray-600 truncate'>
+                <h3 className='font-bold text-xs text-base-content/75 truncate'>
                   {val.author}; {val.artist}
                 </h3>
               </div>
-              <div className='text-xs truncate text-blue-400 dark:text-blue-300'>
-                {val.categories.map((x) => x.name).join(', ')}
+              <div className='inline-flex space-x-2 h-6 overflow-y-hidden flex-wrap'>
+                {val.categories.map((x) => (
+                  <span className='text-xs whitespace-nowrap p-1 rounded bg-neutral text-neutral-content max-w-fit'>
+                    {x.name}
+                  </span>
+                ))}
               </div>
             </div>
           </div>
