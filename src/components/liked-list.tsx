@@ -49,24 +49,33 @@ interface LikedCardProps {
 const LikedCard = ({ liked, onDelete }: LikedCardProps) => {
   const handleDelete = () => onDelete(liked.id);
   return (
-    <div className='relative w-full border border-base-content/20 rounded-bl-lg rounded-tr-lg bg-base-200 shadow-md hover:bg-base-200/50'>
-      <button
-        className='absolute top-0 right-0 inline-flex items-center justify-center w-10 h-10 rounded-br'
-        onClick={handleDelete}
+    <div className='relative h-36 flex items-center w-full border border-base-content/20 rounded-bl-lg rounded-tr-lg shadow-md overflow-hidden'>
+      <Link
+        className='group flex items-center bg-base-200 hover:bg-opacity-50 grow h-36'
+        href={`/manga/${liked.id}`}
       >
-        <span className='sr-only'>Excluir</span>
-        <StarOff />
-      </button>
-      <Link className='h-36 flex items-center' href={`/manga/${liked.id}`}>
-        <img
-          className='object-cover max-w-fit h-36 w-24 rounded-bl'
-          src={liked.image}
-          alt={`Imagem de capa de "${liked.name}"`}
-        />
-        <div className='w-full h-full p-4'>
-          <h3 className='font-semibold line-clamp-4'>{liked.name}</h3>
+        <div className='min-w-fit overflow-hidden'>
+          <img
+            className='transition-transform group-hover:scale-110 object-cover max-w-fit h-36 w-24'
+            src={liked.image}
+            alt={`Imagem de capa de "${liked.name}"`}
+          />
+        </div>
+        <div className='p-4'>
+          <h3 className='group-hover:underline font-semibold text-sm line-clamp-5'>
+            {liked.name}
+          </h3>
         </div>
       </Link>
+      <div className='flex h-full flex-row float-right'>
+        <button
+          className='p-1 m-2 text-warning transition-colors hover:bg-warning/75 hover:text-warning-content rounded-full'
+          onClick={handleDelete}
+        >
+          <span className='sr-only'>Excluir</span>
+          <StarOff className='h-5 w-5' />
+        </button>
+      </div>
     </div>
   );
 };
