@@ -140,7 +140,7 @@ const CommentForm = ({ onSubmit, isLoading }: CommentFormProps) => {
   return (
     <form
       onSubmit={onSubmit}
-      className='w-full my-2 flex flex-col shadow-md overflow-hidden rounded-md border border-base-200'
+      className='w-full my-2 flex flex-col shadow-md overflow-hidden rounded-md border border-base-content/20'
     >
       <textarea
         name='message'
@@ -148,7 +148,7 @@ const CommentForm = ({ onSubmit, isLoading }: CommentFormProps) => {
         maxLength={100}
         required
         placeholder='Adicione um comentário ao capítulo...'
-        className='p-2 resize-y rounded-t-md bg-base-300 focus:outline focus:border-primary outline-2 outline-primary -outline-offset-2 caret-primary'
+        className='p-2 resize-y rounded-t-md bg-base-200 focus:outline focus:border-primary outline-2 outline-primary -outline-offset-2 caret-primary'
       ></textarea>
       <div className='flex flex-row border-t border-inherit'>
         <button

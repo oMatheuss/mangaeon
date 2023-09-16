@@ -58,7 +58,7 @@ export const ChapterList = ({ id, initialData }: ChapterListProps) => {
                 chaptersQuery.isLoading || chaptersQuery.isFetchingNextPage
               }
               onClick={() => chaptersQuery.fetchNextPage()}
-              className='w-full flex flex-row justify-center md:justify-start border border-base-200 p-2 rounded-bl-lg rounded-tr-lg bg-base-300 enabled:hover:bg-base-300/50'
+              className='w-full flex flex-row justify-center md:justify-start border border-base-content/20 p-2 rounded-bl-lg rounded-tr-lg bg-base-200 enabled:hover:bg-base-200/50'
             >
               {chaptersQuery.isLoading || chaptersQuery.isFetchingNextPage ? (
                 <Loader2 className='animate-spin' />
@@ -82,7 +82,7 @@ const ChapterCard = ({ chapter }: ChapterCardProps) => {
   const link = `/ler/${firstScan.id_release}`;
 
   return (
-    <li className='w-full flex flex-row justify-between items-center border border-base-200 p-2 rounded-bl-lg rounded-tr-lg bg-base-300 shadow-md'>
+    <li className='w-full flex flex-row justify-between items-center border border-base-content/20 p-2 rounded-bl-lg rounded-tr-lg bg-base-200 shadow-md'>
       <div className='flex flex-col'>
         <Link
           title={`Ler capítulo ${chapter.number}`}

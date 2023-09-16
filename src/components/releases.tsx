@@ -38,7 +38,7 @@ export const Releases = () => {
 
   return (
     <>
-      <div className='flex justify-between items-end pb-1 mt-4 mb-3 border-b border-base-content/10'>
+      <div className='flex justify-between items-end pb-1 mt-4 mb-4 border-b border-base-content/10'>
         <h2 className='font-bold text-xl sm:text-2xl'>Lançamentos</h2>
         <Select
           value={releaseType}
@@ -60,7 +60,7 @@ export const Releases = () => {
         <button
           disabled={releasesQuery.isFetchingNextPage}
           onClick={() => releasesQuery.fetchNextPage()}
-          className='w-full flex flex-row justify-center md:justify-start bg-base-300 border border-base-200 p-2 rounded enabled:hover:bg-base-300/50 shadow-lg'
+          className='w-full flex flex-row justify-center md:justify-start bg-base-200 border border-base-content/20 p-2 rounded enabled:hover:bg-opacity-50 shadow-lg'
         >
           {releasesQuery.isFetchingNextPage ? (
             <Loader2 className='animate-spin' />
@@ -93,7 +93,7 @@ const ReleaseCard = ({ release }: ReleaseCardProps) => {
   const linkSerie = `/manga/${release.id_serie}`;
 
   return (
-    <li className='relative sm:flex sm:h-48 overflow-hidden bg-base-300 border border-base-200 rounded-lg shadow-lg'>
+    <li className='relative sm:flex sm:h-48 overflow-hidden bg-base-200 border border-base-content/20 rounded-lg shadow-lg'>
       <StarButton
         serie={{
           id: release.id_serie,
@@ -133,7 +133,7 @@ const ReleaseCard = ({ release }: ReleaseCardProps) => {
             {release.name}
           </Link>
         </h3>
-        <h4 className='font-bold text-opacity-75 text-slate-900 dark:text-slate-400 text-sm line-clamp-2'>
+        <h4 className='font-bold text-base-content/75 text-sm line-clamp-2'>
           {scans}
         </h4>
         <nav className='mt-auto inline-flex flex-wrap h-[2.25rem] overflow-hidden text-sm font-semibold text-gray-700'>

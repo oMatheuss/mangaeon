@@ -82,7 +82,7 @@ export const Navbar = () => {
   return (
     <nav
       ref={navRef}
-      className='sticky top-0 z-10 bg-base-100/95 backdrop-blur shadow transition-transform max-h-screen'
+      className='sticky top-0 z-10 bg-base-200/95 backdrop-blur shadow transition-transform max-h-screen'
     >
       <div className='max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto px-4 py-2'>
         <button
@@ -105,8 +105,9 @@ export const Navbar = () => {
         </button>
         <div
           aria-expanded={isOpen}
-          className='hidden aria-expanded:flex w-full md:flex md:w-auto flex-col md:flex-row p-4 md:p-0 mt-4 md:mt-0 border border-base-content/10 rounded-lg bg-light dark:bg-dark md:border-0 md:bg-inherit shadow md:shadow-none md:dark:bg-inherit dark:border-dark-b'
+          className='hidden aria-expanded:flex w-full md:flex md:w-auto flex-col md:flex-row mb-2 md:m-0'
         >
+          <hr className='md:hidden my-2 border-base-content/10' />
           <ul className='font-medium leading-none flex md:items-center flex-col space-y-2 md:space-y-0 md:flex-row md:space-x-8'>
             {links.map((l) => (
               <li key={l.to}>

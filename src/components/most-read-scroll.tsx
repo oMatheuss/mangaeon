@@ -68,7 +68,7 @@ interface MostReadCardProps {
 const MostReadCard = ({ item }: MostReadCardProps) => {
   const link = `/manga/${item.id_serie}`;
   return (
-    <li className='relative flex flex-col items-center overflow-hidden shadow-md bg-base-300 rounded-lg border border-base-200'>
+    <li className='relative flex flex-col items-center overflow-hidden shadow-md bg-base-200 rounded-lg border border-base-content/20'>
       <Link href={link}>
         <div className='min-w-fit overflow-hidden dark:shadow-dark-b shadow-md'>
           <Image
@@ -112,11 +112,11 @@ interface MosteReadSkeletonProps {
 
 const MosteReadSkeleton = ({ isLoading, onClick }: MosteReadSkeletonProps) => {
   return (
-    <li className='group relative overflow-hidden shadow-lg rounded-lg border border-base-200 cursor-pointer'>
+    <li className='group relative overflow-hidden shadow-lg rounded-lg border border-base-content/20 cursor-pointer'>
       <button
         aria-label='Carregar mais'
         onClick={onClick}
-        className='flex justify-center items-center w-32 h-64 group-hover:bg-opacity-80 bg-base-300'
+        className='flex justify-center items-center w-32 h-64 group-hover:bg-opacity-80 bg-base-200'
       >
         {isLoading ? (
           <Loader2 className='h-10 w-10 animate-spin' />

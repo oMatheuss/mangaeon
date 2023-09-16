@@ -43,7 +43,7 @@ export const FeaturedScroll = ({ featured }: FeaturedScrollProps) => {
     <section ref={wrapperRef} className='featured-effect'>
       <ul
         ref={containerRef}
-        className='w-full h-64 flex snap-x snap-mandatory overflow-x-auto bg-inherit rounded'
+        className='w-full h-64 flex snap-x snap-mandatory overflow-x-auto bg-inherit border border-base-content/20 rounded'
       >
         {featured?.map((val) => (
           <FeaturedCard key={val.id_chapter} item={val} />
