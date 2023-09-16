@@ -1,3 +1,4 @@
+import { FeaturedCard } from '@/components/featured-card';
 import { FeaturedScroll } from '@/components/featured-scroll';
 import { MostReadScroll } from '@/components/most-read-scroll';
 import { Releases } from '@/components/releases';
@@ -30,7 +31,11 @@ export default async function Home() {
   return (
     <div className='flex flex-col my-3'>
       <SearchBar />
-      <FeaturedScroll featured={featRes.featured} />
+      <FeaturedScroll>
+        {featRes.featured.map((featured) => (
+          <FeaturedCard key={featured.id_chapter} item={featured} />
+        ))}
+      </FeaturedScroll>
       <MostReadScroll initialMostRead={mostReadRes.most_read || []} />
       <Releases />
     </div>
