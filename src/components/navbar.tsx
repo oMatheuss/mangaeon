@@ -9,6 +9,7 @@ import {
   LogIn,
   LogOut,
   MenuIcon,
+  Palette,
   User,
   XIcon,
 } from 'lucide-react';
@@ -20,6 +21,7 @@ import { useRouter } from 'next/navigation';
 const links = [
   { icon: Home, text: 'Home', to: '/' },
   { icon: Heart, text: 'Favoritos', to: '/liked' },
+  { icon: Palette, text: 'Tema', to: '/theme' },
 ];
 
 export const Navbar = () => {
@@ -32,7 +34,6 @@ export const Navbar = () => {
 
   useEffect(() => {
     let lastPosition = window.scrollY;
-    const closedClass = '-translate-y-full';
 
     const handleScroll = () => {
       if (navRef.current == null) return;
@@ -43,9 +44,9 @@ export const Navbar = () => {
 
       if (scrollY > navbarMinOffset && deltaPosition > 0) {
         setOpen(false);
-        navRef.current.classList.add(closedClass);
+        navRef.current.style.setProperty('--nav-offset', '100%');
       } else if (deltaPosition < 0) {
-        navRef.current.classList.remove(closedClass);
+        navRef.current.style.setProperty('--nav-offset', '0%');
       }
 
       lastPosition = scrollY;
@@ -55,15 +56,6 @@ export const Navbar = () => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-
-    /**
-     * *** NOTE ***
-     * 'isOpen' is necessary on dependency array because it will cause react
-     * to call the cleanup function once the navbar is set open.
-     * The result is that the scroll caused by the navbar opening do not trigger
-     * the handleScroll function inside this effect.
-     * *** NOTE ***
-     */
   }, [isOpen]);
 
   const signIn = async () => {
@@ -79,61 +71,56 @@ export const Navbar = () => {
     await signOut(auth);
   };
 
+  const tabIndexMobile = isOpen ? 0 : -1;
+
   return (
     <nav
       ref={navRef}
-      className='sticky top-0 z-10 bg-base-200/95 backdrop-blur shadow transition-transform max-h-screen'
+      className='sticky left-0 right-0 top-0 z-10 transition-transform -translate-y-[var(--nav-offset)]'
     >
-      <div className='max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto px-4 py-2'>
-        <button
-          className='hidden pwa:inline-flex items-center w-10 h-10 justify-center rounded-lg hover:bg-base-content/10 focus:outline-none focus:ring-2'
-          onClick={router.back}
-        >
-          <ArrowLeft className='w-8 h-8' />
-        </button>
-        <Link href='/' className='flex items-center m-2'>
-          <BookOpen className='w-6 h-6 mr-2' /> MANGÁ LIVRE
-        </Link>
-        <button
-          onClick={toggleOpen}
-          type='button'
-          className='w-10 h-10 rounded-lg md:hidden hover:bg-base-content/10 focus:outline-none focus:ring-2 swap swap-flip'
-        >
-          <input type='checkbox' checked={isOpen} readOnly />
-          <MenuIcon className='w-8 h-8 swap-off fill-current' />
-          <XIcon className='w-8 h-8 swap-on fill-current' />
-        </button>
-        <div
-          aria-expanded={isOpen}
-          className='hidden aria-expanded:flex w-full md:flex md:w-auto flex-col md:flex-row mb-2 md:m-0'
-        >
-          <hr className='md:hidden my-2 border-base-content/10' />
-          <ul className='font-medium leading-none flex md:items-center flex-col space-y-2 md:space-y-0 md:flex-row md:space-x-8'>
-            {links.map((l) => (
-              <li key={l.to}>
-                <Link
-                  href={l.to}
-                  className='flex items-center py-2 px-3 rounded hover:bg-base-content/10 md:hover:bg-transparent md:border-0 md:hover:text-primary md:p-0'
-                  aria-current='page'
-                >
-                  <l.icon className='mr-2' />
-                  <span className='pt-1'>{l.text}</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-          <hr className='md:hidden my-2 border-base-content/10' />
-          <div className='hidden md:block h-10 w-[1px] mx-6 bg-base-content/10'></div>
+      <div className='relative w-full overflow-x-clip bg-base-200/90 backdrop-blur'>
+        <div className='max-w-screen-2xl flex items-center justify-between mx-auto p-3'>
+          <button
+            className='hidden pwa:inline-flex items-center w-10 h-10 justify-center rounded-lg hover:bg-base-content/10 focus:outline-none focus:ring-2'
+            onClick={router.back}
+          >
+            <ArrowLeft className='w-8 h-8' />
+          </button>
+
+          <Link href='/' className='flex items-center py-2 px-3'>
+            <BookOpen className='w-6 h-6 sm:mr-2' />
+            <span className='hidden sm:inline'>MANGÁ LIVRE</span>
+          </Link>
+
+          {/* Desktop */}
+          <div className='hidden md:flex'>
+            <ul className='flex flex-row space-x-8'>
+              {links.map((link) => {
+                return (
+                  <li key={link.to} className='inline-flex'>
+                    <Link
+                      href={link.to}
+                      className='inline-flex items-center hover:text-primary-focus'
+                    >
+                      <div className='font-bold pt-1'>{link.text}</div>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+
           {user === null ? (
             <button
-              className='flex items-center justify-end py-2 px-3 rounded-lg hover:bg-base-content/10 focus:outline-none focus:ring-2'
+              className='hidden md:flex items-center py-2 px-3 rounded-lg hover:bg-base-content/10 focus:outline-none focus:ring-2'
               onClick={signIn}
+              tabIndex={tabIndexMobile}
             >
               Login <LogIn className='ml-2' />
             </button>
           ) : (
-            <>
-              <div className='flex flex-row items-center space-x-3 m-3 md:m-0 md:mr-3'>
+            <div className='hidden md:inline-flex'>
+              <div className='flex flex-row items-center mr-3'>
                 <Avatar.Root>
                   <Avatar.Image
                     src={user.photoURL!}
@@ -144,16 +131,83 @@ export const Navbar = () => {
                     <User />
                   </Avatar.Fallback>
                 </Avatar.Root>
-                <div className='md:hidden'>{user?.displayName}</div>
               </div>
               <button
                 className='flex items-center justify-end py-2 px-3 rounded-lg hover:bg-base-content/10 focus:outline-none focus:ring-2'
                 onClick={signOut}
+                tabIndex={tabIndexMobile}
               >
                 Logout <LogOut className='ml-2' />
               </button>
-            </>
+            </div>
           )}
+
+          <button
+            onClick={toggleOpen}
+            type='button'
+            className='w-10 h-10 rounded-lg md:hidden hover:bg-base-content/10 focus:outline-none focus:ring-2 swap swap-flip'
+          >
+            <input type='checkbox' hidden checked={isOpen} readOnly />
+            <MenuIcon className='w-8 h-8 swap-off fill-current' />
+            <XIcon className='w-8 h-8 swap-on fill-current' />
+          </button>
+        </div>
+
+        {/* Mobile */}
+        <div
+          data-expanded={isOpen}
+          className='translate-x-full data-[expanded=true]:translate-x-0 md:hidden transition-transform flex absolute top-full w-full bg-base-200/90 backdrop-blur '
+        >
+          <div className='px-4 w-full flex-col mb-2'>
+            <hr className='mb-2 border-base-content/10' />
+            <ul className='font-medium leading-none flex flex-col space-y-2'>
+              {links.map((l) => (
+                <li key={l.to}>
+                  <Link
+                    href={l.to}
+                    className='flex items-center py-2 px-3 rounded hover:bg-base-content/10'
+                    tabIndex={tabIndexMobile}
+                  >
+                    <l.icon className='mr-2' />
+                    <span className='pt-1'>{l.text}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <hr className='my-2 border-base-content/10' />
+            {user === null ? (
+              <button
+                className='flex items-center w-full justify-end py-2 px-3 rounded-lg hover:bg-base-content/10 focus:outline-none focus:ring-2'
+                onClick={signIn}
+                tabIndex={tabIndexMobile}
+              >
+                Login <LogIn className='ml-2' />
+              </button>
+            ) : (
+              <>
+                <div className='flex flex-row items-center space-x-3 m-3'>
+                  <Avatar.Root>
+                    <Avatar.Image
+                      src={user.photoURL!}
+                      alt={user.displayName!}
+                      className='h-6 w-6 rounded-full outline outline-2 outline-offset-2 outline-current hover:outline-blue-700'
+                    />
+                    <Avatar.Fallback delayMs={600}>
+                      <User />
+                    </Avatar.Fallback>
+                  </Avatar.Root>
+                  <div>{user?.displayName}</div>
+                </div>
+                <button
+                  className='flex items-center w-full justify-end py-2 px-3 rounded-lg hover:bg-base-content/10 focus:outline-none focus:ring-2'
+                  onClick={signOut}
+                  tabIndex={tabIndexMobile}
+                >
+                  Logout <LogOut className='ml-2' />
+                </button>
+              </>
+            )}
+          </div>
         </div>
       </div>
     </nav>

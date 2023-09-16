@@ -121,7 +121,7 @@ const MosteReadSkeleton = ({ isLoading, onClick }: MosteReadSkeletonProps) => {
         {isLoading ? (
           <Loader2 className='h-10 w-10 animate-spin' />
         ) : (
-          <Plus className='h-10 w-10 rounded-full shadow-xl transition-transform group-hover:rotate-90' />
+          <Plus className='h-10 w-10 rounded-full transition-transform group-hover:rotate-90' />
         )}
       </button>
     </li>

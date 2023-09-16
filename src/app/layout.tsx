@@ -5,6 +5,7 @@ import { Comfortaa } from 'next/font/google';
 import { Footer } from '@/components/footer';
 import { Navbar } from '@/components/navbar';
 import { ClientProviders } from '@/components/client-providers';
+import { ThemeApplier } from '@/lib/theme';
 
 interface RootLayoutProps {
   children: React.ReactNode;
@@ -58,6 +59,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <html lang='pt-BR' className={comfortaa.variable}>
       <body>
         <ClientProviders>
+          <ThemeApplier />
           <Navbar />
           <main className='container px-3 sm:mx-auto'>{children}</main>
           <Footer />
