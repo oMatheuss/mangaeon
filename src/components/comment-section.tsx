@@ -70,7 +70,7 @@ export const CommentSection = ({ idChapter }: CommentSectionProps) => {
           ))
         ) : !showComments ? (
           <button
-            className='flex flex-row items-center p-2 rounded hover:bg-light-b dark:hover:bg-dark-b self-center'
+            className='flex flex-row items-center p-2 rounded hover:bg-base-content/20 self-center'
             onClick={handleShowComments}
           >
             <MessagesSquare className='w-7 h-7 m-auto mr-2 text-blue-500 dark:text-blue-600' />
