@@ -6,4 +6,7 @@ export default {
       { source: '/api/:path*', destination: 'https://mangalivre.net/:path*' },
     ];
   },
+  images: {
+    domains: ['uploads.mangadex.org'],
+  },
 };
