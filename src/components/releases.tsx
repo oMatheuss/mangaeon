@@ -100,8 +100,8 @@ const ReleaseCard = ({ release }: ReleaseCardProps) => {
             {release.title}
           </Link>
         </h3>
-        <h4 className='font-bold text-base-content/75 text-sm line-clamp-2'>
-          {release.date.toLocaleDateString('pt-BR')}
+        <h4 className='font-bold text-base-content/75 text-sm truncate my-1'>
+          {release.date.toLocaleString('pt-BR')}
         </h4>
         <div className='inline-flex space-x-2 h-6 overflow-y-hidden flex-wrap'>
           {release.tags.map((tag) => (

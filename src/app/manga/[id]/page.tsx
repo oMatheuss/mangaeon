@@ -1,25 +1,59 @@
+'use client';
+
 import { ChapterList } from '@/components/chapter-list';
-import { toErrorReponse } from '@/lib/client/utils';
-import { ChapterResponse } from '@/types/chapters';
+import { clientMangadex } from '@/lib/api/mangadex/client-api';
+import { useQuery } from '@tanstack/react-query';
+import { usePathname } from 'next/navigation';
 
-export const revalidate = 3600;
+export default function Manga() {
+  const pathname = usePathname();
+  const id = pathname.split('/').pop() ?? '';
 
-const fetchChaptersList = async (id: string, page: number) => {
-  const res = await fetch(
-    `https://mangalivre.net/series/chapters_list.json?id_serie=${id}&page=${page}`,
-    {
-      headers: {
-        'X-Requested-With': 'XMLHttpRequest',
-      },
-    }
+  const mangaQuery = useQuery({
+    queryKey: ['chapter', id],
+    queryFn: () => clientMangadex.manga!(id),
+    enabled: !!id,
+    staleTime: Infinity,
+    cacheTime: Infinity,
+  });
+
+  const manga = mangaQuery.data;
+
+  return (
+    <>
+      {manga && (
+        <div className='flex flex-col'>
+          <div className='relative items-center mt-6 border-separate'>
+            <img
+              className='float-none sm:float-left object-cover aspect-[3/4] h-64 rounded m-auto mb-6 sm:m-3'
+              src={manga.cover}
+              alt={`Imagem de capa de ${manga.title}`}
+            />
+            <div className='mb-3'>
+              <h1 className='sm:mt-3 text-5xl font-extrabold tracking-tight'>
+                {manga.title}
+              </h1>
+              <p className='font-bold text-base-content/70 ml-3 mb-3'>
+                {manga.author}, {manga.artist}
+              </p>
+              <p className='indent-4 md:indent-8 text-justify'>
+                {manga.description}
+              </p>
+            </div>
+          </div>
+          <div className='flex flex-row flex-wrap capitalize'>
+            {manga.tags.map((tag) => (
+              <span
+                key={tag}
+                className='mr-3 mb-3 text-xs break-keep p-2 rounded bg-neutral text-neutral-content max-w-fit'
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+          <ChapterList chapters={[]} />
+        </div>
+      )}
+    </>
   );
-  if (!res.ok) throw toErrorReponse(res);
-  const chps: ChapterResponse = await res.json();
-  return { chapters: chps.chapters, page };
-};
-
-export default async function Manga({ params }: { params: { id: string } }) {
-  const initial = await fetchChaptersList(params.id, 1);
-
-  return <ChapterList id={params.id} initialData={initial} />;
 }

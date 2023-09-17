@@ -2,13 +2,13 @@ import { useViewed } from '@/lib/client/viewed';
 import { BookOpenCheck, LucideProps } from 'lucide-react';
 
 interface ViewedIconProps extends LucideProps {
-  id_chapter: number;
+  chapterId: string;
 }
 
-export const ViewedIcon = ({ id_chapter, ...rest }: ViewedIconProps) => {
+export const ViewedIcon = ({ chapterId, ...rest }: ViewedIconProps) => {
   const { exist } = useViewed();
 
-  if (!exist(id_chapter)) {
+  if (!exist(chapterId)) {
     return null;
   }
 
