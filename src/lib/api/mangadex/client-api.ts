@@ -42,11 +42,17 @@ const extractReleases = async (data: Manga) => {
 
   const date = new Date(data.attributes.updatedAt);
 
+  const tags = data.attributes.tags
+    .filter((x) => x.type === 'tag')
+    .map((x) => x.attributes.name.en)
+    .filter(Boolean);
+
   return <Release>{
     id,
     title,
     cover,
     date,
+    tags,
   };
 };
 

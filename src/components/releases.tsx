@@ -2,10 +2,9 @@
 
 import type { Release } from '@/types/releases';
 import Link from 'next/link';
-import { Image } from '@/components/image';
 import { Select } from '@/components/select';
 import { StarButton } from '@/components/star-button';
-import { ImageOff, Loader2, PlusSquare } from 'lucide-react';
+import { Loader2, PlusSquare } from 'lucide-react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { clientMangadex } from '@/lib/api/mangadex/client-api';
@@ -22,7 +21,8 @@ export const Releases = () => {
       pageParam,
       releases: await clientMangadex.releases!(pageParam),
     }),
-    getNextPageParam: (last) => last.pageParam + 1,
+    getNextPageParam: (last) =>
+      !!last.releases ? last.pageParam + 1 : undefined,
     cacheTime: ONE_HOUR,
     staleTime: THIRTY_MIN,
   });
@@ -90,7 +90,7 @@ const ReleaseCard = ({ release }: ReleaseCardProps) => {
           loading='lazy'
         />
       </div>
-      <div className='flex flex-col overflow-hidden p-4'>
+      <div className='flex flex-col justify-between overflow-hidden p-4'>
         <h3 className='font-bold text-xl sm:max-h-24 max-w-fit line-clamp-3 tracking-tight'>
           <Link
             href={linkSerie}
@@ -103,6 +103,16 @@ const ReleaseCard = ({ release }: ReleaseCardProps) => {
         <h4 className='font-bold text-base-content/75 text-sm line-clamp-2'>
           {release.date.toLocaleDateString('pt-BR')}
         </h4>
+        <div className='inline-flex space-x-2 h-6 overflow-y-hidden flex-wrap'>
+          {release.tags.map((tag) => (
+            <span
+              key={tag}
+              className='text-xs whitespace-nowrap p-1 rounded bg-neutral text-neutral-content max-w-fit'
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
         {/* <nav className='mt-auto inline-flex flex-wrap h-[2.25rem] overflow-hidden text-sm font-semibold text-gray-700'>
           {release.chapters.map((chap) => (
             <Link

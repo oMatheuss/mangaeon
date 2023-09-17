@@ -3,4 +3,5 @@ export interface Release {
   id: string;
   title: string;
   cover: string;
+  tags: string[];
 }
