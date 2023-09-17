@@ -1,19 +1,17 @@
 import { BookOpen, Github, Mail } from 'lucide-react';
+import Link from 'next/link';
 
 export const Footer = () => {
   return (
     <footer className='container px-3 sm:mx-auto my-8'>
       <hr className='my-6 border-base-content/10 sm:mx-auto lg:my-4' />
       <div className='sm:flex sm:items-center sm:justify-between'>
-        <a
-          href='https://mangalivre.vercel.app/'
-          className='flex items-center mb-4 sm:mb-0'
-        >
+        <Link href='/' className='flex items-center mb-4 sm:mb-0'>
           <BookOpen className='h-8 w-8 mr-3 stroke-current' />
           <span className='self-center text-lg sm:text-2xl font-semibold'>
-            Mangá Livre
+            Mangá Éon
           </span>
-        </a>
+        </Link>
         <ul className='flex flex-wrap items-center text-sm font-medium mx-1 sm:mx-0'>
           <li>
             <a
@@ -39,7 +37,7 @@ export const Footer = () => {
           </li>
           <li>
             <a
-              href='https://github.com/oMatheuss/mangalivre'
+              href='https://github.com/oMatheuss/mangaeon'
               className='group mr-4 md:mr-6 flex items-center'
               target='_blank'
             >

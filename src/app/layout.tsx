@@ -12,7 +12,7 @@ interface RootLayoutProps {
 }
 
 export const metadata: Metadata = {
-  title: { default: 'MangaLivre', template: '%s - ML' },
+  title: { default: 'MangáÉon', template: '%s - ML' },
   description: 'Leitor de Mangás',
   icons: [
     { rel: 'apple-touch-icon', sizes: '180x180', url: '/apple-touch-icon.png' },
@@ -31,10 +31,10 @@ export const metadata: Metadata = {
   ],
   appleWebApp: {
     capable: true,
-    title: 'Mangá Livre',
+    title: 'Mangá Éon',
     statusBarStyle: 'black-translucent',
   },
-  applicationName: 'Mangá Livre',
+  applicationName: 'Mangá Éon',
   other: {
     'mobile-web-app-capable': 'yes',
   },

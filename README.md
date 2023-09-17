@@ -1,12 +1,10 @@
-# Mangá Livre
-
-Este repositório contém um clone para o site [Mangá Livre](https://mangalivre.net/).
+# Mangá Eon
 
 ## INFORMAÇÕES
 
-Uma versão funcionando deste projeto pode ser encontrado em https://mangalivre.vercel.app.
+Uma versão funcionando deste projeto pode ser encontrado em https://mangaeon.com.
 
-**DISCLAIMER:** As obras contidas na página são de autoria de terceiros, providas pela API do Mangá Livre.
+**DISCLAIMER:** As obras contidas na página são de autoria de terceiros.
 
 ## DESENVOLVIMENTO
 

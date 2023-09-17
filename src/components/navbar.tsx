@@ -89,7 +89,7 @@ export const Navbar = () => {
 
           <Link href='/' className='flex items-center py-2 px-3'>
             <BookOpen className='w-6 h-6 sm:mr-2' />
-            <span className='hidden sm:inline'>MANGÁ LIVRE</span>
+            <span className='hidden sm:inline'>MANGÁ ÉON</span>
           </Link>
 
           {/* Desktop */}
