@@ -3,7 +3,7 @@ import { FeaturedScroll } from '@/components/featured-scroll';
 import { MostReadScroll } from '@/components/most-read-scroll';
 import { Releases } from '@/components/releases';
 import { SearchBar } from '@/components/search-bar';
-import { toErrorReponse } from '@/lib/utils';
+import { toErrorReponse } from '@/lib/client/utils';
 
 import type { FeaturedResponse } from '@/types/featured';
 import type { MostReadResponse } from '@/types/most-read';

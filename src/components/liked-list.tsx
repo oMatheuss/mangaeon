@@ -1,5 +1,5 @@
-import { useLiked, Liked } from '@/lib/liked';
-import { useUser } from '@/lib/user';
+import { useLiked, Liked } from '@/lib/client/liked';
+import { useUser } from '@/lib/client/user';
 import { Frown, StarOff } from 'lucide-react';
 import Link from 'next/link';
 
@@ -12,7 +12,7 @@ export const LikedList = () => {
     del(target.id); // optimistic delete
 
     if (user !== null) {
-      const { db, doc, deleteDoc } = await import('@/lib/firestore');
+      const { db, doc, deleteDoc } = await import('@/lib/client/firestore');
 
       const docRef = doc(db, 'users', user.uid, 'liked', target.id.toString());
 

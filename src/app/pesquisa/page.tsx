@@ -3,7 +3,7 @@
 import { Image } from '@/components/image';
 import { SearchBar } from '@/components/search-bar';
 import { StarButton } from '@/components/star-button';
-import { toErrorReponse } from '@/lib/utils';
+import { toErrorReponse } from '@/lib/client/utils';
 import { SearchResponse } from '@/types/search';
 import { useQuery } from '@tanstack/react-query';
 import { ImageOff, Loader2, SearchX } from 'lucide-react';

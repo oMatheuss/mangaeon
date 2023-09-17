@@ -1,7 +1,11 @@
 'use client';
 
-import { deleteComment, listenComments, postComment } from '@/lib/comments';
-import { useUser } from '@/lib/user';
+import {
+  deleteComment,
+  listenComments,
+  postComment,
+} from '@/lib/client/comments';
+import { useUser } from '@/lib/client/user';
 import { CommentModel } from '@/types/comment';
 import * as Avatar from '@radix-ui/react-avatar';
 import { MessagesSquare, Send, Trash2 } from 'lucide-react';

@@ -3,7 +3,7 @@
 import { SecondaryAlert } from '@/components/alert';
 import { LikedActions } from '@/components/liked-actions';
 import { LikedList } from '@/components/liked-list';
-import { useUser } from '@/lib/user';
+import { useUser } from '@/lib/client/user';
 import { Star } from 'lucide-react';
 
 export default function Liked() {

@@ -1,6 +1,6 @@
 'use client';
 
-import { useUser } from '@/lib/user';
+import { useUser } from '@/lib/client/user';
 import {
   ArrowLeft,
   BookOpen,
@@ -60,14 +60,14 @@ export const Navbar = () => {
 
   const signIn = async () => {
     const { auth, signInWithPopup, GoogleAuthProvider } = await import(
-      '@/lib/auth'
+      '@/lib/client/auth'
     );
     const provider = new GoogleAuthProvider();
     await signInWithPopup(auth, provider);
   };
 
   const signOut = async () => {
-    const { signOut, auth } = await import('@/lib/auth');
+    const { signOut, auth } = await import('@/lib/client/auth');
     await signOut(auth);
   };
 

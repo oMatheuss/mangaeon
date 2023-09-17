@@ -7,7 +7,7 @@ import { Select } from '@/components/select';
 import { StarButton } from '@/components/star-button';
 import { ImageOff, Loader2, PlusSquare } from 'lucide-react';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { toErrorReponse } from '@/lib/utils';
+import { toErrorReponse } from '@/lib/client/utils';
 import { useState } from 'react';
 
 const fetchReleases = async (page: number, type: string) => {

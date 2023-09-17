@@ -1,5 +1,5 @@
 import { ChapterList } from '@/components/chapter-list';
-import { toErrorReponse } from '@/lib/utils';
+import { toErrorReponse } from '@/lib/client/utils';
 import { ChapterResponse } from '@/types/chapters';
 
 export const revalidate = 3600;

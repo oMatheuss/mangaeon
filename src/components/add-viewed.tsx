@@ -1,6 +1,6 @@
 'use client';
 
-import { useViewed } from '@/lib/viewed';
+import { useViewed } from '@/lib/client/viewed';
 import { useEffect } from 'react';
 
 export const AddViewed = ({ id }: { id: number }) => {

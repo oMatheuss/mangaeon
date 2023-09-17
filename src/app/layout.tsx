@@ -5,7 +5,7 @@ import { Comfortaa } from 'next/font/google';
 import { Footer } from '@/components/footer';
 import { Navbar } from '@/components/navbar';
 import { ClientProviders } from '@/components/client-providers';
-import { ThemeApplier } from '@/lib/theme';
+import { ThemeApplier } from '@/lib/client/theme';
 
 interface RootLayoutProps {
   children: React.ReactNode;

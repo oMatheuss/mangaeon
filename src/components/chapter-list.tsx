@@ -1,7 +1,7 @@
 'use client';
 
 import { ViewedIcon } from '@/components/viewed-icon';
-import { toErrorReponse } from '@/lib/utils';
+import { toErrorReponse } from '@/lib/client/utils';
 import { Chapter, ChapterResponse } from '@/types/chapters';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { Loader2, PlusSquare } from 'lucide-react';

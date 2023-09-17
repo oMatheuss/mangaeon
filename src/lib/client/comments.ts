@@ -6,7 +6,7 @@ import {
   addDoc,
   deleteDoc,
   doc,
-} from '@/lib/firestore';
+} from '@/lib/client/firestore';
 import { CommentModel } from '@/types/comment';
 
 export const listenComments = (

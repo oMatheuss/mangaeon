@@ -1,4 +1,4 @@
-import { useViewed } from '@/lib/viewed';
+import { useViewed } from '@/lib/client/viewed';
 import { BookOpenCheck, LucideProps } from 'lucide-react';
 
 interface ViewedIconProps extends LucideProps {

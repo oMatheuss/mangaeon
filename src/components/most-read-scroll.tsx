@@ -5,7 +5,7 @@ import { Image } from '@/components/image';
 import Link from 'next/link';
 import { ImageOff, Loader2, Plus } from 'lucide-react';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { toErrorReponse } from '@/lib/utils';
+import { toErrorReponse } from '@/lib/client/utils';
 
 const fetchMostRead = async (page: number) => {
   const res = await fetch(`/api/home/most_read?page=${page}`);
