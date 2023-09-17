@@ -1,7 +1,7 @@
-import { MostRead } from '@/types/most-read';
-import { IApi } from '../iapi';
-import { Manga, MangaResponse } from './manga';
-import { HighLights } from '@/types/highlights';
+import type { MostRead } from '@/types/most-read';
+import type { IApi } from '@/lib/api/iapi';
+import type { Manga, MangaResponse } from './manga';
+import type { HighLights } from '@/types/highlights';
 import sharp from 'sharp';
 
 const BASE_URL = 'https://api.mangadex.org';
@@ -17,7 +17,7 @@ const getMostRead = async () => {
   const searchParams = url.searchParams;
 
   searchParams.append('includes[]', 'cover_art');
-  searchParams.append('order[followedCount]', 'desc');
+  searchParams.append('order[rating]', 'desc');
   searchParams.append('contentRating[]', 'safe');
   searchParams.append('contentRating[]', 'suggestive');
   searchParams.append('availableTranslatedLanguage[]', 'pt-br');
@@ -55,9 +55,9 @@ const getHighLights = async () => {
   const searchParams = url.searchParams;
 
   searchParams.append('includes[]', 'cover_art');
-  searchParams.append('order[followedCount]', 'desc');
+  searchParams.append('order[relevance]', 'desc');
   searchParams.append('contentRating[]', 'safe');
-  searchParams.append('contentRating[]', 'suggestive');
+  //searchParams.append('contentRating[]', 'suggestive');
 
   const lastMonth = new Date();
   lastMonth.setMonth(lastMonth.getMonth() - 1);
@@ -81,7 +81,7 @@ const extractHighLights = async (data: Manga) => {
   const coverImage =
     data.relationships.filter((x) => x.type === 'cover_art')[0]?.attributes
       ?.fileName ?? '';
-  const cover = `${BASE_COVER_URL}/${id}/${coverImage}.256.jpg`;
+  const cover = `${BASE_COVER_URL}/${id}/${coverImage}.512.jpg`;
 
   const date = new Date(data.attributes.updatedAt);
 
@@ -98,6 +98,7 @@ const extractHighLights = async (data: Manga) => {
     Math.round(g).toString(16) +
     Math.round(b).toString(16);
 
+  // luminosity, max 21. < 50% then light else dark
   const foreground =
     0.2126 * dominant.r + 0.7151 * dominant.g + 0.0721 * dominant.b < 10.5
       ? 'fff'
@@ -106,7 +107,7 @@ const extractHighLights = async (data: Manga) => {
   return <HighLights>{ id, title, cover, date, color, foreground };
 };
 
-export const mangadex: Partial<IApi> = {
+export const mangadex: IApi = {
   mostRead: getMostRead,
   highlights: getHighLights,
 };

@@ -36,6 +36,7 @@ const MostReadCard = ({ item }: MostReadCardProps) => {
             alt={`Image de ${item.title}.`}
             className='object-cover object-center transition-transform hover:scale-110'
             loading='lazy'
+            sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
             fill
           />
         </div>

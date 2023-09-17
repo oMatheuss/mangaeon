@@ -26,6 +26,7 @@ export const FeaturedCard = ({ item }: FeaturedCardProps) => {
           src={item.cover}
           alt={`Imagem de ${item.title}`}
           className='object-cover'
+          sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
           fill
         />
       </Link>
