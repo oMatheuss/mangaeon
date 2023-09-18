@@ -7,7 +7,9 @@ const extractPages = (baseUrl: string, hash: string, files: string[]) => {
     baseUrl,
     hash,
     srcs: files.map((file) => {
-      return `${baseUrl}/data/${hash}/${file}`;
+      const param = new URLSearchParams();
+      param.append('url', `${baseUrl}/data/${hash}/${file}`);
+      return `/api/page?${param.toString()}`;
     }),
   };
 };
