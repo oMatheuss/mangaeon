@@ -1,7 +1,8 @@
 import type { IClientApi } from '@/lib/api/iapi';
 import type { Manga, MangaResponse } from './manga';
 import { Release } from '@/types/releases';
-import { Manga as ExtractedManga } from '@/types/manga';
+import { Chapter, Manga as ExtractedManga } from '@/types/manga';
+import { ChapterResponse } from './chapter';
 
 const BASE_URL = 'https://api.mangadex.org';
 const BASE_COVER_URL = 'https://uploads.mangadex.org/covers';
@@ -79,19 +80,16 @@ const getManga = async (id: string) => {
 };
 
 const extractManga = async (data: Manga) => {
+  const langs = 'pt-br,pt,en'.split(',');
   const id = data.id;
   const title = Object.values(data.attributes.title)[0];
 
-  let description;
+  let description = '';
   const descriptionLangs = Object.keys(data.attributes.description);
-  if (descriptionLangs.includes('pt-br')) {
-    description = data.attributes.description['pt-br'];
-  } else if (descriptionLangs.includes('pt')) {
-    description = data.attributes.description['pt'];
-  } else if (descriptionLangs.includes('en')) {
-    description = data.attributes.description['en'];
-  } else {
-    description = '';
+  for (let lang of langs) {
+    if (descriptionLangs.includes('pt-br')) {
+      description = data.attributes.description[lang];
+    }
   }
 
   const artist =
@@ -116,14 +114,47 @@ const extractManga = async (data: Manga) => {
     title,
     cover,
     tags,
-    chapters: [],
     description,
     artist,
     author,
   };
 };
 
+const getChapters = async (id: string) => {
+  const requestOptions: RequestInit = {
+    method: 'GET',
+    redirect: 'follow',
+  };
+
+  const url = new URL(`/manga/${id}/aggregate`, BASE_URL);
+  const searchParams = url.searchParams;
+
+  searchParams.append('translatedLanguage[]', 'pt-br');
+  searchParams.append('translatedLanguage[]', 'pt');
+
+  const response = await fetch(url, requestOptions);
+  const json: ChapterResponse = await response.json();
+
+  return extractChapters(json.volumes).reverse();
+};
+
+const extractChapters = (data: ChapterResponse['volumes']) => {
+  return Object.values(data)
+    .map((volume) => {
+      return Object.values(volume.chapters).map((chap) => {
+        return <Chapter>{
+          chapterId: chap.id,
+          number: chap.chapter,
+          volume: volume.volume,
+          name: '',
+        };
+      });
+    })
+    .flat();
+};
+
 export const clientMangadex: Partial<IClientApi> = {
   releases: getReleases,
   manga: getManga,
+  chapters: getChapters,
 };

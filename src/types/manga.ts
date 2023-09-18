@@ -5,12 +5,11 @@ export interface Manga {
   tags: string[];
   author: string;
   artist: string;
-  chapters: Chapter[];
 }
 
 export interface Chapter {
   chapterId: string;
   name: string;
   number: string;
-  date: string;
+  volume: string;
 }

@@ -6,17 +6,14 @@ import { Select } from '@/components/select';
 import { StarButton } from '@/components/star-button';
 import { Loader2, PlusSquare } from 'lucide-react';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { useState } from 'react';
 import { clientMangadex } from '@/lib/api/mangadex/client-api';
 
 const ONE_HOUR = 1000 * 60 * 60;
 const THIRTY_MIN = 1000 * 60 * 30;
 
 export const Releases = () => {
-  const [releaseType, setReleaseType] = useState('manga');
-
   const releasesQuery = useInfiniteQuery({
-    queryKey: ['releases', releaseType],
+    queryKey: ['releases'],
     queryFn: async ({ pageParam = 1 }) => ({
       pageParam,
       releases: await clientMangadex.releases!(pageParam),
@@ -33,16 +30,6 @@ export const Releases = () => {
     <>
       <div className='flex justify-between items-end pb-1 mt-4 mb-4 border-b border-base-content/10'>
         <h2 className='font-bold text-xl sm:text-2xl'>Lançamentos</h2>
-        <Select
-          value={releaseType}
-          onChange={setReleaseType}
-          name='series-type'
-        >
-          <option value='manga'>Mangá</option>
-          <option value='manhua'>Manhua</option>
-          <option value='webtoon'>Webtoon</option>
-          <option value='novel'>Novel</option>
-        </Select>
       </div>
       <ul className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 mb-4'>
         {releases?.map((val, idx) => (

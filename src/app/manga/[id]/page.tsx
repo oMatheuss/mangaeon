@@ -10,14 +10,25 @@ export default function Manga() {
   const id = pathname.split('/').pop() ?? '';
 
   const mangaQuery = useQuery({
-    queryKey: ['chapter', id],
+    queryKey: ['manga', id],
     queryFn: () => clientMangadex.manga!(id),
     enabled: !!id,
     staleTime: Infinity,
     cacheTime: Infinity,
+    retry: false,
+  });
+
+  const chaptersQuery = useQuery({
+    queryKey: ['chapters', id],
+    queryFn: () => clientMangadex.chapters!(id),
+    enabled: !!id,
+    staleTime: Infinity,
+    cacheTime: Infinity,
+    retry: false,
   });
 
   const manga = mangaQuery.data;
+  const chapters = chaptersQuery.data;
 
   return (
     <>
@@ -51,7 +62,7 @@ export default function Manga() {
               </span>
             ))}
           </div>
-          <ChapterList chapters={[]} />
+          <ChapterList chapters={chapters ?? []} />
         </div>
       )}
     </>
