@@ -2,8 +2,6 @@ import type { Manga, MangaResponse } from '@/lib/api/mangadex/manga';
 import type { Manga as ExtractedManga } from '@/types/manga';
 import { NextResponse, NextRequest } from 'next/server';
 
-export const runtime = 'edge';
-
 const extractManga = (data: Manga) => {
   const langs = 'pt-br,pt,en'.split(',');
   const id = data.id;

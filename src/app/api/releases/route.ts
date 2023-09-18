@@ -2,8 +2,6 @@ import type { Manga, MangaResponse } from '@/lib/api/mangadex/manga';
 import type { Release } from '@/types/releases';
 import { NextResponse, NextRequest } from 'next/server';
 
-export const runtime = 'edge';
-
 const extractReleases = (data: Manga) => {
   const id = data.id;
   const title = Object.values(data.attributes.title)[0];

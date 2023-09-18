@@ -2,8 +2,6 @@ import type { ChapterResponse } from '@/lib/api/mangadex/chapter';
 import type { Chapter } from '@/types/manga';
 import { NextResponse, NextRequest } from 'next/server';
 
-export const runtime = 'edge';
-
 const extractChapters = (data: ChapterResponse['volumes']) => {
   return Object.values(data)
     .map((volume) => {

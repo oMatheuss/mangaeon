@@ -2,8 +2,6 @@ import { PagesResponse } from '@/lib/api/mangadex/pages';
 import { Images } from '@/types/images';
 import { NextResponse, NextRequest } from 'next/server';
 
-export const runtime = 'edge';
-
 const extractPages = (baseUrl: string, hash: string, files: string[]) => {
   return <Images>{
     baseUrl,
