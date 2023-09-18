@@ -16,7 +16,7 @@
       "headers": [
         {
           "key": "Via",
-          "value": null
+          "value": ""
         }
       ]
     }
