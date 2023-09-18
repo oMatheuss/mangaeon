@@ -10,5 +10,16 @@
       "destination": "https://uploads.mangadex.org/covers/:path*"
     }
   ],
+  "headers": [
+    {
+      "source": "/covers/**",
+      "headers": [
+        {
+          "key": "Via",
+          "value": null
+        }
+      ]
+    }
+  ],
   "regions": ["gru1"]
 }
