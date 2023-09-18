@@ -3,7 +3,7 @@ export default {
   reactStrictMode: true,
   rewrites: async () => {
     return [
-      { source: '/api/:path*', destination: 'https://mangalivre.net/:path*' },
+      { source: '/api/:path*', destination: 'https://api.mangadex.org/:path*' },
     ];
   },
   images: {

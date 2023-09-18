@@ -1,7 +1,10 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "rewrites": [
-    { "source": "/api/:path*", "destination": "https://mangalivre.net/:path*" }
+    {
+      "source": "/api/:path*",
+      "destination": "https://api.mangadex.org/:path*"
+    }
   ],
   "regions": ["gru1"]
 }
