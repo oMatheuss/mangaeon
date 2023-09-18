@@ -7,8 +7,8 @@ import { Search } from '@/types/search';
 import { PagesResponse } from './pages';
 import { Images } from '@/types/images';
 
-const BASE_URL = '/api';
-const BASE_COVER_URL = '/covers';
+const BASE_URL = 'https://api.mangadex.org';
+const BASE_COVER_URL = 'https://uploads.mangadex.org/covers';
 
 const getReleases = async (page: number) => {
   const requestOptions: RequestInit = {
@@ -16,7 +16,8 @@ const getReleases = async (page: number) => {
     redirect: 'follow',
   };
 
-  const searchParams = new URLSearchParams();
+  const url = new URL('/manga', BASE_URL);
+  const searchParams = url.searchParams;
 
   searchParams.append('includes[]', 'cover_art');
   searchParams.append('order[updatedAt]', 'desc');
@@ -30,7 +31,6 @@ const getReleases = async (page: number) => {
     searchParams.append('offset', (30 * (page - 1)).toString());
   }
 
-  const url = BASE_URL + '/manga?' + searchParams.toString();
   const response = await fetch(url, requestOptions);
   const json: MangaResponse = await response.json();
   return json.data.map(extractReleases);
@@ -67,7 +67,8 @@ const getManga = async (id: string) => {
     redirect: 'follow',
   };
 
-  const searchParams = new URLSearchParams();
+  const url = new URL('/manga', BASE_URL);
+  const searchParams = url.searchParams;
 
   searchParams.append('includes[]', 'cover_art');
   searchParams.append('includes[]', 'artist');
@@ -75,7 +76,6 @@ const getManga = async (id: string) => {
   searchParams.append('ids[]', id);
   searchParams.append('limit', '1');
 
-  const url = BASE_URL + '/manga?' + searchParams.toString();
   const response = await fetch(url, requestOptions);
   const json: MangaResponse = await response.json();
   const manga = extractManga(json.data[0]);
@@ -129,12 +129,12 @@ const getChapters = async (id: string) => {
     redirect: 'follow',
   };
 
-  const searchParams = new URLSearchParams();
+  const url = new URL(`/manga/${id}/aggregate`, BASE_URL);
+  const searchParams = url.searchParams;
 
   searchParams.append('translatedLanguage[]', 'pt-br');
   searchParams.append('translatedLanguage[]', 'pt');
 
-  const url = BASE_URL + `/manga/${id}/aggregate?` + searchParams.toString();
   const response = await fetch(url, requestOptions);
   const json: ChapterResponse = await response.json();
 
@@ -162,7 +162,8 @@ const getSearch = async (query: string) => {
     redirect: 'follow',
   };
 
-  const searchParams = new URLSearchParams();
+  const url = new URL('/manga', BASE_URL);
+  const searchParams = url.searchParams;
 
   searchParams.append('title', query);
 
@@ -178,7 +179,6 @@ const getSearch = async (query: string) => {
 
   searchParams.append('limit', '15');
 
-  const url = BASE_URL + '/manga?' + searchParams.toString();
   const response = await fetch(url, requestOptions);
   const json: MangaResponse = await response.json();
   return json.data.map(extractSearch);
@@ -224,7 +224,7 @@ const getPages = async (id: string) => {
     redirect: 'follow',
   };
 
-  const url = BASE_URL + `/at-home/server/${id}`;
+  const url = new URL(`/at-home/server/${id}`, BASE_URL);
   const response = await fetch(url, requestOptions);
   const json: PagesResponse = await response.json();
 

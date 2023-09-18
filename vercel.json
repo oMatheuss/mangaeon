@@ -1,25 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "rewrites": [
-    {
-      "source": "/api/:path*",
-      "destination": "https://api.mangadex.org/:path*"
-    },
-    {
-      "source": "/covers/:path*",
-      "destination": "https://uploads.mangadex.org/covers/:path*"
-    }
-  ],
-  "headers": [
-    {
-      "source": "/covers/**",
-      "headers": [
-        {
-          "key": "Via",
-          "value": ""
-        }
-      ]
-    }
+    { "source": "/api/:path*", "destination": "https://mangalivre.net/:path*" }
   ],
   "regions": ["gru1"]
 }
