@@ -10,8 +10,8 @@ import { Images } from '@/types/images';
 //const BASE_URL = 'https://api.mangadex.org';
 //const BASE_COVER_URL = 'https://uploads.mangadex.org/covers';
 
-const BASE_URL = `http://${process.env.NEXT_PUBLIC_VERCEL_URL}`;
-const BASE_COVER_URL = `http://${process.env.NEXT_PUBLIC_VERCEL_URL}`;
+const BASE_URL = `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`;
+const BASE_COVER_URL = `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`;
 
 const getReleases = async (page: number) => {
   const requestOptions: RequestInit = {
