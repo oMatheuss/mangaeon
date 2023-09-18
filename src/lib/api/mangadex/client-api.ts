@@ -7,8 +7,11 @@ import { Search } from '@/types/search';
 import { PagesResponse } from './pages';
 import { Images } from '@/types/images';
 
-const BASE_URL = 'https://api.mangadex.org';
-const BASE_COVER_URL = 'https://uploads.mangadex.org/covers';
+//const BASE_URL = 'https://api.mangadex.org';
+//const BASE_COVER_URL = 'https://uploads.mangadex.org/covers';
+
+const BASE_URL = `http://${process.env.NEXT_PUBLIC_VERCEL_URL}`;
+const BASE_COVER_URL = `http://${process.env.NEXT_PUBLIC_VERCEL_URL}`;
 
 const getReleases = async (page: number) => {
   const requestOptions: RequestInit = {
@@ -16,7 +19,7 @@ const getReleases = async (page: number) => {
     redirect: 'follow',
   };
 
-  const url = new URL('/manga', BASE_URL);
+  const url = new URL('/api/manga', BASE_URL);
   const searchParams = url.searchParams;
 
   searchParams.append('includes[]', 'cover_art');
@@ -43,7 +46,7 @@ const extractReleases = (data: Manga) => {
   const coverImage =
     data.relationships.filter((x) => x.type === 'cover_art')[0]?.attributes
       ?.fileName ?? '';
-  const cover = `${BASE_COVER_URL}/${id}/${coverImage}.256.jpg`;
+  const cover = `${BASE_COVER_URL}/covers/${id}/${coverImage}.256.jpg`;
 
   const date = new Date(data.attributes.updatedAt);
 
@@ -67,7 +70,7 @@ const getManga = async (id: string) => {
     redirect: 'follow',
   };
 
-  const url = new URL('/manga', BASE_URL);
+  const url = new URL('/api/manga', BASE_URL);
   const searchParams = url.searchParams;
 
   searchParams.append('includes[]', 'cover_art');
@@ -105,7 +108,7 @@ const extractManga = async (data: Manga) => {
   const coverImage =
     data.relationships.filter((x) => x.type === 'cover_art')[0]?.attributes
       ?.fileName ?? '';
-  const cover = `${BASE_COVER_URL}/${id}/${coverImage}.512.jpg`;
+  const cover = `${BASE_COVER_URL}/covers/${id}/${coverImage}.512.jpg`;
 
   const tags = data.attributes.tags
     .filter((x) => x.type === 'tag')
@@ -129,7 +132,7 @@ const getChapters = async (id: string) => {
     redirect: 'follow',
   };
 
-  const url = new URL(`/manga/${id}/aggregate`, BASE_URL);
+  const url = new URL(`/api/manga/${id}/aggregate`, BASE_URL);
   const searchParams = url.searchParams;
 
   searchParams.append('translatedLanguage[]', 'pt-br');
@@ -162,7 +165,7 @@ const getSearch = async (query: string) => {
     redirect: 'follow',
   };
 
-  const url = new URL('/manga', BASE_URL);
+  const url = new URL('/api/manga', BASE_URL);
   const searchParams = url.searchParams;
 
   searchParams.append('title', query);
@@ -191,7 +194,7 @@ const extractSearch = (data: Manga) => {
   const coverImage =
     data.relationships.filter((x) => x.type === 'cover_art')[0]?.attributes
       ?.fileName ?? '';
-  const cover = `${BASE_COVER_URL}/${id}/${coverImage}.256.jpg`;
+  const cover = `${BASE_COVER_URL}/covers/${id}/${coverImage}.256.jpg`;
 
   const artist =
     data.relationships.filter((x) => x.type === 'artist')[0]?.attributes
@@ -224,7 +227,7 @@ const getPages = async (id: string) => {
     redirect: 'follow',
   };
 
-  const url = new URL(`/at-home/server/${id}`, BASE_URL);
+  const url = new URL(`/api/at-home/server/${id}`, BASE_URL);
   const response = await fetch(url, requestOptions);
   const json: PagesResponse = await response.json();
 
