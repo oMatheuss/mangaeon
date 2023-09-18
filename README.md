@@ -1,4 +1,4 @@
-# Mangá Eon
+# Mangá Éon
 
 ## INFORMAÇÕES
 
