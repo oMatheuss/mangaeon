@@ -4,6 +4,10 @@ export default {
   rewrites: async () => {
     return [
       { source: '/api/:path*', destination: 'https://api.mangadex.org/:path*' },
+      {
+        source: '/covers/:path*',
+        destination: 'https://uploads.mangadex.org/covers/:path*',
+      },
     ];
   },
   images: {

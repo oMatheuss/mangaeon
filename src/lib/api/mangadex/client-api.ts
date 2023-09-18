@@ -8,7 +8,7 @@ import { PagesResponse } from './pages';
 import { Images } from '@/types/images';
 
 const BASE_URL = '/api';
-const BASE_COVER_URL = 'https://uploads.mangadex.org/covers';
+const BASE_COVER_URL = '/covers';
 
 const getReleases = async (page: number) => {
   const requestOptions: RequestInit = {
