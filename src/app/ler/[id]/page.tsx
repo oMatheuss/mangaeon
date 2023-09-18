@@ -1,27 +1,30 @@
+'use client';
+
 import { AddViewed } from '@/components/add-viewed';
 import { CommentSection } from '@/components/comment-section';
 import { Paginas } from '@/components/paginas';
-import { ImagesResponse } from '@/types/images';
+import { clientMangadex } from '@/lib/api/mangadex/client-api';
+import { useQuery } from '@tanstack/react-query';
+import { usePathname } from 'next/navigation';
 
-export const revalidate = 3600;
+export default function Leitor() {
+  const pathname = usePathname();
+  const id = pathname.split('/').pop() ?? '';
 
-const fetchImagesLinks = async (id: string): Promise<ImagesResponse> => {
-  const res = await fetch(`https://mangalivre.net/leitor/pages/${id}.json`);
-  if (!res.ok) throw res;
-  return (await res.json()) as ImagesResponse;
-};
+  const pagesQuery = useQuery({
+    queryKey: ['ler', id],
+    queryFn: () => clientMangadex.pages(id),
+    staleTime: Infinity,
+    cacheTime: Infinity,
+  });
 
-export default async function Leitor({ params }: { params: { id: string } }) {
-  const imagesRes = await fetchImagesLinks(params.id);
-  const images = imagesRes.images;
-
-  const idChapter = parseInt(params.id);
+  const images = pagesQuery.data?.srcs ?? [];
 
   return (
     <div className='flex flex-col items-center mb-3'>
-      <AddViewed id={idChapter} />
+      <AddViewed id={id} />
       <Paginas images={images} />
-      <CommentSection idChapter={idChapter} />
+      <CommentSection chapterId={id} />
     </div>
   );
 }

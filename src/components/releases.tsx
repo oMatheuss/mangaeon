@@ -2,7 +2,6 @@
 
 import type { Release } from '@/types/releases';
 import Link from 'next/link';
-import { Select } from '@/components/select';
 import { StarButton } from '@/components/star-button';
 import { Loader2, PlusSquare } from 'lucide-react';
 import { useInfiniteQuery } from '@tanstack/react-query';

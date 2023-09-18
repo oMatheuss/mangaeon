@@ -43,7 +43,7 @@ export const LikedActions = ({ userUid }: LikedActionsProps) => {
       );
       const newArr = cloudLiked.docs.map((x) => {
         const data = x.data();
-        return { id: Number(x.id), ...data } as LikedType;
+        return { id: x.id, ...data } as LikedType;
       });
 
       set(newArr);

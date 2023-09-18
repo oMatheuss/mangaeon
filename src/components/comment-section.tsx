@@ -13,10 +13,10 @@ import { useEffect, useState } from 'react';
 import { SecondaryAlert, SuccessAlert } from './alert';
 
 interface CommentSectionProps {
-  idChapter: number;
+  chapterId: string;
 }
 
-export const CommentSection = ({ idChapter }: CommentSectionProps) => {
+export const CommentSection = ({ chapterId }: CommentSectionProps) => {
   const [user] = useUser();
 
   const [isLoading, setLoading] = useState(false);
@@ -26,9 +26,9 @@ export const CommentSection = ({ idChapter }: CommentSectionProps) => {
 
   useEffect(() => {
     if (showComments) {
-      return listenComments(idChapter, setComments);
+      return listenComments(chapterId, setComments);
     }
-  }, [idChapter, showComments]);
+  }, [chapterId, showComments]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -36,7 +36,7 @@ export const CommentSection = ({ idChapter }: CommentSectionProps) => {
     if (!user) return;
 
     setLoading(true);
-    await postComment(idChapter, {
+    await postComment(chapterId, {
       message: formData.get('message') as string,
       userid: user.uid,
       username: user.displayName ?? 'Anônimo',
@@ -68,7 +68,7 @@ export const CommentSection = ({ idChapter }: CommentSectionProps) => {
             <CommentCard
               key={comment.id}
               comment={comment}
-              idChapter={idChapter}
+              chapterId={chapterId}
               enableDelete={comment.userid === user?.uid}
             />
           ))
@@ -90,17 +90,17 @@ export const CommentSection = ({ idChapter }: CommentSectionProps) => {
 
 interface CommentCardProps {
   comment: CommentModel;
-  idChapter: number;
+  chapterId: string;
   enableDelete: boolean;
 }
 
 const CommentCard = ({
   comment,
-  idChapter,
+  chapterId,
   enableDelete,
 }: CommentCardProps) => {
   const handleDelete = () => {
-    deleteComment(idChapter, comment.id).catch(console.error);
+    deleteComment(chapterId, comment.id).catch(console.error);
   };
 
   return (

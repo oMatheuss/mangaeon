@@ -3,6 +3,9 @@ import type { Manga, MangaResponse } from './manga';
 import { Release } from '@/types/releases';
 import { Chapter, Manga as ExtractedManga } from '@/types/manga';
 import { ChapterResponse } from './chapter';
+import { Search } from '@/types/search';
+import { PagesResponse } from './pages';
+import { Images } from '@/types/images';
 
 const BASE_URL = 'https://api.mangadex.org';
 const BASE_COVER_URL = 'https://uploads.mangadex.org/covers';
@@ -93,11 +96,11 @@ const extractManga = async (data: Manga) => {
   }
 
   const artist =
-    data.relationships.filter((x) => x.type === 'artist')[0].attributes?.name ??
-    '';
+    data.relationships.filter((x) => x.type === 'artist')[0]?.attributes
+      ?.name ?? '';
   const author =
-    data.relationships.filter((x) => x.type === 'author')[0].attributes?.name ??
-    '';
+    data.relationships.filter((x) => x.type === 'author')[0]?.attributes
+      ?.name ?? '';
 
   const coverImage =
     data.relationships.filter((x) => x.type === 'cover_art')[0]?.attributes
@@ -153,8 +156,95 @@ const extractChapters = (data: ChapterResponse['volumes']) => {
     .flat();
 };
 
-export const clientMangadex: Partial<IClientApi> = {
+const getSearch = async (query: string) => {
+  const requestOptions: RequestInit = {
+    method: 'GET',
+    redirect: 'follow',
+  };
+
+  const url = new URL('/manga', BASE_URL);
+  const searchParams = url.searchParams;
+
+  searchParams.append('title', query);
+
+  searchParams.append('includes[]', 'cover_art');
+  searchParams.append('includes[]', 'author');
+  searchParams.append('includes[]', 'artist');
+  searchParams.append('order[rating]', 'desc');
+
+  searchParams.append('contentRating[]', 'safe');
+  searchParams.append('contentRating[]', 'suggestive');
+  searchParams.append('contentRating[]', 'erotica');
+  searchParams.append('contentRating[]', 'pornographic');
+
+  searchParams.append('limit', '15');
+
+  const response = await fetch(url, requestOptions);
+  const json: MangaResponse = await response.json();
+  return json.data.map(extractSearch);
+};
+
+const extractSearch = (data: Manga) => {
+  const id = data.id;
+  const title = Object.values(data.attributes.title)[0];
+
+  const coverImage =
+    data.relationships.filter((x) => x.type === 'cover_art')[0]?.attributes
+      ?.fileName ?? '';
+  const cover = `${BASE_COVER_URL}/${id}/${coverImage}.256.jpg`;
+
+  const artist =
+    data.relationships.filter((x) => x.type === 'artist')[0]?.attributes
+      ?.name ?? '';
+  const author =
+    data.relationships.filter((x) => x.type === 'author')[0]?.attributes
+      ?.name ?? '';
+
+  const date = new Date(data.attributes.updatedAt);
+
+  const tags = data.attributes.tags
+    .filter((x) => x.type === 'tag')
+    .map((x) => x.attributes.name.en)
+    .filter(Boolean);
+
+  return <Search>{
+    id,
+    title,
+    cover,
+    date,
+    tags,
+    artist,
+    author,
+  };
+};
+
+const getPages = async (id: string) => {
+  const requestOptions: RequestInit = {
+    method: 'GET',
+    redirect: 'follow',
+  };
+
+  const url = new URL(`/at-home/server/${id}`, BASE_URL);
+  const response = await fetch(url, requestOptions);
+  const json: PagesResponse = await response.json();
+
+  return extractPages(json.baseUrl, json.chapter.hash, json.chapter.data);
+};
+
+const extractPages = (baseUrl: string, hash: string, files: string[]) => {
+  return <Images>{
+    baseUrl,
+    hash,
+    srcs: files.map((file) => {
+      return `${baseUrl}/data/${hash}/${file}`;
+    }),
+  };
+};
+
+export const clientMangadex: IClientApi = {
   releases: getReleases,
   manga: getManga,
   chapters: getChapters,
+  search: getSearch,
+  pages: getPages,
 };

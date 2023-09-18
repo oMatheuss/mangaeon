@@ -7,7 +7,7 @@ export const LikedList = () => {
   const { liked, del, add } = useLiked();
   const [user] = useUser();
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (id: string) => {
     const target = { ...liked.find((x) => x.id === id)! };
     del(target.id); // optimistic delete
 
@@ -43,7 +43,7 @@ export const LikedList = () => {
 
 interface LikedCardProps {
   liked: Liked;
-  onDelete: (id: number) => void;
+  onDelete: (id: string) => void;
 }
 
 const LikedCard = ({ liked, onDelete }: LikedCardProps) => {
