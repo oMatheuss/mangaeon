@@ -2,7 +2,7 @@
 
 import { SearchBar } from '@/components/search-bar';
 import { StarButton } from '@/components/star-button';
-import { clientMangadex } from '@/lib/api/mangadex/client-api';
+import { Search } from '@/types/search';
 import { useQuery } from '@tanstack/react-query';
 import { Loader2, SearchX } from 'lucide-react';
 import Link from 'next/link';
@@ -14,7 +14,8 @@ export default function Search() {
 
   const searchQuery = useQuery({
     queryKey: ['search', query],
-    queryFn: () => clientMangadex.search!(query!),
+    queryFn: async () =>
+      (await fetch(`/search?q=${query}`).then((d) => d.json())) as Search[],
     retry: false,
     enabled: searchParams.has('q') && query!.length > 0,
   });

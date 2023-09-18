@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { StarButton } from '@/components/star-button';
 import { Loader2, PlusSquare } from 'lucide-react';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { clientMangadex } from '@/lib/api/mangadex/client-api';
 
 const ONE_HOUR = 1000 * 60 * 60;
 const THIRTY_MIN = 1000 * 60 * 30;
@@ -13,10 +12,13 @@ const THIRTY_MIN = 1000 * 60 * 30;
 export const Releases = () => {
   const releasesQuery = useInfiniteQuery({
     queryKey: ['releases'],
-    queryFn: async ({ pageParam = 1 }) => ({
-      pageParam,
-      releases: await clientMangadex.releases!(pageParam),
-    }),
+    queryFn: async ({ pageParam = 1 }) =>
+      ({
+        pageParam,
+        releases: await fetch(`/api/releases?page=${pageParam}`).then((d) =>
+          d.json()
+        ),
+      } as { pageParam: number; releases: Release[] }),
     getNextPageParam: (last) =>
       !!last.releases ? last.pageParam + 1 : undefined,
     cacheTime: ONE_HOUR,
