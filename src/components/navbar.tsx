@@ -20,8 +20,8 @@ import { useRouter } from 'next/navigation';
 
 const links = [
   { icon: Home, text: 'Home', to: '/' },
-  { icon: Heart, text: 'Favoritos', to: '/liked' },
-  { icon: Palette, text: 'Tema', to: '/theme' },
+  { icon: Heart, text: 'Favoritos', to: '/favoritos' },
+  { icon: Palette, text: 'Tema', to: '/tema' },
 ];
 
 export const Navbar = () => {

@@ -26,7 +26,7 @@ interface ChapterCardProps {
 }
 
 const ChapterCard = ({ chapter }: ChapterCardProps) => {
-  const link = `/ler/${chapter.chapterId}`;
+  const link = `/leitor/${chapter.chapterId}`;
 
   return (
     <li className='w-full flex flex-row justify-between items-center border border-base-content/20 p-2 rounded-bl-lg rounded-tr-lg bg-base-200 shadow-md'>

@@ -12,7 +12,7 @@ export default function Leitor() {
   const id = pathname.split('/').pop() ?? '';
 
   const pagesQuery = useQuery({
-    queryKey: ['ler', id],
+    queryKey: ['leitor', id],
     queryFn: () => clientMangadex.pages(id),
     staleTime: Infinity,
     cacheTime: Infinity,
