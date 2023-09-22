@@ -1,7 +1,7 @@
 'use client';
 
 import { ChapterList } from '@/components/chapter-list';
-import { Chapter, Manga } from '@/types/manga';
+import { clientMangadex } from '@/lib/api/mangadex/client-api';
 import { useQuery } from '@tanstack/react-query';
 import { usePathname } from 'next/navigation';
 
@@ -11,8 +11,7 @@ export default function Manga() {
 
   const mangaQuery = useQuery({
     queryKey: ['manga', id],
-    queryFn: async () =>
-      (await fetch(`/api/manga/${id}`).then((d) => d.json())) as Manga,
+    queryFn: () => clientMangadex.manga!(id),
     enabled: !!id,
     staleTime: Infinity,
     cacheTime: Infinity,
@@ -21,8 +20,7 @@ export default function Manga() {
 
   const chaptersQuery = useQuery({
     queryKey: ['chapters', id],
-    queryFn: async () =>
-      (await fetch(`/api/chapters/${id}`).then((d) => d.json())) as Chapter[],
+    queryFn: () => clientMangadex.chapters!(id),
     enabled: !!id,
     staleTime: Infinity,
     cacheTime: Infinity,

@@ -3,7 +3,7 @@
 import { AddViewed } from '@/components/add-viewed';
 import { CommentSection } from '@/components/comment-section';
 import { Paginas } from '@/components/paginas';
-import { Images } from '@/types/images';
+import { clientMangadex } from '@/lib/api/mangadex/client-api';
 import { useQuery } from '@tanstack/react-query';
 import { usePathname } from 'next/navigation';
 
@@ -13,8 +13,7 @@ export default function Leitor() {
 
   const pagesQuery = useQuery({
     queryKey: ['ler', id],
-    queryFn: async () =>
-      (await fetch(`/api/chapter/${id}`).then((d) => d.json())) as Images,
+    queryFn: () => clientMangadex.pages(id),
     staleTime: Infinity,
     cacheTime: Infinity,
   });
