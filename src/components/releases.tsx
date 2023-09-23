@@ -1,30 +1,12 @@
-'use client';
-
 import type { Release } from '@/types/releases';
 import Link from 'next/link';
 import { StarButton } from '@/components/star-button';
-import { Loader2, PlusSquare } from 'lucide-react';
-import { useInfiniteQuery } from '@tanstack/react-query';
-import { clientMangadex } from '@/lib/api/mangadex/client-api';
+import Image from 'next/image';
+interface ReleasesProps {
+  releases: Release[];
+}
 
-const ONE_HOUR = 1000 * 60 * 60;
-const THIRTY_MIN = 1000 * 60 * 30;
-
-export const Releases = () => {
-  const releasesQuery = useInfiniteQuery({
-    queryKey: ['releases'],
-    queryFn: async ({ pageParam = 1 }) => ({
-      pageParam,
-      releases: await clientMangadex.releases!(pageParam),
-    }),
-    getNextPageParam: (last) =>
-      !!last.releases ? last.pageParam + 1 : undefined,
-    cacheTime: ONE_HOUR,
-    staleTime: THIRTY_MIN,
-  });
-
-  const releases = releasesQuery.data?.pages.flatMap((x) => x.releases);
-
+export const Releases = ({ releases }: ReleasesProps) => {
   return (
     <>
       <div className='flex justify-between items-end pb-1 mt-4 mb-4 border-b border-base-content/10'>
@@ -35,19 +17,6 @@ export const Releases = () => {
           <ReleaseCard key={`${val.id}-${idx}`} release={val} />
         ))}
       </ul>
-      {releasesQuery.hasNextPage && (
-        <button
-          disabled={releasesQuery.isFetchingNextPage}
-          onClick={() => releasesQuery.fetchNextPage()}
-          className='w-full flex flex-row justify-center md:justify-start bg-base-200 border border-base-content/20 p-2 rounded enabled:hover:bg-opacity-50 shadow-lg'
-        >
-          {releasesQuery.isFetchingNextPage ? (
-            <Loader2 className='animate-spin' />
-          ) : (
-            <PlusSquare />
-          )}
-        </button>
-      )}
     </>
   );
 };
@@ -69,11 +38,12 @@ const ReleaseCard = ({ release }: ReleaseCardProps) => {
         }}
       />
       <div className='min-w-fit bg-base-200'>
-        <img
+        <Image
           src={release.cover}
           alt={release.title}
           className='w-full sm:w-32 h-48 object-contain sm:object-cover'
-          loading='lazy'
+          height={256}
+          width={192}
         />
       </div>
       <div className='flex flex-col justify-between overflow-hidden p-4'>

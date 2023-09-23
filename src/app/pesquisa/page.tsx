@@ -1,42 +1,21 @@
-'use client';
-
 import { SearchBar } from '@/components/search-bar';
 import { StarButton } from '@/components/star-button';
-import { clientMangadex } from '@/lib/api/mangadex/client-api';
-import { useQuery } from '@tanstack/react-query';
-import { Loader2, SearchX } from 'lucide-react';
+import { mangadex } from '@/lib/api/mangadex/api';
+import Image from 'next/image';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
 
-export default function Search() {
-  const searchParams = useSearchParams();
-  const query = searchParams.get('q');
-
-  const searchQuery = useQuery({
-    queryKey: ['search', query],
-    queryFn: () => clientMangadex.search!(query!),
-    retry: false,
-    enabled: searchParams.has('q') && query!.length > 0,
-  });
-
-  const series = searchQuery.data || [];
+export default async function Search({
+  searchParams,
+}: {
+  searchParams: { q: string };
+}) {
+  const query = searchParams.q;
+  const series = await mangadex.search(query);
 
   return (
     <>
       <SearchBar defaultValue={query || undefined} />
       <div className='flex flex-col space-y-2 my-2'>
-        {searchQuery.isSuccess && series.length === 0 && (
-          <div className='flex flex-col items-center self-center'>
-            <SearchX className='h-12 w-12 text-red-600' />
-            <div>Nenhum resultado para a pesquisa...</div>
-          </div>
-        )}
-        {searchQuery.isLoading && searchQuery.isFetching && (
-          <div className='flex flex-col items-center self-center'>
-            <Loader2 className='animate-spin h-12 w-12' />
-            <div>Carregando...</div>
-          </div>
-        )}
         {series.map((serie) => (
           <div
             key={serie.id}
@@ -50,11 +29,12 @@ export default function Search() {
               }}
             />
             <div className='min-w-fit mr-2'>
-              <img
+              <Image
                 src={serie.cover}
                 alt={`Image de capa de ${serie.title}`}
                 className='object-cover w-24 h-36 md:w-32 md:h-48 rounded-s'
-                loading='lazy'
+                width={192}
+                height={256}
               />
             </div>
             <div className='w-full p-2 overflow-auto flex flex-col justify-between leading-normal'>

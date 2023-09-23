@@ -10,6 +10,7 @@ export const revalidate = 21600;
 export default async function Home() {
   const highLights = await mangadex.highlights();
   const mostRead = await mangadex.mostRead();
+  const releases = await mangadex.releases(1);
 
   return (
     <div className='flex flex-col my-3'>
@@ -20,7 +21,7 @@ export default async function Home() {
         ))}
       </FeaturedScroll>
       <MostReadScroll items={mostRead} />
-      <Releases />
+      <Releases releases={releases} />
     </div>
   );
 }
