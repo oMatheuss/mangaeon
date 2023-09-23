@@ -11,11 +11,11 @@ export default {
         source: '/mangadex/:path*',
         destination: 'https://api.mangadex.org/:path*',
       },
-      {
-        source: '/proxy',
-        has: [{ type: 'query', key: 'url', value: '(?<url>.*)' }],
-        destination: ':url',
-      },
+      // {
+      //   source: '/proxy',
+      //   has: [{ type: 'query', key: 'url', value: '(?<url>.*)' }],
+      //   destination: '/:url',
+      // },
     ];
   },
   images: {

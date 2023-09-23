@@ -230,7 +230,7 @@ const extractPages = (baseUrl: string, hash: string, files: string[]) => {
     baseUrl,
     hash,
     srcs: files.map((file) => {
-      return '/proxy?url=' + encodeURI(`${baseUrl}/data/${hash}/${file}`);
+      return `${baseUrl}/data/${hash}/${file}`;
     }),
   };
 };
