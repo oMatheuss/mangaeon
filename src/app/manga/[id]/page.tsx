@@ -41,10 +41,10 @@ export default function Manga() {
               alt={`Imagem de capa de ${manga.title}`}
             />
             <div className='mb-3'>
-              <h1 className='sm:mt-3 text-5xl font-extrabold tracking-tight'>
+              <h1 className='sm:mt-3 text-2xl sm:text-5xl font-extrabold tracking-tight'>
                 {manga.title}
               </h1>
-              <p className='font-bold text-base-content/70 ml-3 mb-3'>
+              <p className='font-bold text-base-content/70 mb-3'>
                 {manga.author}, {manga.artist}
               </p>
               <p className='indent-4 md:indent-8 text-justify'>
