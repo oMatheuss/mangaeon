@@ -10,7 +10,7 @@ const gradient =
   'repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,.1) 35px, rgba(255,255,255,.1) 70px)';
 
 export const FeaturedCard = ({ item }: FeaturedCardProps) => {
-  const link = `/manga/${item.id}`;
+  const link = `/leitor/${item.id}`;
 
   return (
     <li
