@@ -225,6 +225,7 @@ const getPages = async (id: string) => {
   const requestOptions: RequestInit = {
     method: 'GET',
     redirect: 'follow',
+    next: { revalidate: 900 }, // 15 minutos
   };
 
   const url = new URL(`/at-home/server/${id}`, BASE_URL);
