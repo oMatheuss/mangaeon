@@ -6,4 +6,14 @@ export default {
     minimumCacheTTL: 86400,
     formats: ['image/avif', 'image/webp'],
   },
+  rewrites: async () => [
+    {
+      source: '/mangadex/secure/:origin/:path*',
+      destination: 'https://:origin/:path*',
+    },
+    {
+      source: '/mangadex/insecure/:origin/:path*',
+      destination: 'http://:origin/:path*',
+    },
+  ],
 };

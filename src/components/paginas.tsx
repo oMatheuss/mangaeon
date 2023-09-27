@@ -176,7 +176,6 @@ export const MangaPage = ({ img, page, onResolve }: MangaPageProps) => {
         className='w-full object-contain'
         onLoad={handleLoad}
         onError={handleError}
-        crossOrigin='anonymous'
       />
     </>
   );
