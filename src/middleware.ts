@@ -22,17 +22,22 @@ export default function middleware(request: Request) {
   targetUrl += origin + matches[3];
 
   const headers: { [k: string]: string } = {
-    host: origin,
+    Host: origin,
+    Connection: 'keep-alive',
+    'Upgrade-Insecure-Requests': '1',
+    'Cache-Control': 'no-cache',
   };
 
   if (request.headers.get('user-agent'))
-    headers['user-agent'] = request.headers.get('user-agent')!;
+    headers['User-Agent'] = request.headers.get('User-Agent')!;
 
   if (request.headers.get('accept'))
-    headers['accept'] = request.headers.get('accept')!;
+    headers['Accept'] = request.headers.get('Accept')!;
 
   if (request.headers.get('accept-encoding'))
-    headers['accept-encoding'] = request.headers.get('accept-encoding')!;
+    headers['Accept-Encoding'] = request.headers.get('Accept-Encoding')!;
+
+  console.log(headers);
 
   return fetch(targetUrl, {
     method: 'GET',

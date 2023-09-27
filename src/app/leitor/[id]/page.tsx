@@ -12,9 +12,7 @@ export default async function Leitor({ params }: { params: { id: string } }) {
     <div className='flex flex-col items-center mb-3'>
       <AddViewed id={params.id} />
       <Paginas
-        images={images.srcs.map(
-          (src) => `/mangadex/${secure}/${origin}/${src}`
-        )}
+        images={images.srcs.map((src) => `/mangadex/${secure}/${origin}${src}`)}
       />
       <CommentSection chapterId={params.id} />
     </div>
