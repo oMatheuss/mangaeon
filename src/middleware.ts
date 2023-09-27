@@ -21,11 +21,22 @@ export default function middleware(request: Request) {
 
   targetUrl += origin + matches[3];
 
+  const headers: { [k: string]: string } = {
+    host: origin,
+  };
+
+  if (request.headers.get('user-agent'))
+    headers['user-agent'] = request.headers.get('user-agent')!;
+
+  if (request.headers.get('accept'))
+    headers['accept'] = request.headers.get('accept')!;
+
+  if (request.headers.get('accept-encoding'))
+    headers['accept-encoding'] = request.headers.get('accept-encoding')!;
+
   return fetch(targetUrl, {
     method: 'GET',
-    headers: {
-      Host: origin,
-    },
+    headers,
     next: { revalidate: 900 },
   });
 }
