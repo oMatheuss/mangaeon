@@ -1,9 +1,9 @@
 /** @type {import('next').NextConfig} */
 export default {
   reactStrictMode: true,
-  rewrites: async () => {
-    return [
-      { source: '/api/:path*', destination: 'https://mangalivre.net/:path*' },
-    ];
+  images: {
+    domains: ['uploads.mangadex.org'],
+    minimumCacheTTL: 86400,
+    formats: ['image/avif', 'image/webp'],
   },
 };

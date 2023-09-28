@@ -1,5 +1,5 @@
-import { useLiked, Liked } from '@/lib/liked';
-import { useUser } from '@/lib/user';
+import { useLiked, Liked } from '@/lib/client/liked';
+import { useUser } from '@/lib/client/user';
 import { Frown, StarOff } from 'lucide-react';
 import Link from 'next/link';
 
@@ -7,12 +7,12 @@ export const LikedList = () => {
   const { liked, del, add } = useLiked();
   const [user] = useUser();
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (id: string) => {
     const target = { ...liked.find((x) => x.id === id)! };
     del(target.id); // optimistic delete
 
     if (user !== null) {
-      const { db, doc, deleteDoc } = await import('@/lib/firestore');
+      const { db, doc, deleteDoc } = await import('@/lib/client/firestore');
 
       const docRef = doc(db, 'users', user.uid, 'liked', target.id.toString());
 
@@ -43,7 +43,7 @@ export const LikedList = () => {
 
 interface LikedCardProps {
   liked: Liked;
-  onDelete: (id: number) => void;
+  onDelete: (id: string) => void;
 }
 
 const LikedCard = ({ liked, onDelete }: LikedCardProps) => {

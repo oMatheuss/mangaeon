@@ -2,7 +2,7 @@ import { useAtom } from 'jotai';
 import { atomWithStorage } from 'jotai/utils';
 
 export interface Liked {
-  id: number;
+  id: string;
   name: string;
   image: string;
 }
@@ -12,7 +12,7 @@ export const likedAtom = atomWithStorage<Liked[]>('liked', []);
 export const useLiked = () => {
   const [liked, setLiked] = useAtom(likedAtom);
 
-  const exist = (id: number) => {
+  const exist = (id: string) => {
     return liked.findIndex((x) => x.id === id) > -1;
   };
 
@@ -20,7 +20,7 @@ export const useLiked = () => {
     setLiked((x) => [...x, serie]);
   };
 
-  const del = (id: number): void => {
+  const del = (id: string): void => {
     setLiked((x) => x.filter((y) => y.id !== id));
   };
 

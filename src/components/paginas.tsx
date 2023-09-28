@@ -1,12 +1,11 @@
 'use client';
 
-import { mapUntil } from '@/lib/utils';
-import { Image } from '@/types/images';
+import { mapUntil } from '@/lib/client/utils';
 import { Loader2, RefreshCwOff, RotateCcw } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 
 interface PaginasProps {
-  images: Image[];
+  images: string[];
 }
 
 enum ImageStatus {
@@ -123,7 +122,7 @@ export const Paginas = ({ images }: PaginasProps) => {
 };
 
 interface MangaPageProps {
-  img: Image;
+  img: string;
   page: number;
   onResolve: (success: boolean, num: number) => void;
 }
@@ -169,16 +168,15 @@ export const MangaPage = ({ img, page, onResolve }: MangaPageProps) => {
           <span>Carregando</span>
         </div>
       )}
-      <picture onLoad={handleLoad} onError={handleError}>
-        <source srcSet={img.avif} type='image/avif' />
-        <img
-          ref={imgRef}
-          loading='lazy'
-          src={img.legacy}
-          alt={`Página ${page}`}
-          className='w-full object-contain'
-        />
-      </picture>
+      <img
+        ref={imgRef}
+        loading='lazy'
+        src={img}
+        alt={`Página ${page}`}
+        className='w-full object-contain'
+        onLoad={handleLoad}
+        onError={handleError}
+      />
     </>
   );
 };

@@ -6,14 +6,14 @@ import {
   addDoc,
   deleteDoc,
   doc,
-} from '@/lib/firestore';
+} from '@/lib/client/firestore';
 import { CommentModel } from '@/types/comment';
 
 export const listenComments = (
-  id_chapter: number,
+  chapterId: string,
   callback: (comment: CommentModel[]) => void
 ) => {
-  const col = collection(db, 'leitor', id_chapter.toString(), 'comments');
+  const col = collection(db, 'leitor', chapterId, 'comments');
 
   let first = true;
   const allComments: CommentModel[] = [];
@@ -63,10 +63,10 @@ export const listenComments = (
 };
 
 export const postComment = async (
-  id_chapter: number,
+  chapterId: string,
   comment: Omit<CommentModel, 'id' | 'time'>
 ) => {
-  const col = collection(db, 'leitor', id_chapter.toString(), 'comments');
+  const col = collection(db, 'leitor', chapterId, 'comments');
 
   await addDoc(col, {
     ...comment,
@@ -74,13 +74,7 @@ export const postComment = async (
   } as Omit<CommentModel, 'id'>);
 };
 
-export const deleteComment = async (id_chapter: number, id_comment: string) => {
-  const refDoc = doc(
-    db,
-    'leitor',
-    id_chapter.toString(),
-    'comments',
-    id_comment.toString()
-  );
+export const deleteComment = async (chapterId: string, commentId: string) => {
+  const refDoc = doc(db, 'leitor', chapterId, 'comments', commentId);
   await deleteDoc(refDoc);
 };

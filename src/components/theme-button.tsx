@@ -1,6 +1,6 @@
 'use client';
 
-import { useTheme } from '@/lib/theme';
+import { useTheme } from '@/lib/client/theme';
 
 interface ThemeButtonProps
   extends React.DetailedHTMLProps<

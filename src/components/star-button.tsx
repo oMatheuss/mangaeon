@@ -1,4 +1,6 @@
-import { type Liked, useLiked } from '@/lib/liked';
+'use client';
+
+import { type Liked, useLiked } from '@/lib/client/liked';
 import { Star } from 'lucide-react';
 
 interface HeartButtonProps {
