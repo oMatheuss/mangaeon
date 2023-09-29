@@ -46,7 +46,7 @@ const ReleaseCard = ({ release }: ReleaseCardProps) => {
           width={192}
         />
       </div>
-      <div className='flex flex-col justify-between overflow-hidden p-4'>
+      <section className='flex flex-col justify-between overflow-hidden p-4'>
         <h3 className='font-bold text-xl sm:max-h-24 max-w-fit line-clamp-3 tracking-tight'>
           <Link
             href={linkSerie}
@@ -59,16 +59,19 @@ const ReleaseCard = ({ release }: ReleaseCardProps) => {
         <h4 className='font-bold text-base-content/75 text-sm truncate my-1'>
           {release.date.toLocaleString('pt-BR')}
         </h4>
-        <div className='inline-flex space-x-2 h-6 overflow-y-hidden flex-wrap'>
+        <ul
+          aria-label='Tags'
+          className='inline-flex space-x-2 h-6 overflow-y-hidden flex-wrap'
+        >
           {release.tags.map((tag) => (
-            <span
+            <li
               key={tag}
               className='text-xs whitespace-nowrap p-1 rounded bg-neutral text-neutral-content max-w-fit'
             >
               {tag}
-            </span>
+            </li>
           ))}
-        </div>
+        </ul>
         {/* <nav className='mt-auto inline-flex flex-wrap h-[2.25rem] overflow-hidden text-sm font-semibold text-gray-700'>
           {release.chapters.map((chap) => (
             <Link
@@ -80,7 +83,7 @@ const ReleaseCard = ({ release }: ReleaseCardProps) => {
             </Link>
           ))}
         </nav> */}
-      </div>
+      </section>
     </li>
   );
 };
