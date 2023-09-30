@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { ThemeButton } from '@/components/theme-button';
 import { PaletteIcon } from 'lucide-react';
 
@@ -32,6 +33,11 @@ const themes = [
   'coffee',
   'winter',
 ];
+
+export const metadata: Metadata = {
+  title: 'Tema',
+  description: 'Defina um tema para o site',
+};
 
 export default function Theme() {
   return (

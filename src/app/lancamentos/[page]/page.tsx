@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { Releases } from '@/components/releases';
 import { mangadex } from '@/lib/api/mangadex/api';
 import { ArrowLeftCircle, ArrowRightCircle } from 'lucide-react';
@@ -8,6 +9,12 @@ export const revalidate = 21600;
 
 interface LancamentosProps {
   params: { page: string };
+}
+
+export function generateMetadata({ params }: LancamentosProps): Metadata {
+  return {
+    title: `Lançamentos: ${params.page}`,
+  };
 }
 
 export default async function Lancamentos({ params }: LancamentosProps) {
