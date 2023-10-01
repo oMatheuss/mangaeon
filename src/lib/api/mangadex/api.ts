@@ -153,13 +153,13 @@ const getChapters = async (id: string) => {
 };
 
 const extractChapters = (data: ChapterResponse['volumes']) => {
-  return Object.values(data)
+  return Object.keys(data)
     .map((volume) => {
-      return Object.values(volume.chapters).map((chap) => {
+      return Object.values(data[volume].chapters).map((chap) => {
         return <Chapter>{
           chapterId: chap.id,
           number: chap.chapter,
-          volume: volume.volume,
+          volume: !volume || volume === 'none' ? '' : volume,
           name: '',
         };
       });

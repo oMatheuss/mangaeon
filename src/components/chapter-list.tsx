@@ -36,9 +36,11 @@ const ChapterCard = ({ chapter }: ChapterCardProps) => {
         >
           Capítulo {chapter.number}
         </Link>
-        <span className='font-bold text-xs opacity-75'>
-          Volume {chapter.volume}
-        </span>
+        {chapter.volume && (
+          <span className='font-bold text-xs opacity-75'>
+            Volume {chapter.volume}
+          </span>
+        )}
       </div>
       <div className='flex flex-col items-end'>
         {/* <div className='proportional-nums'>{chapter.date}</div> */}
