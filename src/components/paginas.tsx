@@ -2,7 +2,7 @@
 
 import { mapUntil } from '@/lib/client/utils';
 import { Loader2, RefreshCwOff, RotateCcw } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface PaginasProps {
   images: string[];
@@ -17,9 +17,13 @@ enum ImageStatus {
 }
 
 export const Paginas = ({ images }: PaginasProps) => {
-  const [imagesStatus, setImagesStatus] = useState<ImageStatus[]>(() =>
-    Array<ImageStatus>(images.length).fill(ImageStatus.NOT_FETCHED)
-  );
+  const [imagesStatus, setImagesStatus] = useState<ImageStatus[]>([]);
+
+  useEffect(() => {
+    setImagesStatus(
+      Array<ImageStatus>(images.length).fill(ImageStatus.NOT_FETCHED)
+    );
+  }, [images]);
 
   const handleImgResolve = (success: boolean, page: number) => {
     const idx = page - 1;
@@ -123,20 +127,43 @@ interface MangaPageProps {
   onResolve: (success: boolean, num: number) => void;
 }
 
+type Status =
+  | {
+      resolved: false;
+      success: null;
+    }
+  | {
+      resolved: true;
+      success: boolean;
+    };
+
 export const MangaPage = ({ img, page, onResolve }: MangaPageProps) => {
-  const [loading, setLoading] = useState(true);
-  const handleLoad = () => {
-    setLoading(false);
-    onResolve(true, page);
-  };
-  const handleError = () => {
-    setLoading(false);
-    onResolve(false, page);
-  };
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  const [status, setStatus] = useState<Status>({
+    resolved: false,
+    success: null,
+  });
+
+  const handleLoad = () => setStatus({ resolved: true, success: true });
+  const handleError = () => setStatus({ resolved: true, success: false });
+
+  useEffect(() => {
+    if (!imgRef.current) return;
+
+    if (imgRef.current.complete) {
+      setStatus({ resolved: true, success: imgRef.current.naturalHeight > 0 });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (status.resolved) onResolve(status.success, page);
+  }, [status, page]);
 
   return (
     <>
       <img
+        ref={imgRef}
         loading='lazy'
         src={img}
         alt={`Página ${page}`}
@@ -144,7 +171,7 @@ export const MangaPage = ({ img, page, onResolve }: MangaPageProps) => {
         onLoad={handleLoad}
         onError={handleError}
       />
-      {loading && (
+      {!status.resolved && (
         <div className='my-3 flex flex-col justify-center items-center'>
           <Loader2 className='h-10 w-10 animate-spin' />
           <span>Carregando</span>
