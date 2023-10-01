@@ -98,8 +98,9 @@ const extractManga = async (data: Manga) => {
   let description = '';
   const descriptionLangs = Object.keys(data.attributes.description);
   for (let lang of langs) {
-    if (descriptionLangs.includes('pt-br')) {
+    if (descriptionLangs.includes(lang)) {
       description = data.attributes.description[lang];
+      break;
     }
   }
 
