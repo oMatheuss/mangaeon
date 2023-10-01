@@ -162,12 +162,6 @@ export const MangaPage = ({ img, page, onResolve }: MangaPageProps) => {
 
   return (
     <>
-      {!status.resolved && (
-        <div className='my-3 flex flex-col justify-center items-center'>
-          <Loader2 className='h-10 w-10 animate-spin' />
-          <span>Carregando</span>
-        </div>
-      )}
       <img
         ref={imgRef}
         loading='lazy'
@@ -177,6 +171,12 @@ export const MangaPage = ({ img, page, onResolve }: MangaPageProps) => {
         onLoad={handleLoad}
         onError={handleError}
       />
+      {!status.resolved && (
+        <div className='my-3 flex flex-col justify-center items-center'>
+          <Loader2 className='h-10 w-10 animate-spin' />
+          <span>Carregando</span>
+        </div>
+      )}
     </>
   );
 };
