@@ -79,6 +79,11 @@ const getManga = async (id: string) => {
   searchParams.append('ids[]', id);
   searchParams.append('limit', '1');
 
+  searchParams.append('contentRating[]', 'safe');
+  searchParams.append('contentRating[]', 'suggestive');
+  searchParams.append('contentRating[]', 'erotica');
+  searchParams.append('contentRating[]', 'pornographic');
+
   const response = await fetch(url, requestOptions);
   const json: MangaResponse = await response.json();
   const manga = extractManga(json.data[0]);
