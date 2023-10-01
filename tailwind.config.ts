@@ -1,6 +1,7 @@
 import type { Config } from 'tailwindcss';
 import { fontFamily } from 'tailwindcss/defaultTheme';
 import daisyui from 'daisyui';
+import typography from '@tailwindcss/typography';
 
 const config: Config = {
   content: ['./index.html', './src/**/*.{ts,tsx}'],
@@ -14,7 +15,7 @@ const config: Config = {
       },
     },
   },
-  plugins: [daisyui],
+  plugins: [daisyui, typography],
   daisyui: {
     themes: true,
     darkTheme: 'dark',

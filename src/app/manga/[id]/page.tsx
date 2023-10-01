@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { ChapterList } from '@/components/chapter-list';
 import { mangadex } from '@/lib/api/mangadex/api';
 import Image from 'next/image';
+import { remark } from 'remark';
+import html from 'remark-html';
 
 interface MangaProps {
   params: { id: string };
@@ -33,6 +35,13 @@ export default async function Manga({ params }: MangaProps) {
   const manga = await mangadex.manga(params.id);
   const chapters = await mangadex.chapters(params.id);
 
+  let descHtml = '';
+
+  if (manga.description) {
+    const descFromMd = await remark().use(html).process(manga.description);
+    descHtml = descFromMd.toString('utf-8');
+  }
+
   return (
     <div className='flex flex-col'>
       <div className='relative items-center mt-6 border-separate'>
@@ -44,15 +53,16 @@ export default async function Manga({ params }: MangaProps) {
           width={192}
         />
         <div className='mb-3'>
-          <h1 className='sm:mt-3 text-5xl font-extrabold tracking-tight'>
+          <h1 className='sm:mt-3 text-3xl sm:text-5xl font-extrabold tracking-tight'>
             {manga.title}
           </h1>
           <p className='font-bold text-base-content/70 ml-3 mb-3'>
             {manga.author}, {manga.artist}
           </p>
-          <p className='indent-4 md:indent-8 text-justify'>
-            {manga.description}
-          </p>
+          <div
+            className='prose max-w-full indent-4 md:indent-8 text-justify'
+            dangerouslySetInnerHTML={{ __html: descHtml }}
+          />
         </div>
       </div>
       <div className='flex flex-row flex-wrap capitalize'>
