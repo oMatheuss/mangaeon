@@ -147,7 +147,9 @@ const getChapters = async (id: string) => {
   const response = await fetch(url, requestOptions);
   const json: ChapterResponse = await response.json();
 
-  return extractChapters(json.volumes).reverse();
+  return extractChapters(json.volumes)
+    .sort((a, b) => parseFloat(a.number) - parseFloat(b.number))
+    .reverse();
 };
 
 const extractChapters = (data: ChapterResponse['volumes']) => {

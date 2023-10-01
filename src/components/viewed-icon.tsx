@@ -1,3 +1,5 @@
+'use client';
+
 import { useViewed } from '@/lib/client/viewed';
 import { BookOpenCheck, LucideProps } from 'lucide-react';
 

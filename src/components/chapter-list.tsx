@@ -1,5 +1,3 @@
-'use client';
-
 import { ViewedIcon } from '@/components/viewed-icon';
 import { Chapter } from '@/types/manga';
 import Link from 'next/link';
