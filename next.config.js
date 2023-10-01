@@ -9,7 +9,7 @@ export default {
   rewrites: async () => {
     /**
      * Attention!!!
-     * In prod, remove this if block or set a reverse proxy like nginx
+     * In prod, set reverse proxy like nginx
      */
     return [
       {
