@@ -16,7 +16,7 @@ import {
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import * as Avatar from '@radix-ui/react-avatar';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 const links = [
   { icon: Home, text: 'Home', to: '/' },
@@ -26,6 +26,8 @@ const links = [
 
 export const Navbar = () => {
   const router = useRouter();
+  const pathname = usePathname();
+
   const [isOpen, setOpen] = useState(false);
   const toggleOpen = () => setOpen((x) => !x);
   const navRef = useRef<HTMLElement>(null);
@@ -99,8 +101,9 @@ export const Navbar = () => {
                 return (
                   <li key={link.to} className='inline-flex'>
                     <Link
+                      aria-current={pathname === link.to ? 'page' : undefined}
                       href={link.to}
-                      className='inline-flex items-center hover:text-primary-focus'
+                      className='inline-flex items-center hover:text-primary-focus aria-[current]:text-primary'
                     >
                       <div className='font-bold pt-1'>{link.text}</div>
                     </Link>
