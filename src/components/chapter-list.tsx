@@ -33,6 +33,7 @@ const ChapterCard = ({ chapter }: ChapterCardProps) => {
           title={`Ler capítulo ${chapter.number}`}
           href={link}
           className='hover:underline'
+          prefetch={false}
         >
           Capítulo {chapter.number}
         </Link>
