@@ -46,7 +46,7 @@ export default async function Manga({ params }: MangaProps) {
     <div className='flex flex-col'>
       <div className='relative items-center mt-6 border-separate'>
         <Image
-          className='float-none sm:float-left object-cover aspect-[3/4] rounded m-auto mb-6 sm:m-3'
+          className='float-none sm:float-left object-cover aspect-[3/4] rounded m-auto mb-6 sm:m-0 sm:mr-3 sm:mb-3'
           src={manga.cover}
           alt={`Imagem de capa de ${manga.title}`}
           height={256}
@@ -56,11 +56,11 @@ export default async function Manga({ params }: MangaProps) {
           <h1 className='sm:mt-3 text-3xl sm:text-5xl font-extrabold tracking-tight'>
             {manga.title}
           </h1>
-          <p className='font-bold text-base-content/70 ml-3 mb-3'>
+          <p className='font-bold text-base-content/70 mb-3'>
             {manga.author}, {manga.artist}
           </p>
           <div
-            className='prose max-w-full indent-4 md:indent-8 text-justify'
+            className='prose prose-hr:my-3 max-w-full text-justify'
             dangerouslySetInnerHTML={{ __html: descHtml }}
           />
         </div>
