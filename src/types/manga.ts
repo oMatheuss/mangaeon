@@ -9,7 +9,12 @@ export interface Manga {
 
 export interface Chapter {
   chapterId: string;
-  name: string;
+  title: string;
   number: string;
   volume: string;
+  publishAt: string;
+  pages: number;
+
+  scanlator: string;
+  scanlatorWebsite: string;
 }

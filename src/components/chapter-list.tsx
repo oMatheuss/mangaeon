@@ -10,7 +10,7 @@ export const ChapterList = ({ chapters }: ChapterListProps) => {
   return (
     <>
       <h2 className='font-bold text-xl mt-4 mb-2'>Capítulos</h2>
-      <ol className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-4'>
+      <ol className='flex flex-col space-y-3 mb-4'>
         {chapters.map((chap) => (
           <ChapterCard key={chap.chapterId} chapter={chap} />
         ))}
@@ -25,29 +25,34 @@ interface ChapterCardProps {
 
 const ChapterCard = ({ chapter }: ChapterCardProps) => {
   const link = `/leitor/${chapter.chapterId}`;
+  const title = chapter.title ? chapter.title : `Capítulo ${chapter.number}`;
 
   return (
-    <li className='w-full flex flex-row justify-between items-center border border-base-content/20 p-2 rounded-bl-lg rounded-tr-lg bg-base-200 shadow-md'>
-      <div className='flex flex-col'>
-        <Link
-          title={`Ler capítulo ${chapter.number}`}
-          href={link}
-          className='hover:underline'
-          prefetch={false}
-        >
-          Capítulo {chapter.number}
-        </Link>
-        {chapter.volume && (
-          <span className='font-bold text-xs opacity-75'>
-            Volume {chapter.volume}
-          </span>
-        )}
-      </div>
-      <div className='flex flex-col items-end'>
-        {/* <div className='proportional-nums'>{chapter.date}</div> */}
-        <div className='flex flex-row space-x-3 items-center'>
-          <ViewedIcon className='w-4 h-4' chapterId={chapter.chapterId} />
-        </div>
+    <li>
+      <div className='p-3 w-full border border-base-content/20 rounded-bl-lg rounded-tr-lg bg-base-200 shadow-md space-y-3 grow overflow-hidden'>
+        <h3 className='font-extrabold line-clamp-2 text-lg'>
+          <ViewedIcon chapterId={chapter.chapterId} className='inline' />{' '}
+          <Link
+            title={title}
+            href={link}
+            className='hover:text-secondary'
+            prefetch={false}
+          >
+            {chapter.number} - {title}
+          </Link>
+        </h3>
+        <p className='opacity-75'>
+          {chapter.volume && <span>Volume {chapter.volume} - </span>}
+          {new Date(chapter.publishAt).toLocaleDateString('pt-br')}
+          {' - '}
+          <a
+            href={chapter.scanlatorWebsite}
+            target='_blank'
+            className='font-extrabold hover:text-primary'
+          >
+            {chapter.scanlator}
+          </a>
+        </p>
       </div>
     </li>
   );

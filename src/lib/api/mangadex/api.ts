@@ -3,7 +3,7 @@ import type { Manga, MangaResponse } from './manga';
 import type { HighLights } from '@/types/highlights';
 import type { Release } from '@/types/releases';
 import type { Chapter, Manga as ExtractedManga } from '@/types/manga';
-import type { ChapterResponse } from './chapter';
+import type { FeedResponse } from './chapter';
 import type { Search } from '@/types/search';
 import type { PagesResponse } from './pages';
 import type { Images } from '@/types/images';
@@ -138,33 +138,67 @@ const getChapters = async (id: string) => {
     redirect: 'follow',
   };
 
-  const url = new URL(`/manga/${id}/aggregate`, BASE_URL);
+  const url = new URL(`/manga/${id}/feed`, BASE_URL);
   const searchParams = url.searchParams;
 
   searchParams.append('translatedLanguage[]', 'pt-br');
   searchParams.append('translatedLanguage[]', 'pt');
 
-  const response = await fetch(url, requestOptions);
-  const json: ChapterResponse = await response.json();
+  searchParams.append('limit', '96');
+  searchParams.append('offset', '0');
 
-  return extractChapters(json.volumes)
+  searchParams.append('includes[]', 'scanlation_group');
+  searchParams.append('includes[]', 'user');
+
+  searchParams.append('order[volume]', 'desc');
+  searchParams.append('order[chapter]', 'desc');
+
+  searchParams.append('contentRating[]', 'safe');
+  searchParams.append('contentRating[]', 'suggestive');
+  searchParams.append('contentRating[]', 'erotica');
+  searchParams.append('contentRating[]', 'pornographic');
+
+  const response = await fetch(url, requestOptions);
+  const json: FeedResponse = await response.json();
+
+  return extractChapters(json.data)
+    .filter((x) => x.pages > 0)
     .sort((a, b) => parseFloat(a.number) - parseFloat(b.number))
     .reverse();
 };
 
-const extractChapters = (data: ChapterResponse['volumes']) => {
-  return Object.keys(data)
-    .map((volume) => {
-      return Object.values(data[volume].chapters).map((chap) => {
-        return <Chapter>{
-          chapterId: chap.id,
-          number: chap.chapter,
-          volume: !volume || volume === 'none' ? '' : volume,
-          name: '',
-        };
-      });
-    })
-    .flat();
+const extractChapters = (data: FeedResponse['data']) => {
+  return data.map((chap) => {
+    const extracted = <Partial<Chapter>>{
+      chapterId: chap.id,
+      number: chap.attributes.chapter,
+      volume: chap.attributes.volume,
+      title: chap.attributes.title,
+      publishAt: chap.attributes.publishAt,
+      pages: chap.attributes.pages,
+    };
+
+    for (const rel of chap.relationships) {
+      switch (rel.type) {
+        case 'scanlation_group':
+          extracted.scanlator = rel.attributes.name;
+          if (rel.attributes.website)
+            extracted.scanlatorWebsite = rel.attributes.website;
+          else if (rel.attributes.twitter)
+            extracted.scanlatorWebsite = `//twitter.com/${rel.attributes.twitter}`;
+          else if (rel.attributes.discord) {
+            extracted.scanlatorWebsite = `//discord.gg/${rel.attributes.discord}`;
+          }
+          break;
+        case 'manga':
+          break;
+        case 'user':
+          break;
+      }
+    }
+
+    return extracted as Chapter;
+  });
 };
 
 const getSearch = async (query: string) => {
