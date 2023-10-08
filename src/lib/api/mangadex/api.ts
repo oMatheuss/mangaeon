@@ -348,7 +348,7 @@ const getHighLights = async () => {
   const searchParams = url.searchParams;
 
   searchParams.append('includes[]', 'cover_art');
-  searchParams.append('order[relevance]', 'desc');
+  searchParams.append('order[rating]', 'desc');
   searchParams.append('contentRating[]', 'safe');
   //searchParams.append('contentRating[]', 'suggestive');
 
@@ -358,7 +358,6 @@ const getHighLights = async () => {
   searchParams.append('updatedAtSince', lastMonth.toISOString().slice(0, 19));
   searchParams.append('availableTranslatedLanguage[]', 'pt-br');
   searchParams.append('availableTranslatedLanguage[]', 'pt');
-  searchParams.append('status[]', 'ongoing');
   searchParams.append('limit', '10');
   searchParams.append('hasAvailableChapters', 'true');
 
