@@ -22,6 +22,7 @@ export const StarButton = ({ serie }: HeartButtonProps) => {
 
   return (
     <button
+      role='checkbox'
       aria-checked={isActive}
       className='absolute top-0 left-0 inline-flex items-center justify-center w-10 h-10 text-yellow-600 rounded-br group'
       onClick={handleClick}
