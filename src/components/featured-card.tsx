@@ -21,13 +21,13 @@ export const FeaturedCard = ({ item }: FeaturedCardProps) => {
         color: `#${item.foreground}`,
       }}
     >
-      <Link href={link} className='relative flex aspect-[3/4] h-full'>
+      <Link href={link} className='flex aspect-[2/3] w-auto h-full'>
         <Image
           src={item.cover}
           alt={`Imagem de ${item.title}`}
-          className='object-cover'
-          sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
-          fill
+          className='object-cover object-center'
+          width={192}
+          height={288}
         />
       </Link>
       <div className='flex flex-col justify-center text-center grow p-2 sm:px-6 sm:py-4'>

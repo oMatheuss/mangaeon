@@ -37,13 +37,13 @@ const ReleaseCard = ({ release }: ReleaseCardProps) => {
           name: release.title,
         }}
       />
-      <div className='min-w-fit bg-base-200'>
+      <div className='flex justify-center w-full sm:w-auto min-w-fit bg-base-200'>
         <Image
           src={release.cover}
           alt={release.title}
-          className='w-full sm:w-32 h-48 object-contain sm:object-cover'
-          height={256}
-          width={192}
+          className='w-32 h-48 object-cover sm:object-cover'
+          height={192}
+          width={128}
         />
       </div>
       <section className='flex flex-col justify-between overflow-hidden p-4'>

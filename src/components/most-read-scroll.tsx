@@ -30,14 +30,14 @@ const MostReadCard = ({ item }: MostReadCardProps) => {
   return (
     <li className='flex flex-col items-center overflow-hidden shadow-md bg-base-200 rounded-lg border border-base-content/20'>
       <Link href={link}>
-        <div className='relative w-32 h-48 overflow-hidden dark:shadow-dark-b shadow-md'>
+        <div className='overflow-hidden dark:shadow-dark-b shadow-md'>
           <Image
             src={item.cover}
             alt={`Image de ${item.title}.`}
-            className='object-cover object-center transition-transform hover:scale-110'
+            className='w-32 h-48 object-cover object-center transition-transform hover:scale-110'
             loading='lazy'
-            sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
-            fill
+            width={128}
+            height={192}
           />
         </div>
       </Link>

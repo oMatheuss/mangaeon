@@ -373,7 +373,7 @@ const extractHighLights = async (data: Manga) => {
   const coverImage =
     data.relationships.filter((x) => x.type === 'cover_art')[0]?.attributes
       ?.fileName ?? '';
-  const cover = `${BASE_COVER_URL}/${id}/${coverImage}.512.jpg`;
+  const cover = `${BASE_COVER_URL}/${id}/${coverImage}.256.jpg`;
 
   const date = new Date(data.attributes.updatedAt);
 
