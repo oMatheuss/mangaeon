@@ -4,9 +4,12 @@ import { mangadex } from '@/lib/api/mangadex/api';
 import Image from 'next/image';
 import { remark } from 'remark';
 import html from 'remark-html';
+import { Pagination } from '@/components/pagination';
+import { notFound } from 'next/navigation';
 
 interface MangaProps {
   params: { id: string };
+  searchParams: { page?: string };
 }
 
 export async function generateMetadata({
@@ -31,9 +34,16 @@ export async function generateMetadata({
   };
 }
 
-export default async function Manga({ params }: MangaProps) {
+export default async function Manga({ params, searchParams }: MangaProps) {
   const manga = await mangadex.manga(params.id);
-  const chapters = await mangadex.chapters(params.id);
+
+  let page: number;
+  if (searchParams.page && !/\d+/.test(searchParams.page)) page = 1;
+  else page = searchParams.page ? parseInt(searchParams.page) : 1;
+
+  if (page <= 0 || page * 96 > 10000) return notFound();
+
+  const chaptersWithPagination = await mangadex.chapters(params.id, page);
 
   let descHtml = '';
 
@@ -75,7 +85,13 @@ export default async function Manga({ params }: MangaProps) {
           </span>
         ))}
       </div>
-      <ChapterList chapters={chapters} />
+      <ChapterList chapters={chaptersWithPagination.chapters} />
+      <Pagination
+        limit={chaptersWithPagination.limit}
+        page={page}
+        total={chaptersWithPagination.total}
+        offset={chaptersWithPagination.offset}
+      />
     </div>
   );
 }

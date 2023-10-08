@@ -2,7 +2,11 @@ import type { MostRead } from '@/types/most-read';
 import type { Manga, MangaResponse } from './manga';
 import type { HighLights } from '@/types/highlights';
 import type { Release } from '@/types/releases';
-import type { Chapter, Manga as ExtractedManga } from '@/types/manga';
+import type {
+  Chapter,
+  ChaptersWithPagination,
+  Manga as ExtractedManga,
+} from '@/types/manga';
 import type { FeedResponse } from './chapter';
 import type { Search } from '@/types/search';
 import type { PagesResponse } from './pages';
@@ -132,7 +136,7 @@ const extractManga = async (data: Manga) => {
   };
 };
 
-const getChapters = async (id: string) => {
+const getChapters = async (id: string, page: number = 0) => {
   const requestOptions: RequestInit = {
     method: 'GET',
     redirect: 'follow',
@@ -158,13 +162,22 @@ const getChapters = async (id: string) => {
   searchParams.append('contentRating[]', 'erotica');
   searchParams.append('contentRating[]', 'pornographic');
 
+  if (page > 1) {
+    searchParams.append('offset', (96 * (page - 1)).toString());
+  }
+
   const response = await fetch(url, requestOptions);
   const json: FeedResponse = await response.json();
 
-  return extractChapters(json.data)
-    .filter((x) => x.pages > 0)
-    .sort((a, b) => parseFloat(a.number) - parseFloat(b.number))
-    .reverse();
+  return <ChaptersWithPagination>{
+    chapters: extractChapters(json.data)
+      .filter((x) => x.pages > 0)
+      .sort((a, b) => parseFloat(a.number) - parseFloat(b.number))
+      .reverse(),
+    limit: json.limit,
+    offset: json.offset,
+    total: json.total,
+  };
 };
 
 const extractChapters = (data: FeedResponse['data']) => {

@@ -18,3 +18,13 @@ export interface Chapter {
   scanlator: string;
   scanlatorWebsite: string;
 }
+
+export interface ChaptersWithPagination extends Pagination {
+  chapters: Chapter[];
+}
+
+interface Pagination {
+  limit: number;
+  offset: number;
+  total: number;
+}
