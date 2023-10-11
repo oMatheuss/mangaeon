@@ -1,28 +1,15 @@
+'use client';
+
 import { useLiked, Liked } from '@/lib/client/liked';
-import { useUser } from '@/lib/client/user';
 import { Frown, StarOff } from 'lucide-react';
 import Link from 'next/link';
 
 export const LikedList = () => {
-  const { liked, del, add } = useLiked();
-  const [user] = useUser();
+  const { liked, del } = useLiked();
 
   const handleDelete = async (id: string) => {
     const target = { ...liked.find((x) => x.id === id)! };
-    del(target.id); // optimistic delete
-
-    if (user !== null) {
-      const { db, doc, deleteDoc } = await import('@/lib/client/firestore');
-
-      const docRef = doc(db, 'users', user.uid, 'liked', target.id.toString());
-
-      deleteDoc(docRef).catch(() => {
-        add(target); // rollback optimistic delete
-        alert(
-          'Ops! Ocorreu um erro ao excluir da nuvem. Tente novamente mais tarde.'
-        );
-      });
-    }
+    del(target.id);
   };
 
   return (

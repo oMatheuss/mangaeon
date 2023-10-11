@@ -1,21 +1,16 @@
 'use client';
 
-import { useUser } from '@/lib/client/user';
 import {
   ArrowLeft,
   BookOpen,
   Heart,
   Home,
-  LogIn,
-  LogOut,
   MenuIcon,
   Palette,
-  User,
   XIcon,
 } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import * as Avatar from '@radix-ui/react-avatar';
 import { usePathname, useRouter } from 'next/navigation';
 
 const links = [
@@ -31,8 +26,6 @@ export const Navbar = () => {
   const [isOpen, setOpen] = useState(false);
   const toggleOpen = () => setOpen((x) => !x);
   const navRef = useRef<HTMLElement>(null);
-
-  const [user] = useUser();
 
   useEffect(() => {
     let lastPosition = window.scrollY;
@@ -58,27 +51,14 @@ export const Navbar = () => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [isOpen]);
-
-  const signIn = async () => {
-    const { auth, signInWithPopup, GoogleAuthProvider } = await import(
-      '@/lib/client/auth'
-    );
-    const provider = new GoogleAuthProvider();
-    await signInWithPopup(auth, provider);
-  };
-
-  const signOut = async () => {
-    const { signOut, auth } = await import('@/lib/client/auth');
-    await signOut(auth);
-  };
+  }, []);
 
   const tabIndexMobile = isOpen ? 0 : -1;
 
   return (
     <nav
       ref={navRef}
-      className='sticky left-0 right-0 top-0 z-10 transition-transform -translate-y-[var(--nav-offset)]'
+      className='border-b border-b-base-content/10 sticky left-0 right-0 top-0 z-10 transition-transform -translate-y-[var(--nav-offset)]'
     >
       <div className='relative w-full overflow-x-clip bg-base-200/90 backdrop-blur'>
         <div className='max-w-screen-2xl flex items-center justify-between mx-auto p-3'>
@@ -113,38 +93,6 @@ export const Navbar = () => {
             </ul>
           </div>
 
-          {user === null ? (
-            <button
-              className='hidden md:flex items-center py-2 px-3 rounded-lg hover:bg-base-content/10 focus:outline-none focus:ring-2'
-              onClick={signIn}
-              tabIndex={tabIndexMobile}
-            >
-              Login <LogIn className='ml-2' />
-            </button>
-          ) : (
-            <div className='hidden md:inline-flex'>
-              <div className='flex flex-row items-center mr-3'>
-                <Avatar.Root>
-                  <Avatar.Image
-                    src={user.photoURL!}
-                    alt={user.displayName!}
-                    className='h-6 w-6 rounded-full outline outline-2 outline-offset-2 outline-current hover:outline-blue-700'
-                  />
-                  <Avatar.Fallback delayMs={600}>
-                    <User />
-                  </Avatar.Fallback>
-                </Avatar.Root>
-              </div>
-              <button
-                className='flex items-center justify-end py-2 px-3 rounded-lg hover:bg-base-content/10 focus:outline-none focus:ring-2'
-                onClick={signOut}
-                tabIndex={tabIndexMobile}
-              >
-                Logout <LogOut className='ml-2' />
-              </button>
-            </div>
-          )}
-
           <button
             onClick={toggleOpen}
             type='button'
@@ -159,7 +107,7 @@ export const Navbar = () => {
         {/* Mobile */}
         <div
           data-expanded={isOpen}
-          className='translate-x-full data-[expanded=true]:translate-x-0 md:hidden transition-transform flex absolute top-full w-full bg-base-200/90 backdrop-blur '
+          className='border-b border-b-base-content/10 translate-x-full data-[expanded=true]:translate-x-0 md:hidden transition-transform flex absolute top-full w-full bg-base-200/90 backdrop-blur '
         >
           <div className='px-4 w-full flex-col mb-2'>
             <hr className='mb-2 border-base-content/10' />
@@ -177,39 +125,6 @@ export const Navbar = () => {
                 </li>
               ))}
             </ul>
-            <hr className='my-2 border-base-content/10' />
-            {user === null ? (
-              <button
-                className='flex items-center w-full justify-end py-2 px-3 rounded-lg hover:bg-base-content/10 focus:outline-none focus:ring-2'
-                onClick={signIn}
-                tabIndex={tabIndexMobile}
-              >
-                Login <LogIn className='ml-2' />
-              </button>
-            ) : (
-              <>
-                <div className='flex flex-row items-center space-x-3 m-3'>
-                  <Avatar.Root>
-                    <Avatar.Image
-                      src={user.photoURL!}
-                      alt={user.displayName!}
-                      className='h-6 w-6 rounded-full outline outline-2 outline-offset-2 outline-current hover:outline-blue-700'
-                    />
-                    <Avatar.Fallback delayMs={600}>
-                      <User />
-                    </Avatar.Fallback>
-                  </Avatar.Root>
-                  <div>{user?.displayName}</div>
-                </div>
-                <button
-                  className='flex items-center w-full justify-end py-2 px-3 rounded-lg hover:bg-base-content/10 focus:outline-none focus:ring-2'
-                  onClick={signOut}
-                  tabIndex={tabIndexMobile}
-                >
-                  Logout <LogOut className='ml-2' />
-                </button>
-              </>
-            )}
           </div>
         </div>
       </div>

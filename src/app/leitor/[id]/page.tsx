@@ -1,5 +1,4 @@
 import { AddViewed } from '@/components/add-viewed';
-import { CommentSection } from '@/components/comment-section';
 import { Paginas } from '@/components/paginas';
 import { mangadex } from '@/lib/api/mangadex/api';
 
@@ -14,7 +13,6 @@ export default async function Leitor({ params }: { params: { id: string } }) {
       <Paginas
         images={images.srcs.map((src) => `/mangadex/${secure}/${origin}${src}`)}
       />
-      <CommentSection chapterId={params.id} />
     </div>
   );
 }
