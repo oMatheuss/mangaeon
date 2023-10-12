@@ -21,10 +21,10 @@ const config: Config = {
     darkTheme: 'dark',
     base: true,
     styled: true,
-    utils: true,
+    utils: false,
     rtl: false,
     prefix: '',
-    logs: true,
+    logs: false,
   },
 };
 

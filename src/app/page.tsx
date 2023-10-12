@@ -1,4 +1,3 @@
-import { FeaturedCard } from '@/components/featured-card';
 import { FeaturedScroll } from '@/components/featured-scroll';
 import { MostReadScroll } from '@/components/most-read-scroll';
 import { Releases } from '@/components/releases';
@@ -10,18 +9,13 @@ import Link from 'next/link';
 export const revalidate = 21600;
 
 export default async function Home() {
-  const highLights = await mangadex.highlights();
   const mostRead = await mangadex.mostRead();
   const releases = await mangadex.releases(1);
 
   return (
     <div className='flex flex-col my-3'>
       <SearchBar />
-      <FeaturedScroll>
-        {highLights.map((hl) => (
-          <FeaturedCard key={hl.id} item={hl} />
-        ))}
-      </FeaturedScroll>
+      <FeaturedScroll />
       <MostReadScroll items={mostRead} />
       <Releases releases={releases} />
       <div className='flex justify-center mt-3'>
