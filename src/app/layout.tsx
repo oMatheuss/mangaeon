@@ -1,5 +1,6 @@
 import '@/index.css';
 
+import type { Viewport } from 'next';
 import type { Metadata } from 'next';
 import { Comfortaa } from 'next/font/google';
 import { Footer } from '@/components/footer';
@@ -39,13 +40,16 @@ export const metadata: Metadata = {
     'mobile-web-app-capable': 'yes',
   },
   manifest: '/site.webmanifest',
+  verification: {
+    google: 'CFeJ-y3WPijLH_DeRueZt7i9eudIAuUjLi7YUKq5Vlc',
+  },
+};
+
+export const viewport: Viewport = {
   themeColor: [
     { media: '(prefers-color-scheme: light)', color: '#ffffff' },
     { media: '(prefers-color-scheme: dark)', color: '#111827' },
   ],
-  verification: {
-    google: 'CFeJ-y3WPijLH_DeRueZt7i9eudIAuUjLi7YUKq5Vlc',
-  },
 };
 
 const comfortaa = Comfortaa({
