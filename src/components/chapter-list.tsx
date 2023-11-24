@@ -28,7 +28,7 @@ export const ChapterList = ({ chapters }: ChapterListProps) => {
         {groupedByChapter.map((group) => (
           <li key={group.number}>
             {group.chapters.map((chap) => (
-              <ChapterCardItem chapter={chap} />
+              <ChapterCardItem key={chap.chapterId} chapter={chap} />
             ))}
           </li>
         ))}
