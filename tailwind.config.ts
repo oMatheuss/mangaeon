@@ -11,7 +11,7 @@ const config: Config = {
         pwa: { raw: '(display-mode: standalone)' },
       },
       fontFamily: {
-        comfortaa: ['var(--font-comfortaa)', ...fontFamily.sans],
+        sans: ['var(--font-quicksand)', ...fontFamily.sans],
       },
     },
   },

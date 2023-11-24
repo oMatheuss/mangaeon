@@ -2,7 +2,7 @@ import '@/index.css';
 
 import type { Viewport } from 'next';
 import type { Metadata } from 'next';
-import { Comfortaa } from 'next/font/google';
+import { Quicksand } from 'next/font/google';
 import { Footer } from '@/components/footer';
 import { Navbar } from '@/components/navbar';
 import { ClientProviders } from '@/components/client-providers';
@@ -52,15 +52,16 @@ export const viewport: Viewport = {
   ],
 };
 
-const comfortaa = Comfortaa({
+const font = Quicksand({
   subsets: ['latin'],
+  weight: 'variable',
   display: 'swap',
-  variable: '--font-comfortaa',
+  variable: '--font-quicksand',
 });
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang='pt-BR' className={comfortaa.variable}>
+    <html lang='pt-BR' className={font.variable}>
       <body>
         <ClientProviders>
           <ThemeApplier />

@@ -4,8 +4,6 @@
 
 @layer base {
   :root {
-    @apply font-comfortaa font-normal;
-
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;

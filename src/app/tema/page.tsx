@@ -46,7 +46,7 @@ export default function Theme() {
         <PaletteIcon className='inline h-7 w-7 mr-2 text-primary' />
         <h2 className='font-bold text-2xl'>Temas</h2>
       </div>
-      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-4'>
+      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-4 font-sans'>
         {themes.map((theme) => {
           return (
             <ThemeButton
