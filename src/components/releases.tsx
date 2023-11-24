@@ -46,19 +46,19 @@ const ReleaseCard = ({ release }: ReleaseCardProps) => {
           width={128}
         />
       </div>
-      <section className='flex flex-col justify-between overflow-hidden p-4'>
+      <section className='flex flex-col overflow-hidden p-4'>
         <h3 className='font-bold text-xl sm:max-h-24 max-w-fit line-clamp-3 tracking-tight'>
           <Link
             href={linkSerie}
             title={release.title}
-            className='hover:underline'
+            className='hover:text-primary'
           >
             {release.title}
           </Link>
         </h3>
-        <h4 className='font-bold text-base-content/75 text-sm truncate my-1'>
+        <p className='font-bold mt-auto text-base-content/75 text-sm truncate my-1'>
           {release.date.toLocaleString('pt-BR')}
-        </h4>
+        </p>
         <ul
           aria-label='Tags'
           className='inline-flex space-x-2 h-6 overflow-y-hidden flex-wrap'

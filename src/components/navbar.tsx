@@ -59,20 +59,22 @@ export const Navbar = () => {
 
             <Link href='/' className='flex items-center py-2 px-3'>
               <BookOpen className='w-6 h-6 sm:mr-2' />
-              <span className='sr-only sm:not-sr-only'>MANGÁ ÉON</span>
+              <span className='font-bold sr-only sm:not-sr-only'>
+                MANGÁ ÉON
+              </span>
             </Link>
 
             <ul className='flex flex-row'>
               {links.map((link) => {
                 return (
-                  <li key={link.to} className='inline-flex'>
+                  <li key={link.to} className='inline-flex font-medium'>
                     <Link
                       aria-current={pathname === link.to ? 'page' : undefined}
                       href={link.to}
                       className='inline-flex items-center hover:text-primary-focus aria-[current]:text-primary py-2 px-3'
                     >
-                      <link.icon className='mr-2' />
-                      <div className='sr-only sm:not-sr-only font-bold pt-1'>
+                      <link.icon className='mr-2 stroke-3' />
+                      <div className='sr-only sm:not-sr-only pt-1'>
                         {link.text}
                       </div>
                     </Link>

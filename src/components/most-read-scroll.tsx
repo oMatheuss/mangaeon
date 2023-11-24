@@ -44,7 +44,7 @@ const MostReadCard = ({ item }: MostReadCardProps) => {
       <div className='flex items-center h-16 w-32 px-2'>
         <Link
           href={link}
-          className='line-clamp-3 w-full text-xs text-center font-bold tracking-wide hover:underline'
+          className='line-clamp-3 w-full text-xs text-center font-bold tracking-wide hover:text-primary'
         >
           {item.title}
         </Link>

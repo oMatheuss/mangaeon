@@ -31,7 +31,7 @@ export const FeaturedCard = ({ item }: FeaturedCardProps) => {
         />
       </Link>
       <div className='flex flex-col justify-center text-center grow p-2 sm:px-6 sm:py-4'>
-        <Link className='font-bold text-xl hover:underline' href={link}>
+        <Link className='font-medium text-xl hover:underline' href={link}>
           {item.title}
         </Link>
         <span className='text-sm'>{item.date.toLocaleDateString('pt-BR')}</span>
