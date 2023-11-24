@@ -76,7 +76,7 @@ export default async function Manga({ params, searchParams }: MangaProps) {
         </div>
       </div>
       <div className='flex flex-row flex-wrap capitalize'>
-        {manga.tags.map((tag) => (
+        {manga.tags.sort().map((tag) => (
           <span
             key={tag}
             className='mr-3 mb-3 text-xs break-keep p-2 rounded bg-neutral text-neutral-content max-w-fit'

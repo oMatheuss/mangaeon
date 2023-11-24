@@ -145,8 +145,8 @@ const getChapters = async (id: string, page: number = 0) => {
   const url = new URL(`/manga/${id}/feed`, BASE_URL);
   const searchParams = url.searchParams;
 
-  searchParams.append('translatedLanguage[]', 'pt-br');
-  searchParams.append('translatedLanguage[]', 'pt');
+  //searchParams.append('translatedLanguage[]', 'pt-br');
+  //searchParams.append('translatedLanguage[]', 'pt');
 
   searchParams.append('limit', '96');
   searchParams.append('offset', '0');
@@ -189,6 +189,7 @@ const extractChapters = (data: FeedResponse['data']) => {
       title: chap.attributes.title,
       publishAt: chap.attributes.publishAt,
       pages: chap.attributes.pages,
+      translatedLanguage: chap.attributes.translatedLanguage,
     };
 
     for (const rel of chap.relationships) {
