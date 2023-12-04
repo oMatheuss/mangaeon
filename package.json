@@ -25,7 +25,7 @@
     "@types/react": "^18.2.38",
     "@types/react-dom": "^18.2.17",
     "autoprefixer": "^10.4.16",
-    "daisyui": "^4.4.6",
+    "daisyui": "^4.4.19",
     "encoding": "^0.1.13",
     "eslint": "^8.54.0",
     "eslint-config-next": "^13.5.6",
