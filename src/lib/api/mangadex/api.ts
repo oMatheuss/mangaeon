@@ -12,8 +12,6 @@ import type { Search } from '@/types/search';
 import type { PagesResponse } from './pages';
 import type { Images } from '@/types/images';
 
-import sharp from 'sharp';
-
 const BASE_URL = 'https://api.mangadex.org';
 const BASE_COVER_URL = 'https://uploads.mangadex.org/covers';
 
@@ -336,9 +334,6 @@ const extractMostRead = (data: Manga) => {
   return <MostRead>{ title, cover, id };
 };
 
-const downloadBuffer = (src: string) =>
-  fetch(src).then((res) => res.arrayBuffer());
-
 const getHighLights = async () => {
   const requestOptions: RequestInit = {
     method: 'GET',
@@ -378,26 +373,7 @@ const extractHighLights = async (data: Manga) => {
 
   const date = new Date(data.attributes.updatedAt);
 
-  const img = await downloadBuffer(cover);
-  const sharpApi = sharp(img);
-
-  const buffer = await sharpApi.toBuffer();
-  const { dominant, channels } = await sharp(buffer).stats();
-
-  // average color
-  const [r, g, b] = channels.map((c) => c.mean);
-  const color =
-    Math.round(r).toString(16) +
-    Math.round(g).toString(16) +
-    Math.round(b).toString(16);
-
-  // luminosity, max 21. < 50% then light else dark
-  const foreground =
-    0.2126 * dominant.r + 0.7151 * dominant.g + 0.0721 * dominant.b < 10.5
-      ? 'fff'
-      : '000';
-
-  return <HighLights>{ id, title, cover, date, color, foreground };
+  return <HighLights>{ id, title, cover, date };
 };
 
 export const mangadex = {
