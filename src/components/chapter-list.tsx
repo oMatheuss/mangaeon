@@ -27,9 +27,13 @@ export const ChapterList = ({ chapters }: ChapterListProps) => {
       <ol className='mb-8 grid grid-cols-1 gap-8 md:grid-cols-2 2xl:grid-cols-3'>
         {groupedByChapter.map((group) => (
           <li key={group.number}>
-            {group.chapters.map((chap) => (
-              <ChapterCardItem key={chap.chapterId} chapter={chap} />
-            ))}
+            {group.chapters
+              .sort((a, b) =>
+                a.translatedLanguage.localeCompare(b.translatedLanguage)
+              )
+              .map((chap) => (
+                <ChapterCardItem key={chap.chapterId} chapter={chap} />
+              ))}
           </li>
         ))}
       </ol>
