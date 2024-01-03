@@ -10,9 +10,9 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "jotai": "^2.5.1",
+    "jotai": "^2.6.1",
     "lucide-react": "^0.292.0",
-    "next": "^14.0.3",
+    "next": "^14.0.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "remark": "^15.0.1",
@@ -21,16 +21,16 @@
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.10",
-    "@types/node": "^20.10.0",
-    "@types/react": "^18.2.38",
-    "@types/react-dom": "^18.2.17",
+    "@types/node": "^20.10.6",
+    "@types/react": "^18.2.46",
+    "@types/react-dom": "^18.2.18",
     "autoprefixer": "^10.4.16",
-    "daisyui": "^4.4.6",
+    "daisyui": "^4.5.0",
     "encoding": "^0.1.13",
-    "eslint": "^8.54.0",
+    "eslint": "^8.56.0",
     "eslint-config-next": "^13.5.6",
-    "postcss": "^8.4.31",
-    "tailwindcss": "^3.3.5",
-    "typescript": "^5.3.2"
+    "postcss": "^8.4.32",
+    "tailwindcss": "^3.4.0",
+    "typescript": "^5.3.3"
   }
 }
