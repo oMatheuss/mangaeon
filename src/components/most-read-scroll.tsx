@@ -63,7 +63,7 @@ interface MostReadFocusCardProps {
 const MostReadFocusCard = ({ item }: MostReadFocusCardProps) => {
   const link = `/manga/${item.id}`;
   return (
-    <li className='mb-4 w-full lg:max-w-screen-lg flex flex-row gap-4 items-center p-4 lg:py-8 overflow-hidden rounded-lg shadow-lg bg-base-200 border border-base-content/20'>
+    <section className='mb-4 w-full lg:max-w-screen-lg flex flex-row gap-4 items-center p-4 lg:py-8 overflow-hidden rounded-lg shadow-lg bg-base-200 border border-base-content/20'>
       <div className='shrink-0 overflow-hidden dark:shadow-dark-b shadow-md'>
         <Link href={link}>
           <Image
@@ -84,6 +84,6 @@ const MostReadFocusCard = ({ item }: MostReadFocusCardProps) => {
           {item.description}
         </p>
       </div>
-    </li>
+    </section>
   );
 };
