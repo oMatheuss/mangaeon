@@ -33,10 +33,10 @@ const MostReadCard = ({ item }: MostReadCardProps) => {
           <Image
             src={item.cover}
             alt={`Image de ${item.title}.`}
-            className='w-32 h-48 object-cover object-center transition-transform hover:scale-110'
+            className='w-40 h-60 object-cover object-center transition-transform hover:scale-110'
             loading='lazy'
-            width={128}
-            height={192}
+            width={160}
+            height={240}
           />
         </div>
       </Link>
