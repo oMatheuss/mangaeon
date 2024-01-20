@@ -32,6 +32,9 @@ const themes = [
   'night',
   'coffee',
   'winter',
+  'dim',
+  'nord',
+  'sunset',
 ];
 
 export const metadata: Metadata = {
