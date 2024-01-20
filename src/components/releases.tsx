@@ -1,7 +1,9 @@
 import type { Release } from '@/types/releases';
 import Link from 'next/link';
 import { StarButton } from '@/components/star-button';
+import { SectionTitle } from '@/components/section-title';
 import Image from 'next/image';
+
 interface ReleasesProps {
   releases: Release[];
 }
@@ -9,9 +11,7 @@ interface ReleasesProps {
 export const Releases = ({ releases }: ReleasesProps) => {
   return (
     <>
-      <div className='flex justify-between items-end pb-1 mt-4 mb-4 border-b border-base-content/10'>
-        <h2 className='font-bold text-xl sm:text-2xl'>Lançamentos</h2>
-      </div>
+      <SectionTitle text='Lançamentos' />
       <ul className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 mb-4'>
         {releases?.map((val, idx) => (
           <ReleaseCard key={`${val.id}-${idx}`} release={val} />

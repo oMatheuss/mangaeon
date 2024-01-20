@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { MostRead } from '@/types/most-read';
 import Image from 'next/image';
+import { SectionTitle } from '@/components/section-title';
 
 interface MostReadScrollProps {
   items: MostRead[];
@@ -9,9 +10,7 @@ interface MostReadScrollProps {
 export const MostReadScroll = ({ items }: MostReadScrollProps) => {
   return (
     <>
-      <div className='flex justify-between items-end mt-8 mb-4 border-b border-base-content/10'>
-        <h2 className='font-bold text-xl sm:text-2xl'>Mais Lidos</h2>
-      </div>
+      <SectionTitle text='Mais Lidos' />
       <ul className='w-full pb-4 overflow-x-auto grid grid-flow-col auto-cols-max gap-x-3'>
         {items.map((item) => (
           <MostReadCard key={item.id} item={item} />
