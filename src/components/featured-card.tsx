@@ -22,7 +22,7 @@ export const FeaturedCard = ({ item }: FeaturedCardProps) => {
       <div className='flex w-[90%] h-[90%]'>
         <Link
           href={link}
-          className='relative hidden sm:flex aspect-[2/3] w-auto h-full z-10 self-center'
+          className='relative hidden sm:flex aspect-[2/3] w-auto h-full z-[1] self-center'
         >
           <Image
             src={item.cover}
