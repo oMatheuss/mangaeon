@@ -32,7 +32,7 @@ export const FeaturedCard = ({ item }: FeaturedCardProps) => {
             height={288}
           />
         </Link>
-        <div className='text-base-content flex flex-col justify-end text-left p-2 sm:px-6 sm:py-4 z-10'>
+        <div className='text-base-content flex flex-col justify-end text-left p-2 sm:px-6 sm:py-4 z-[2]'>
           <Link
             className='font-extrabold text-3xl hover:underline line-clamp-3'
             href={link}
