@@ -11,7 +11,7 @@ export const FeaturedCard = ({ item }: FeaturedCardProps) => {
 
   return (
     <li className='relative flex sm:justify-center items-center snap-center h-full w-full shrink-0'>
-      <div className='absolute w-full h-full z-[1] bg-gradient-to-b from-base-100/20 to-base-100' />
+      <div className='absolute w-full h-full z-[1] bg-gradient-to-b from-transparent to-base-300' />
       <Image
         src={item.cover}
         alt={`Imagem de ${item.title}`}

@@ -324,15 +324,25 @@ const getMostRead = async () => {
 };
 
 const extractMostRead = (data: Manga) => {
+  const langs = 'pt-br,pt,en'.split(',');
   const id = data.id;
-  const title = Object.values(data.attributes.title)[0] ?? '';
+  const title = Object.values(data.attributes.title)[0];
+
+  let description = '';
+  const descriptionLangs = Object.keys(data.attributes.description);
+  for (let lang of langs) {
+    if (descriptionLangs.includes(lang)) {
+      description = data.attributes.description[lang];
+      break;
+    }
+  }
 
   const coverImage =
     data.relationships.filter((x) => x.type === 'cover_art')[0]?.attributes
       ?.fileName ?? '';
   const cover = `${BASE_COVER_URL}/${id}/${coverImage}.256.jpg`;
 
-  return <MostRead>{ title, cover, id };
+  return <MostRead>{ title, cover, id, description };
 };
 
 const getHighLights = async () => {

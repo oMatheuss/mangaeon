@@ -16,7 +16,7 @@ export default async function Home() {
     <div className='flex flex-col my-3'>
       <SearchBar />
       <FeaturedScroll />
-      <MostReadScroll items={mostRead} />
+      <MostReadScroll items={mostRead} focused={mostRead.pop()!} />
       <Releases releases={releases} />
       <NextPageButton />
     </div>
