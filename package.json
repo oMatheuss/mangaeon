@@ -28,7 +28,7 @@
     "daisyui": "^4.6.0",
     "encoding": "^0.1.13",
     "eslint": "^8.56.0",
-    "eslint-config-next": "^13.5.6",
+    "eslint-config-next": "^14.1.0",
     "postcss": "^8.4.33",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.3.3"
