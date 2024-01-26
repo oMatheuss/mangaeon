@@ -12,11 +12,13 @@ export default async function Home() {
   const mostRead = await mangadex.mostRead();
   const releases = await mangadex.releases(1);
 
+  const [firstMostRead, ...mostReads] = mostRead ?? [];
+
   return (
     <div className='flex flex-col my-3'>
       <SearchBar />
       <FeaturedScroll />
-      <MostReadScroll items={mostRead} focused={mostRead.pop()!} />
+      <MostReadScroll items={mostReads} focused={firstMostRead} />
       <Releases releases={releases} />
       <NextPageButton />
     </div>
