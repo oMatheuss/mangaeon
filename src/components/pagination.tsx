@@ -19,7 +19,7 @@ export const Pagination = ({ page, total, limit }: PaginationProps) => {
     actions.push({ type: 'link', number: 2 });
   }
   if (page - 1 > 2) {
-    actions.push({ type: 'dots' });
+    actions.push({ type: 'dots', number: page - 2 });
     actions.push({ type: 'link', number: page - 1 });
   }
   actions.push({ type: 'actual', number: page });
@@ -27,7 +27,7 @@ export const Pagination = ({ page, total, limit }: PaginationProps) => {
     actions.push({ type: 'link', number: maxPage - 1 });
   } else if (page + 1 < maxPage - 1) {
     actions.push({ type: 'link', number: page + 1 });
-    actions.push({ type: 'dots' });
+    actions.push({ type: 'dots', number: page + 2 });
   }
   if (page < maxPage) {
     actions.push({ type: 'link', number: maxPage });
