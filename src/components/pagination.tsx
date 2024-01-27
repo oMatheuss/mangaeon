@@ -36,7 +36,7 @@ export const Pagination = ({ page, total, limit }: PaginationProps) => {
   return (
     <div className='flex flex-row items-center justify-center flex-wrap'>
       <Link
-        href={{ query: { page: (page - 1).toString(), hash: 'capitulos' } }}
+        href={{ query: { page: (page - 1).toString() } }}
         className='mx-3 flex items-center justify-center w-10 h-10 rounded-full focus:outline-none hover:bg-base-content/10 aria-disabled:pointer-events-none aria-disabled:opacity-50'
         aria-disabled={page < 2}
       >
@@ -49,7 +49,7 @@ export const Pagination = ({ page, total, limit }: PaginationProps) => {
             return (
               <Link
                 key={x.number}
-                href={{ query: { page: x.number }, hash: 'capitulos' }}
+                href={{ query: { page: x.number?.toString() } }}
                 className='mx-3 flex items-center justify-center w-10 h-10 rounded-lg focus:outline-none hover:bg-base-content/10 aria-disabled:pointer-events-none aria-disabled:opacity-50'
               >
                 <span className='text-lg'>{x.number}</span>
@@ -79,7 +79,7 @@ export const Pagination = ({ page, total, limit }: PaginationProps) => {
       })}
 
       <Link
-        href={{ query: { page: (page + 1).toString() }, hash: 'capitulos' }}
+        href={{ query: { page: (page + 1).toString() } }}
         className='mx-3 flex items-center justify-center w-10 h-10 rounded-full focus:outline-none hover:bg-base-content/10 aria-disabled:pointer-events-none aria-disabled:opacity-50'
         aria-disabled={page > maxPage - 1}
       >

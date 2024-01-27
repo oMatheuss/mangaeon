@@ -92,7 +92,7 @@ const getManga = async (id: string) => {
   return manga;
 };
 
-const extractManga = async (data: Manga) => {
+const extractManga = (data: Manga) => {
   const langs = 'pt-br,pt,en'.split(',');
   const id = data.id;
   const title = Object.values(data.attributes.title)[0];
@@ -370,10 +370,10 @@ const getHighLights = async () => {
 
   const response = await fetch(url, requestOptions);
   const json: MangaResponse = await response.json();
-  return Promise.all(json.data.map(extractHighLights));
+  return json.data.map(extractHighLights);
 };
 
-const extractHighLights = async (data: Manga) => {
+const extractHighLights = (data: Manga) => {
   const id = data.id;
   const title = Object.values(data.attributes.title)[0];
 
