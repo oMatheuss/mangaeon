@@ -10,7 +10,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "jotai": "^2.6.2",
+    "jotai": "^2.6.3",
     "lucide-react": "^0.292.0",
     "next": "^14.1.0",
     "react": "^18.2.0",
