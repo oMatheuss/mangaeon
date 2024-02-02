@@ -170,8 +170,12 @@ const getChapters = async (id: string, page: number = 0) => {
 
   return <ChaptersWithPagination>{
     chapters: extractChapters(json.data)
-      .filter((x) => x.pages > 0)
-      .sort((a, b) => parseFloat(a.number) - parseFloat(b.number))
+      // sort by volume and chapter number
+      .sort(
+        (a, b) =>
+          parseFloat(a.volume) - parseFloat(b.volume) ||
+          parseFloat(a.number) - parseFloat(b.number)
+      )
       .reverse(),
     limit: json.limit,
     offset: json.offset,
@@ -189,6 +193,7 @@ const extractChapters = (data: FeedResponse['data']) => {
       publishAt: chap.attributes.publishAt,
       pages: chap.attributes.pages,
       translatedLanguage: chap.attributes.translatedLanguage,
+      externalUrl: chap.attributes.externalUrl,
     };
 
     for (const rel of chap.relationships) {

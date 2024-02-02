@@ -18,6 +18,7 @@ export interface Chapter {
   translatedLanguage: string;
   scanlator: string;
   scanlatorWebsite: string;
+  externalUrl: string;
 }
 
 export interface ChaptersWithPagination extends Pagination {

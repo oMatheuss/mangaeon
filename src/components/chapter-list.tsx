@@ -47,7 +47,8 @@ interface ChapterCardProps {
 }
 
 const ChapterCardItem = ({ chapter }: ChapterCardProps) => {
-  const link = `/leitor/${chapter.chapterId}`;
+  const link =
+    chapter.pages > 0 ? `/leitor/${chapter.chapterId}` : chapter.externalUrl;
   const title = chapter.title ? chapter.title : `Capítulo ${chapter.number}`;
 
   return (
