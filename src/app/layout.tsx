@@ -7,6 +7,7 @@ import { Footer } from '@/components/footer';
 import { Navbar } from '@/components/navbar';
 import { ClientProviders } from '@/components/client-providers';
 import { ThemeApplier } from '@/lib/client/theme';
+import Script from 'next/script';
 
 interface RootLayoutProps {
   children: React.ReactNode;
@@ -59,9 +60,19 @@ const font = Quicksand({
   variable: '--font-quicksand',
 });
 
+const themeScript = `
+let theme = localStorage["theme"];
+if (typeof theme === "string") {
+  theme = theme.slice(1, theme.length - 1);
+  document.documentElement.setAttribute("data-theme", theme);
+}`;
+
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang='pt-BR' className={font.variable}>
+    <html suppressHydrationWarning lang='pt-BR' className={font.variable}>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }}/>
+      </head>
       <body>
         <ClientProviders>
           <ThemeApplier />
