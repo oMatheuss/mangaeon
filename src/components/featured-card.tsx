@@ -4,9 +4,10 @@ import Image from 'next/image';
 
 interface FeaturedCardProps {
   item: HighLights;
+  loading: 'eager' | 'lazy';
 }
 
-export const FeaturedCard = ({ item }: FeaturedCardProps) => {
+export const FeaturedCard = ({ item, loading }: FeaturedCardProps) => {
   const link = `/manga/${item.id}`;
 
   return (
@@ -17,6 +18,7 @@ export const FeaturedCard = ({ item }: FeaturedCardProps) => {
         alt={`Imagem de ${item.title}`}
         className='object-cover absolute w-full h-full z-[0] md:blur-sm'
         fill
+        loading={loading}
       />
 
       <div className='flex w-[90%] h-[90%]'>
@@ -30,6 +32,7 @@ export const FeaturedCard = ({ item }: FeaturedCardProps) => {
             className='object-cover object-center rounded-md shadow-md'
             width={192}
             height={288}
+            loading={loading}
           />
         </Link>
         <div className='text-base-content flex flex-col justify-end text-left p-2 sm:px-6 sm:py-4 z-[2]'>

@@ -7,7 +7,6 @@ import { Footer } from '@/components/footer';
 import { Navbar } from '@/components/navbar';
 import { ClientProviders } from '@/components/client-providers';
 import { ThemeApplier } from '@/lib/client/theme';
-import Script from 'next/script';
 
 interface RootLayoutProps {
   children: React.ReactNode;

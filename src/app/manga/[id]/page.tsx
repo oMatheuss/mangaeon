@@ -61,6 +61,7 @@ export default async function Manga({ params, searchParams }: MangaProps) {
           alt={`Imagem de capa de ${manga.title}`}
           height={256}
           width={192}
+          loading='eager'
         />
         <div className='mb-3'>
           <h1 className='sm:mt-3 text-3xl sm:text-5xl font-extrabold tracking-tight'>
