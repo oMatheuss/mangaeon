@@ -53,35 +53,3 @@ const MostReadCard = ({ item }: MostReadCardProps) => {
     </li>
   );
 };
-
-interface MostReadFocusCardProps {
-  item: MostRead;
-}
-
-const MostReadFocusCard = ({ item }: MostReadFocusCardProps) => {
-  const link = `/manga/${item.id}`;
-  return (
-    <section className='mb-4 w-full lg:max-w-screen-lg flex flex-row gap-4 items-center p-4 lg:py-8 overflow-hidden rounded-lg shadow-lg bg-base-200 border border-base-content/20'>
-      <div className='shrink-0 overflow-hidden dark:shadow-dark-b shadow-md'>
-        <Link href={link}>
-          <Image
-            src={item.cover}
-            alt={`Image de ${item.title}.`}
-            className='w-32 h-48 sm:w-40 sm:h-60 rounded-md shadow-md object-cover object-center'
-            loading='eager'
-            width={160}
-            height={240}
-          />
-        </Link>
-      </div>
-      <div className='text-base-content flex flex-col self-start text-left max-h-60'>
-        <Link className='font-extrabold text-3xl' href={link}>
-          <h2 className='hover:underline line-clamp-2'>{item.title}</h2>
-        </Link>
-        <p className='text-sm whitespace-break-spaces text-justify line-clamp-5'>
-          {item.description}
-        </p>
-      </div>
-    </section>
-  );
-};
