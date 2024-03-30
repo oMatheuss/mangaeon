@@ -34,14 +34,19 @@ export const Pagination = ({ page, total, limit }: PaginationProps) => {
   }
 
   return (
-    <div className='flex flex-row items-center justify-center flex-wrap'>
-      <Link
-        href={{ query: { page: (page - 1).toString() } }}
-        className='mx-3 flex items-center justify-center w-10 h-10 rounded-full focus:outline-none hover:bg-base-content/10 aria-disabled:pointer-events-none aria-disabled:opacity-50'
-        aria-disabled={page < 2}
-      >
-        <ArrowLeft className='w-8 h-8' aria-label='Página anterior' />
-      </Link>
+    <div className='flex flex-row items-center justify-center flex-wrap gap-6'>
+      {page < 2 ? (
+        <span className='flex items-center justify-center w-10 h-10 rounded-full opacity-50'>
+          <ArrowLeft className='w-8 h-8' aria-label='Página anterior' />
+        </span>
+      ) : (
+        <Link
+          href={{ query: { page: (page - 1).toString() } }}
+          className='flex items-center justify-center w-10 h-10 rounded-full focus:outline-none hover:bg-base-content/10'
+        >
+          <ArrowLeft className='w-8 h-8' aria-label='Página anterior' />
+        </Link>
+      )}
 
       {actions.map((x) => {
         switch (x.type) {
@@ -50,7 +55,7 @@ export const Pagination = ({ page, total, limit }: PaginationProps) => {
               <Link
                 key={x.number}
                 href={{ query: { page: x.number?.toString() } }}
-                className='mx-3 flex items-center justify-center w-10 h-10 rounded-lg focus:outline-none hover:bg-base-content/10 aria-disabled:pointer-events-none aria-disabled:opacity-50'
+                className='flex items-center justify-center w-10 h-10 rounded-lg focus:outline-none hover:bg-base-content/10 aria-disabled:pointer-events-none aria-disabled:opacity-50'
               >
                 <span className='text-lg'>{x.number}</span>
               </Link>
@@ -59,7 +64,7 @@ export const Pagination = ({ page, total, limit }: PaginationProps) => {
             return (
               <div
                 key={x.number}
-                className='mx-3 flex items-center justify-center w-10 h-10'
+                className='flex items-center justify-center w-10 h-10'
               >
                 <MoreHorizontal className='w-8 h-8' />
               </div>
@@ -68,7 +73,7 @@ export const Pagination = ({ page, total, limit }: PaginationProps) => {
             return (
               <div
                 key={x.number}
-                className='mx-3 flex items-center justify-center w-10 h-10 text-lg bg-primary text-primary-content rounded-lg'
+                className='flex items-center justify-center w-10 h-10 text-lg bg-primary text-primary-content rounded-lg'
               >
                 {x.number}
               </div>
@@ -78,13 +83,18 @@ export const Pagination = ({ page, total, limit }: PaginationProps) => {
         }
       })}
 
-      <Link
-        href={{ query: { page: (page + 1).toString() } }}
-        className='mx-3 flex items-center justify-center w-10 h-10 rounded-full focus:outline-none hover:bg-base-content/10 aria-disabled:pointer-events-none aria-disabled:opacity-50'
-        aria-disabled={page > maxPage - 1}
-      >
-        <ArrowRight className='w-8 h-8' aria-label='Proxima página' />
-      </Link>
+      {page > maxPage - 1 ? (
+        <span className='flex items-center justify-center w-10 h-10 rounded-full opacity-50'>
+          <ArrowRight className='w-8 h-8' aria-label='Proxima página' />
+        </span>
+      ) : (
+        <Link
+          href={{ query: { page: (page + 1).toString() } }}
+          className='flex items-center justify-center w-10 h-10 rounded-full focus:outline-none hover:bg-base-content/10'
+        >
+          <ArrowRight className='w-8 h-8' aria-label='Proxima página' />
+        </Link>
+      )}
     </div>
   );
 };

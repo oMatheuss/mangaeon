@@ -44,6 +44,7 @@ export default async function Manga({ params, searchParams }: MangaProps) {
   if (page <= 0 || page * 96 > 10000) return notFound();
 
   const chaptersWithPagination = await mangadex.chapters(params.id, page);
+  if (chaptersWithPagination.chapters.length === 0) return notFound();
 
   let descHtml = '';
 
