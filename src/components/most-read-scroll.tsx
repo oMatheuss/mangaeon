@@ -5,15 +5,13 @@ import { SectionTitle } from '@/components/section-title';
 
 interface MostReadScrollProps {
   items: MostRead[];
-  focused: MostRead;
 }
 
-export const MostReadScroll = ({ items, focused }: MostReadScrollProps) => {
+export const MostReadScroll = ({ items }: MostReadScrollProps) => {
   return (
     <>
-      <SectionTitle text='Mais Lidos' />
+      <SectionTitle text='Mais Procurados' />
       <div className='flex flex-col lg:flex-row gap-4'>
-        <MostReadFocusCard item={focused} />
         <ul className='pb-4 w-full overflow-x-auto grid grid-flow-col auto-cols-max gap-x-3'>
           {items.map((item) => (
             <MostReadCard key={item.id} item={item} />

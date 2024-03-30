@@ -199,12 +199,12 @@ const extractChapters = (data: FeedResponse['data']) => {
     for (const rel of chap.relationships) {
       switch (rel.type) {
         case 'scanlation_group':
-          extracted.scanlator = rel.attributes.name;
-          if (rel.attributes.website)
+          extracted.scanlator = rel.attributes?.name;
+          if (rel.attributes?.website)
             extracted.scanlatorWebsite = rel.attributes.website;
-          else if (rel.attributes.twitter)
+          else if (rel.attributes?.twitter)
             extracted.scanlatorWebsite = `//twitter.com/${rel.attributes.twitter}`;
-          else if (rel.attributes.discord) {
+          else if (rel.attributes?.discord) {
             extracted.scanlatorWebsite = `//discord.gg/${rel.attributes.discord}`;
           }
           break;
@@ -315,7 +315,7 @@ const getMostRead = async () => {
   const searchParams = url.searchParams;
 
   searchParams.append('includes[]', 'cover_art');
-  searchParams.append('order[rating]', 'desc');
+  searchParams.append('order[followedCount]', 'desc');
   searchParams.append('contentRating[]', 'safe');
   searchParams.append('contentRating[]', 'suggestive');
   searchParams.append('availableTranslatedLanguage[]', 'pt-br');
