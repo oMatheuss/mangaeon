@@ -40,6 +40,7 @@ const themes = [
 export const metadata: Metadata = {
   title: 'Tema',
   description: 'Defina um tema para o site',
+  robots: { index: false, follow: false },
 };
 
 export default function Theme() {

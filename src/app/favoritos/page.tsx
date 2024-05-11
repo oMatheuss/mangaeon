@@ -1,5 +1,11 @@
 import { LikedList } from '@/components/liked-list';
 import { Star } from 'lucide-react';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Favoritos',
+  robots: { index: false, follow: false },
+};
 
 export default function Liked() {
   return (
