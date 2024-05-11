@@ -1,13 +1,21 @@
+import { MangaData } from './manga';
+
+export interface ChapterResponse {
+  result: string;
+  response: string;
+  data: ChapterData;
+}
+
 export interface FeedResponse {
   result: string;
   response: string;
-  data: Daum[];
+  data: ChapterData[];
   limit: number;
   offset: number;
   total: number;
 }
 
-export interface Daum {
+export interface ChapterData {
   id: string;
   type: string;
   attributes: Attributes;
@@ -34,10 +42,9 @@ export type Relationship =
       type: 'scanlation_group';
       attributes: ScanlationGroupAttribute;
     }
-  | {
-      id: string;
+  | (MangaData & {
       type: 'manga';
-    }
+    })
   | {
       id: string;
       type: 'user';

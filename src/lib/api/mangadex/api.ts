@@ -1,19 +1,37 @@
 import type { MostRead } from '@/types/most-read';
-import type { Manga, MangaResponse } from './manga';
+import type { MangaData, MangaResponse } from './manga';
 import type { HighLights } from '@/types/highlights';
 import type { Release } from '@/types/releases';
-import type {
-  Chapter,
-  ChaptersWithPagination,
-  Manga as ExtractedManga,
-} from '@/types/manga';
-import type { FeedResponse } from './chapter';
+import type { Chapter, ChaptersWithPagination, Manga } from '@/types/manga';
+import type { ChapterData, ChapterResponse, FeedResponse } from './chapter';
 import type { Search } from '@/types/search';
 import type { PagesResponse } from './pages';
 import type { Images } from '@/types/images';
 
 const BASE_URL = 'https://api.mangadex.org';
 const BASE_COVER_URL = 'https://uploads.mangadex.org/covers';
+
+const LANGS = 'pt-br,pt,en,ja-ro,es-la'.split(',');
+
+const mangaTitle = (data: MangaData) => {
+  for (const lang of Object.keys(data.attributes.title)) {
+    if (LANGS.includes(lang)) {
+      return data.attributes.title[lang];
+    }
+  }
+
+  return data.attributes.title?.[0] ?? 'Sem título';
+};
+
+const mangaDesc = (data: MangaData) => {
+  for (const lang of Object.keys(data.attributes.description)) {
+    if (LANGS.includes(lang)) {
+      return data.attributes.description[lang];
+    }
+  }
+
+  return data.attributes.description?.[0] ?? 'Sem descrição';
+};
 
 const getReleases = async (page: number) => {
   const requestOptions: RequestInit = {
@@ -41,13 +59,13 @@ const getReleases = async (page: number) => {
   return json.data.map(extractReleases);
 };
 
-const extractReleases = (data: Manga) => {
+const extractReleases = (data: MangaData) => {
   const id = data.id;
-  const title = Object.values(data.attributes.title)[0];
+  const title = mangaTitle(data);
 
+  const rels = data.relationships;
   const coverImage =
-    data.relationships.filter((x) => x.type === 'cover_art')[0]?.attributes
-      ?.fileName ?? '';
+    rels.find((x) => x.type === 'cover_art')?.attributes?.fileName ?? '';
   const cover = `${BASE_COVER_URL}/${id}/${coverImage}.256.jpg`;
 
   const date = new Date(data.attributes.updatedAt);
@@ -57,13 +75,7 @@ const extractReleases = (data: Manga) => {
     .map((x) => x.attributes.name.en)
     .filter(Boolean);
 
-  return <Release>{
-    id,
-    title,
-    cover,
-    date,
-    tags,
-  };
+  return { id, title, cover, date, tags } as Release;
 };
 
 const getManga = async (id: string) => {
@@ -92,46 +104,56 @@ const getManga = async (id: string) => {
   return manga;
 };
 
-const extractManga = (data: Manga) => {
-  const langs = 'pt-br,pt,en'.split(',');
-  const id = data.id;
-  const title = Object.values(data.attributes.title)[0];
+const extractManga = (data: MangaData) => {
+  const manga: Partial<Manga> = {
+    id: data.id,
+    title: mangaTitle(data),
+    description: mangaDesc(data),
+  };
 
-  let description = '';
-  const descriptionLangs = Object.keys(data.attributes.description);
-  for (let lang of langs) {
-    if (descriptionLangs.includes(lang)) {
-      description = data.attributes.description[lang];
-      break;
-    }
+  const rel = data.relationships;
+  if (rel && rel.length > 0) {
+    manga.artist = rel.find((x) => x.type === 'artist')?.attributes?.name ?? '';
+    manga.author = rel.find((x) => x.type === 'author')?.attributes?.name ?? '';
+
+    const coverImage =
+      rel.find((x) => x.type === 'cover_art')?.attributes?.fileName ?? '';
+    manga.cover = `${BASE_COVER_URL}/${manga.id}/${coverImage}.512.jpg`;
   }
 
-  const artist =
-    data.relationships.filter((x) => x.type === 'artist')[0]?.attributes
-      ?.name ?? '';
-  const author =
-    data.relationships.filter((x) => x.type === 'author')[0]?.attributes
-      ?.name ?? '';
-
-  const coverImage =
-    data.relationships.filter((x) => x.type === 'cover_art')[0]?.attributes
-      ?.fileName ?? '';
-  const cover = `${BASE_COVER_URL}/${id}/${coverImage}.512.jpg`;
-
-  const tags = data.attributes.tags
+  manga.tags = data.attributes.tags
     .filter((x) => x.type === 'tag')
     .map((x) => x.attributes.name.en)
     .filter(Boolean);
 
-  return <ExtractedManga>{
-    id,
-    title,
-    cover,
-    tags,
-    description,
-    artist,
-    author,
+  return manga as Manga;
+};
+
+const getChapter = async (id: string) => {
+  const requestOptions: RequestInit = {
+    method: 'GET',
+    redirect: 'follow',
   };
+
+  const url = new URL(`/chapter/${id}`, BASE_URL);
+  const searchParams = url.searchParams;
+
+  searchParams.append('includes[]', 'manga');
+
+  const response = await fetch(url, requestOptions);
+  const json: ChapterResponse = await response.json();
+
+  let chapInfo: Partial<Chapter & Manga> = extractChapter(json.data);
+
+  for (const rel of json.data.relationships) {
+    if (rel.type === 'manga') {
+      const manga = extractManga(rel);
+      chapInfo = { ...chapInfo, ...manga };
+      break;
+    }
+  }
+
+  return chapInfo as Chapter & Manga;
 };
 
 const getChapters = async (id: string, page: number = 0) => {
@@ -148,7 +170,6 @@ const getChapters = async (id: string, page: number = 0) => {
   searchParams.append('translatedLanguage[]', 'es-la');
 
   searchParams.append('limit', '96');
-  searchParams.append('offset', '0');
 
   searchParams.append('includes[]', 'scanlation_group');
   searchParams.append('includes[]', 'user');
@@ -169,7 +190,8 @@ const getChapters = async (id: string, page: number = 0) => {
   const json: FeedResponse = await response.json();
 
   return <ChaptersWithPagination>{
-    chapters: extractChapters(json.data)
+    chapters: json.data
+      .map((chap) => extractChapter(chap))
       // sort by volume and chapter number
       .sort(
         (a, b) =>
@@ -183,40 +205,38 @@ const getChapters = async (id: string, page: number = 0) => {
   };
 };
 
-const extractChapters = (data: FeedResponse['data']) => {
-  return data.map((chap) => {
-    const extracted = <Partial<Chapter>>{
-      chapterId: chap.id,
-      number: chap.attributes.chapter,
-      volume: chap.attributes.volume,
-      title: chap.attributes.title,
-      publishAt: chap.attributes.publishAt,
-      pages: chap.attributes.pages,
-      translatedLanguage: chap.attributes.translatedLanguage,
-      externalUrl: chap.attributes.externalUrl,
-    };
+const extractChapter = (chap: ChapterData) => {
+  const attrs = chap.attributes;
 
-    for (const rel of chap.relationships) {
-      switch (rel.type) {
-        case 'scanlation_group':
-          extracted.scanlator = rel.attributes?.name;
-          if (rel.attributes?.website)
-            extracted.scanlatorWebsite = rel.attributes.website;
-          else if (rel.attributes?.twitter)
-            extracted.scanlatorWebsite = `//twitter.com/${rel.attributes.twitter}`;
-          else if (rel.attributes?.discord) {
-            extracted.scanlatorWebsite = `//discord.gg/${rel.attributes.discord}`;
-          }
-          break;
-        case 'manga':
-          break;
-        case 'user':
-          break;
+  const chapInfo = <Partial<Chapter>>{
+    chapterId: chap.id,
+    number: attrs.chapter,
+    volume: attrs.volume,
+    chapterTitle: attrs.title,
+    publishAt: new Date(attrs.publishAt),
+    pages: attrs.pages,
+    translatedLanguage: attrs.translatedLanguage,
+    externalUrl: attrs.externalUrl,
+  };
+
+  const rels = chap.relationships ?? [];
+  for (const rel of rels) {
+    if (rel.type === 'scanlation_group') {
+      chapInfo.scanlator = rel.attributes?.name;
+
+      if (rel.attributes?.website) {
+        chapInfo.scanlatorWebsite = rel.attributes.website;
+      } else if (rel.attributes?.twitter) {
+        chapInfo.scanlatorWebsite = `//twitter.com/${rel.attributes.twitter}`;
+      } else if (rel.attributes?.discord) {
+        chapInfo.scanlatorWebsite = `//discord.gg/${rel.attributes.discord}`;
       }
-    }
 
-    return extracted as Chapter;
-  });
+      break;
+    }
+  }
+
+  return chapInfo as Chapter;
 };
 
 const getSearch = async (query: string) => {
@@ -244,24 +264,20 @@ const getSearch = async (query: string) => {
 
   const response = await fetch(url, requestOptions);
   const json: MangaResponse = await response.json();
-  return json.data.map(extractSearch);
+  return json.data.map((manga) => extractSearch(manga));
 };
 
-const extractSearch = (data: Manga) => {
+const extractSearch = (data: MangaData) => {
   const id = data.id;
-  const title = Object.values(data.attributes.title)[0];
+  const title = mangaTitle(data);
 
+  const rels = data.relationships;
   const coverImage =
-    data.relationships.filter((x) => x.type === 'cover_art')[0]?.attributes
-      ?.fileName ?? '';
+    rels.find((x) => x.type === 'cover_art')?.attributes?.fileName ?? '';
   const cover = `${BASE_COVER_URL}/${id}/${coverImage}.256.jpg`;
 
-  const artist =
-    data.relationships.filter((x) => x.type === 'artist')[0]?.attributes
-      ?.name ?? '';
-  const author =
-    data.relationships.filter((x) => x.type === 'author')[0]?.attributes
-      ?.name ?? '';
+  const artist = rels.find((x) => x.type === 'artist')?.attributes?.name ?? '';
+  const author = rels.find((x) => x.type === 'author')?.attributes?.name ?? '';
 
   const date = new Date(data.attributes.updatedAt);
 
@@ -328,19 +344,10 @@ const getMostRead = async () => {
   return json.data.map(extractMostRead);
 };
 
-const extractMostRead = (data: Manga) => {
-  const langs = 'pt-br,pt,en'.split(',');
+const extractMostRead = (data: MangaData) => {
   const id = data.id;
-  const title = Object.values(data.attributes.title)[0];
-
-  let description = '';
-  const descriptionLangs = Object.keys(data.attributes.description);
-  for (let lang of langs) {
-    if (descriptionLangs.includes(lang)) {
-      description = data.attributes.description[lang];
-      break;
-    }
-  }
+  const title = mangaTitle(data);
+  const description = mangaDesc(data);
 
   const coverImage =
     data.relationships.filter((x) => x.type === 'cover_art')[0]?.attributes
@@ -378,9 +385,9 @@ const getHighLights = async () => {
   return json.data.map(extractHighLights);
 };
 
-const extractHighLights = (data: Manga) => {
+const extractHighLights = (data: MangaData) => {
   const id = data.id;
-  const title = Object.values(data.attributes.title)[0];
+  const title = mangaTitle(data);
 
   const coverImage =
     data.relationships.filter((x) => x.type === 'cover_art')[0]?.attributes
@@ -396,6 +403,7 @@ export const mangadex = {
   mostRead: getMostRead,
   highlights: getHighLights,
   chapters: getChapters,
+  chapter: getChapter,
   manga: getManga,
   pages: getPages,
   releases: getReleases,

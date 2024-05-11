@@ -10,10 +10,10 @@ export interface Manga {
 
 export interface Chapter {
   chapterId: string;
-  title: string;
+  chapterTitle: string;
   number: string;
   volume: string;
-  publishAt: string;
+  publishAt: Date;
   pages: number;
   translatedLanguage: string;
   scanlator: string;

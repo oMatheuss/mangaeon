@@ -49,7 +49,9 @@ interface ChapterCardProps {
 const ChapterCardItem = ({ chapter }: ChapterCardProps) => {
   const link =
     chapter.pages > 0 ? `/leitor/${chapter.chapterId}` : chapter.externalUrl;
-  const title = chapter.title ? chapter.title : `Capítulo ${chapter.number}`;
+  const title = chapter.chapterTitle
+    ? chapter.chapterTitle
+    : `Capítulo ${chapter.number}`;
 
   return (
     <div className='border border-base-content/20 first:rounded-t last:rounded-b p-2 mb-1 last:mb-0 bg-base-200 shadow-md grow overflow-hidden'>
@@ -86,7 +88,7 @@ const ChapterCardItem = ({ chapter }: ChapterCardProps) => {
         <div className='whitespace-nowrap'>
           <CalendarDaysIcon className='inline w-4 h-4 mr-1' />
           <span className='proportional-nums'>
-            {new Date(chapter.publishAt).toLocaleDateString('pt-br', {
+            {chapter.publishAt.toLocaleDateString('pt-br', {
               day: '2-digit',
               year: '2-digit',
               month: '2-digit',
