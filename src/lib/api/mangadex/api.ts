@@ -11,26 +11,24 @@ import type { Images } from '@/types/images';
 const BASE_URL = 'https://api.mangadex.org';
 const BASE_COVER_URL = 'https://uploads.mangadex.org/covers';
 
-const LANGS = 'pt-br,pt,en,ja-ro,es-la'.split(',');
+const LANGS = 'pt-br,pt,en,ja,ja-ro,es-la'.split(',');
 
 const mangaTitle = (data: MangaData) => {
-  for (const lang of Object.keys(data.attributes.title)) {
-    if (LANGS.includes(lang)) {
-      return data.attributes.title[lang];
-    }
+  const titles = data.attributes.title;
+  for (const lang of LANGS) {
+    if (titles[lang]) return titles[lang];
   }
 
-  return data.attributes.title?.[0] ?? 'Sem título';
+  return Object.values(titles)[0];
 };
 
 const mangaDesc = (data: MangaData) => {
-  for (const lang of Object.keys(data.attributes.description)) {
-    if (LANGS.includes(lang)) {
-      return data.attributes.description[lang];
-    }
+  const descs = data.attributes.description;
+  for (const lang of LANGS) {
+    if (descs[lang]) return descs[lang];
   }
 
-  return data.attributes.description?.[0] ?? 'Sem descrição';
+  return Object.values(descs)[0];
 };
 
 const getReleases = async (page: number) => {
