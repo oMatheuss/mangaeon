@@ -2,7 +2,7 @@
 
 Site para leitura de manga/manhuas/comics.
 
-## INFORMAÇÕES
+## GERAL
 
 Uma versão funcionando deste projeto pode ser encontrado em **[MangaEon](https://mangaeon.com)**.
 
@@ -14,15 +14,15 @@ Uma versão funcionando deste projeto pode ser encontrado em **[MangaEon](https:
 
 Este projeto é feito em **[Next.js](https://nextjs.org/)**. Para executar localmente, clone o projeto e execute:
 
-```console
-npm install && npm run dev
+```sh
+npm install &&
+npm run dev
 ```
 
-## FEATURES
+## CONTRIBUINDO
 
-Este projeto conta com melhorias para tornar a visualização da página mais agradavel:
+Pensando em fazer uma contribuição? Sinta-se livre para abrir uma pull request com as suas alterações.
 
-- Muitos temas - **[daisyUI](https://daisyui.com/)**.
-- Favoritar obras.
-- Salvar favoritos em uma conta Google.
-- Salvamento local de capitulos lidos.
+Se encontrou algum problema no site, considere abrir uma [Issue](https://github.com/oMatheuss/mangaeon/issues).
+
+Caso contrario, crie uma [discussão](https://github.com/oMatheuss/mangaeon/discussions) sobre a sua ideia.
