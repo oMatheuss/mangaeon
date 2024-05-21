@@ -53,6 +53,9 @@ const ChapterCardItem = ({ chapter }: ChapterCardProps) => {
     ? chapter.chapterTitle
     : `Capítulo ${chapter.number}`;
 
+  // in case there is no pages and no external url
+  if (link === null) return;
+
   return (
     <div className='border border-base-content/20 first:rounded-t last:rounded-b p-2 mb-1 last:mb-0 bg-base-200 shadow-md grow overflow-hidden'>
       <div className='flex items-center grow'>
