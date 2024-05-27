@@ -12,7 +12,7 @@
   "dependencies": {
     "eslint-config-next": "^14.2.3",
     "jotai": "^2.8.0",
-    "lucide-react": "^0.363.0",
+    "lucide-react": "^0.379.0",
     "next": "^14.2.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
