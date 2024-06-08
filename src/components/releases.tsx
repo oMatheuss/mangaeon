@@ -12,7 +12,7 @@ export const Releases = ({ releases }: ReleasesProps) => {
   return (
     <>
       <SectionTitle text='Lançamentos' />
-      <ul className='mb-4 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3'>
+      <ul className='grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3'>
         {releases?.map((val, idx) => (
           <ReleaseCard key={`${val.id}-${idx}`} release={val} />
         ))}
@@ -29,7 +29,7 @@ const ReleaseCard = ({ release }: ReleaseCardProps) => {
   const linkSerie = `/manga/${release.id}`;
 
   return (
-    <li className='relative flex h-48 overflow-hidden rounded-lg border border-base-content/20 bg-base-200 shadow-lg'>
+    <li className='relative flex h-48 overflow-hidden rounded-box border border-base-content/20 bg-base-200 shadow-lg'>
       <StarButton
         serie={{
           id: release.id,
@@ -41,7 +41,7 @@ const ReleaseCard = ({ release }: ReleaseCardProps) => {
         <Image
           src={release.cover}
           alt={release.title}
-          className='h-48 w-32 rounded-r-lg object-cover'
+          className='h-48 w-32 rounded-r-box object-cover'
           height={192}
           width={128}
           quality={100}
@@ -67,7 +67,7 @@ const ReleaseCard = ({ release }: ReleaseCardProps) => {
           {release.tags.map((tag) => (
             <li
               key={tag}
-              className='max-w-fit whitespace-nowrap rounded bg-neutral p-1 text-xs text-neutral-content'
+              className='max-w-fit whitespace-nowrap rounded-badge bg-neutral px-2 py-1 text-xs text-neutral-content'
             >
               {tag}
             </li>

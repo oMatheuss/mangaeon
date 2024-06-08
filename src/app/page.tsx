@@ -13,7 +13,7 @@ export default async function Home() {
   const releases = await mangadex.releases(1);
 
   return (
-    <div className='my-3 flex flex-col'>
+    <div className='flex flex-col'>
       <SearchBar />
       <FeaturedScroll />
       <MostReadScroll items={mostRead} />
@@ -24,14 +24,14 @@ export default async function Home() {
 }
 
 const NextPageButton = () => (
-  <div className='mt-3 flex justify-center'>
+  <div className='mt-3 flex justify-end'>
     <Link
       href='/lancamentos/2'
-      className='hover:bg-primary-focus group flex h-10 w-32 max-w-full items-center justify-center rounded bg-primary'
+      className='group flex h-10 w-10 items-center justify-center rounded-btn hover:bg-base-content/10'
     >
       <ArrowRightCircle
         aria-label='Proxima página'
-        className='h-6 w-6 stroke-primary-content'
+        className='group-hover:stroke-primary-focus h-6 w-6'
       />
     </Link>
   </div>

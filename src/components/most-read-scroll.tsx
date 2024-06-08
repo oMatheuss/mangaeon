@@ -29,9 +29,9 @@ interface MostReadCardProps {
 const MostReadCard = ({ item }: MostReadCardProps) => {
   const link = `/manga/${item.id}`;
   return (
-    <li className='flex flex-col items-center overflow-hidden rounded-lg border border-base-content/20 bg-base-200 shadow-lg'>
+    <li className='flex flex-col items-center overflow-hidden rounded-box border border-base-content/20 bg-base-200 shadow-lg'>
       <Link href={link}>
-        <div className='overflow-hidden rounded-b-lg'>
+        <div className='overflow-hidden border-b border-base-content/20 shadow'>
           <Image
             src={item.cover}
             alt={`Image de ${item.title}.`}

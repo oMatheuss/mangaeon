@@ -64,19 +64,19 @@ export const Navbar = () => {
               </span>
             </Link>
 
-            <ul className='flex flex-row'>
+            <ul className='flex gap-2'>
               {links.map((link) => {
                 return (
                   <li key={link.to} className='inline-flex font-medium'>
                     <Link
                       aria-current={pathname === link.to ? 'page' : undefined}
                       href={link.to}
-                      className='hover:text-primary-focus inline-flex items-center px-3 py-2 aria-[current]:text-primary'
+                      className='rounded-btn px-3 py-2 hover:bg-base-content/10 aria-[current]:bg-primary aria-[current]:text-primary-content'
                     >
-                      <link.icon className='stroke-3 mr-2' />
-                      <div className='sr-only pt-1 sm:not-sr-only'>
+                      <link.icon className='stroke-3 inline align-middle sm:mr-2' />
+                      <span className='sr-only pt-1 align-middle sm:not-sr-only'>
                         {link.text}
-                      </div>
+                      </span>
                     </Link>
                   </li>
                 );

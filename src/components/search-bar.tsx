@@ -23,7 +23,7 @@ export const SearchBar = ({ defaultValue }: SearchBarProps) => {
       method='GET'
       action='/pesquisa'
       onSubmit={handleSearch}
-      className='group my-2 flex w-full flex-row rounded border-base-content/20 shadow'
+      className='group my-4 flex w-full flex-row rounded-btn border-base-content/20 shadow hover:border-base-content/50'
     >
       <div className='relative w-full border-inherit'>
         <Search className='pointer-events-none absolute left-2 top-2 h-6 w-6 group-focus-within:text-primary' />
@@ -32,13 +32,13 @@ export const SearchBar = ({ defaultValue }: SearchBarProps) => {
           type='search'
           name='q'
           placeholder='Pesquise uma obra'
-          className='w-full rounded-s border border-e-0 border-inherit bg-base-200 p-2 pl-10 caret-primary outline-2 -outline-offset-2 outline-primary placeholder:text-base-content/50 focus:border-primary focus:outline'
+          className='w-full rounded-s-btn border border-e-0 border-inherit bg-base-200 p-2 pl-10 caret-primary outline-2 -outline-offset-2 outline-primary placeholder:text-base-content/50 focus:border-primary focus:outline'
         />
       </div>
       <button
         aria-label='Pesquisar'
         type='submit'
-        className='rounded-e border border-s-0 border-inherit bg-base-200 p-2 outline-2 -outline-offset-2 outline-primary focus:outline'
+        className='rounded-e-btn border border-s-0 border-inherit bg-base-200 p-2 outline-2 -outline-offset-2 outline-primary focus:outline'
       >
         <CornerUpRight className='h-6 w-6' />
       </button>

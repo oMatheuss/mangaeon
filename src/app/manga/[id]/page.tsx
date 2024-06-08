@@ -57,7 +57,7 @@ export default async function Manga({ params, searchParams }: MangaProps) {
     <div className='flex flex-col'>
       <div className='relative mt-6 border-separate items-center'>
         <Image
-          className='float-none m-auto mb-6 aspect-[3/4] rounded object-cover sm:float-left sm:m-0 sm:mb-3 sm:mr-3'
+          className='float-none m-auto mb-6 aspect-[3/4] rounded-box border border-base-content/20 object-cover shadow-md sm:float-left sm:m-0 sm:mb-3 sm:mr-3'
           src={manga.cover}
           alt={`Imagem de capa de ${manga.title}`}
           height={256}
@@ -81,7 +81,7 @@ export default async function Manga({ params, searchParams }: MangaProps) {
         {manga.tags.sort().map((tag) => (
           <span
             key={tag}
-            className='mb-3 mr-3 max-w-fit break-keep rounded bg-neutral p-2 text-xs text-neutral-content'
+            className='mb-3 mr-3 max-w-fit break-keep rounded-badge bg-neutral px-2 py-1 text-xs text-neutral-content'
           >
             {tag}
           </span>

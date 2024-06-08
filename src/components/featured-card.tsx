@@ -29,7 +29,7 @@ export const FeaturedCard = ({ item, loading }: FeaturedCardProps) => {
           <Image
             src={item.cover}
             alt={`Imagem de ${item.title}`}
-            className='rounded-md object-cover object-center shadow-md'
+            className='rounded-btn object-cover object-center shadow-md'
             width={192}
             height={288}
             loading={loading}

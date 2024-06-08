@@ -36,7 +36,7 @@ interface LikedCardProps {
 const LikedCard = ({ liked, onDelete }: LikedCardProps) => {
   const handleDelete = () => onDelete(liked.id);
   return (
-    <div className='relative flex h-36 w-full items-center overflow-hidden rounded-bl-lg rounded-tr-lg border border-base-content/20 shadow-md'>
+    <div className='relative flex h-36 w-full items-center overflow-hidden rounded-bl-btn rounded-tr-btn border border-base-content/20 shadow-md'>
       <Link
         className='group flex h-36 grow items-center bg-base-200 hover:bg-opacity-50'
         href={`/manga/${liked.id}`}

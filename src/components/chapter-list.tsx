@@ -57,9 +57,9 @@ const ChapterCardItem = ({ chapter }: ChapterCardProps) => {
   if (link === null) return;
 
   return (
-    <div className='mb-1 grow overflow-hidden border border-base-content/20 bg-base-200 p-2 shadow-md first:rounded-t last:mb-0 last:rounded-b'>
+    <div className='mb-1 grow overflow-hidden border border-base-content/20 bg-base-200 px-4 py-3 shadow-md first:rounded-t-box last:mb-0 last:rounded-b-box'>
       <div className='flex grow items-center'>
-        <div className='mr-1 inline-block min-w-12 whitespace-nowrap rounded bg-neutral text-center text-sm text-neutral-content'>
+        <div className='mr-1 inline-block min-w-12 whitespace-nowrap rounded-badge bg-neutral text-center text-sm text-neutral-content'>
           {chapter.translatedLanguage}
         </div>
         <ViewedIcon

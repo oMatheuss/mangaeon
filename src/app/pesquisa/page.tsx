@@ -15,11 +15,11 @@ export default async function Search({
   return (
     <>
       <SearchBar defaultValue={query || undefined} />
-      <div className='my-2 flex flex-col space-y-2'>
+      <div className='my-4 flex flex-col space-y-4'>
         {series.map((serie) => (
           <div
             key={serie.id}
-            className='relative flex h-36 w-full flex-row overflow-hidden rounded border border-base-content/20 bg-base-200 shadow md:h-48'
+            className='relative flex h-36 w-full flex-row overflow-hidden rounded-box border border-base-content/20 bg-base-200 shadow-md md:h-48'
           >
             <StarButton
               serie={{
@@ -32,7 +32,7 @@ export default async function Search({
               <Image
                 src={serie.cover}
                 alt={`Image de capa de ${serie.title}`}
-                className='h-36 w-24 rounded-s object-cover md:h-48 md:w-32'
+                className='h-36 w-24 rounded-r-box object-cover md:h-48 md:w-32'
                 width={192}
                 height={256}
               />
@@ -52,7 +52,7 @@ export default async function Search({
                 {serie.tags.map((tag) => (
                   <span
                     key={tag}
-                    className='max-w-fit whitespace-nowrap rounded bg-neutral p-1 text-xs text-neutral-content'
+                    className='max-w-fit whitespace-nowrap rounded-badge bg-neutral px-2 py-1 text-xs text-neutral-content'
                   >
                     {tag}
                   </span>

@@ -5,7 +5,7 @@ export async function FeaturedScroll() {
   const highLights = await mangadex.highlights();
 
   return (
-    <ul className='flex h-64 w-full snap-x snap-mandatory overflow-x-auto rounded-lg border border-base-content/20 bg-inherit shadow-lg'>
+    <ul className='flex h-64 w-full snap-x snap-mandatory overflow-x-auto rounded-box border border-base-content/20 bg-inherit shadow-lg'>
       {highLights.map((item, idx) => (
         <FeaturedCard
           key={item.id}

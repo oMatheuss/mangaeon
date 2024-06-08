@@ -55,7 +55,7 @@ export const Pagination = ({ page, total, limit }: PaginationProps) => {
               <Link
                 key={x.number}
                 href={{ query: { page: x.number?.toString() } }}
-                className='flex h-10 w-10 items-center justify-center rounded-lg hover:bg-base-content/10 focus:outline-none aria-disabled:pointer-events-none aria-disabled:opacity-50'
+                className='flex h-10 w-10 items-center justify-center rounded-btn hover:bg-base-content/10 focus:outline-none aria-disabled:pointer-events-none aria-disabled:opacity-50'
               >
                 <span className='text-lg'>{x.number}</span>
               </Link>
@@ -73,7 +73,7 @@ export const Pagination = ({ page, total, limit }: PaginationProps) => {
             return (
               <div
                 key={x.number}
-                className='flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-lg text-primary-content'
+                className='flex h-10 w-10 items-center justify-center rounded-btn bg-primary text-lg text-primary-content'
               >
                 {x.number}
               </div>
