@@ -1,182 +1,97 @@
 'use client';
 
-import { mapUntil } from '@/lib/client/utils';
 import { Loader2, RefreshCwOff, RotateCcw } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 
 interface PaginasProps {
   images: string[];
 }
 
 enum ImageStatus {
-  OK,
+  LOADING,
   ERROR,
-  NOT_FETCHED,
-  REFETCH,
-  SKIPED,
+  FINISHED,
 }
 
-export const Paginas = ({ images }: PaginasProps) => {
-  const [imagesStatus, setImagesStatus] = useState<ImageStatus[]>([]);
+export function Paginas({ images }: PaginasProps) {
+  const [status, setStatus] = useState(ImageStatus.LOADING);
+  const [cursor, setCursor] = useState(0);
 
-  useEffect(() => {
-    setImagesStatus(
-      Array<ImageStatus>(images.length).fill(ImageStatus.NOT_FETCHED)
-    );
-  }, [images]);
-
-  const handleImgResolve = (success: boolean, page: number) => {
-    const idx = page - 1;
-    setImagesStatus((status) => {
-      const newArr = [...status];
-      if (success) {
-        newArr[idx] = ImageStatus.OK;
-      } else if (
-        status[idx + 1] !== undefined &&
-        status[idx + 1] !== ImageStatus.NOT_FETCHED
-      ) {
-        newArr[idx] = ImageStatus.SKIPED;
+  const handleResolve = (success: boolean, num: number) => {
+    if (success) {
+      if (cursor < images.length) {
+        setCursor(num + 1);
+        setStatus(ImageStatus.LOADING);
       } else {
-        newArr[idx] = ImageStatus.ERROR;
+        setStatus(ImageStatus.FINISHED);
       }
-      return newArr;
-    });
+    } else {
+      setCursor(num - 1);
+      setStatus(ImageStatus.ERROR);
+    }
   };
 
-  const handleRetry = (idx: number) => {
-    setImagesStatus((status) => {
-      const newArr = [...status];
-      newArr[idx] = ImageStatus.REFETCH;
-      return newArr;
-    });
+  const handleRetry = () => {
+    setCursor((c) => c + 1);
+    setStatus(ImageStatus.LOADING);
   };
 
-  const handleSkip = (idx: number) => {
-    setImagesStatus((status) => {
-      const newArr = [...status];
-      newArr[idx] = ImageStatus.SKIPED;
-      return newArr;
-    });
+  const handleIgnore = () => {
+    const next = cursor + 2;
+    if (next < images.length) {
+      setStatus(ImageStatus.LOADING);
+    } else {
+      setStatus(ImageStatus.FINISHED);
+    }
+    setCursor(next);
   };
 
   return (
     <div className='mx-auto flex max-w-prose flex-col'>
-      {mapUntil(
-        imagesStatus,
-        (status, idx) => {
-          if (
-            status === ImageStatus.OK ||
-            status === ImageStatus.NOT_FETCHED ||
-            status === ImageStatus.REFETCH
-          ) {
-            return (
-              <MangaPage
-                key={idx}
-                img={images[idx]}
-                page={idx + 1}
-                onResolve={handleImgResolve}
-              />
-            );
-          } else {
-            return (
-              <div
-                key={idx}
-                className='my-3 flex flex-col items-center justify-center'
-              >
-                <span>Falha ao carregar página {idx + 1}</span>
-                <div className='flex flex-row space-x-3'>
-                  <button
-                    onClick={() => handleRetry(idx)}
-                    className='mt-3 flex flex-row items-center rounded-sm border p-2'
-                  >
-                    <RotateCcw className='mr-2' />
-                    Atualizar
-                  </button>
-                  <button
-                    onClick={() => handleSkip(idx)}
-                    className='mt-3 flex flex-row items-center rounded-sm border p-2'
-                  >
-                    <RefreshCwOff className='mr-2' />
-                    Ignorar
-                  </button>
-                </div>
-              </div>
-            );
-          }
-        },
-        (status, idx, arr) =>
-          status === ImageStatus.ERROR ||
-          status === ImageStatus.NOT_FETCHED ||
-          (status === ImageStatus.REFETCH &&
-            arr[idx + 1] !== undefined &&
-            arr[idx + 1] === ImageStatus.NOT_FETCHED)
-      )}
-      {imagesStatus.length > 0 &&
-        imagesStatus.every((status) => status !== ImageStatus.NOT_FETCHED) && (
-          <div className='my-3 flex flex-col items-center justify-center'>
-            <span>Você chegou ao final do capítulo!</span>
-          </div>
-        )}
-    </div>
-  );
-};
+      {images.slice(0, cursor + 1).map((img, idx) => (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          key={idx}
+          sizes='(max-width: 65ch) 100vw, 65ch'
+          src={img}
+          alt={`Página ${idx + 1}`}
+          onLoad={() => handleResolve(true, idx)}
+          onError={() => handleResolve(false, idx)}
+          loading='lazy'
+          className='w-full object-contain'
+        />
+      ))}
 
-interface MangaPageProps {
-  img: string;
-  page: number;
-  onResolve: (success: boolean, num: number) => void;
-}
-
-type Status =
-  | {
-      resolved: false;
-      success: null;
-    }
-  | {
-      resolved: true;
-      success: boolean;
-    };
-
-export const MangaPage = ({ img, page, onResolve }: MangaPageProps) => {
-  const imgRef = useRef<HTMLImageElement>(null);
-
-  const [status, setStatus] = useState<Status>({
-    resolved: false,
-    success: null,
-  });
-
-  const handleLoad = () => setStatus({ resolved: true, success: true });
-  const handleError = () => setStatus({ resolved: true, success: false });
-
-  useEffect(() => {
-    if (!imgRef.current) return;
-
-    if (imgRef.current.complete) {
-      setStatus({ resolved: true, success: imgRef.current.naturalHeight > 0 });
-    }
-  }, []);
-
-  useEffect(() => {
-    if (status.resolved) onResolve(status.success, page);
-  }, [status, page]);
-
-  return (
-    <>
-      <img
-        ref={imgRef}
-        loading='lazy'
-        src={img}
-        alt={`Página ${page}`}
-        className='w-full object-contain'
-        onLoad={handleLoad}
-        onError={handleError}
-      />
-      {!status.resolved && (
+      {status === ImageStatus.LOADING ? (
         <div className='my-3 flex flex-col items-center justify-center'>
           <Loader2 className='h-10 w-10 animate-spin' />
           <span>Carregando</span>
         </div>
-      )}
-    </>
+      ) : status === ImageStatus.ERROR ? (
+        <div className='my-3 flex flex-col items-center justify-center'>
+          <span>Falha ao carregar página {cursor + 1}</span>
+          <div className='flex flex-row space-x-3'>
+            <button
+              onClick={handleRetry}
+              className='mt-3 flex flex-row items-center rounded-sm border p-2'
+            >
+              <RotateCcw className='mr-2' />
+              Atualizar
+            </button>
+            <button
+              onClick={handleIgnore}
+              className='mt-3 flex flex-row items-center rounded-sm border p-2'
+            >
+              <RefreshCwOff className='mr-2' />
+              Ignorar
+            </button>
+          </div>
+        </div>
+      ) : status === ImageStatus.FINISHED ? (
+        <div className='my-3 flex flex-col items-center justify-center'>
+          <span>Você chegou ao final do capítulo!</span>
+        </div>
+      ) : null}
+    </div>
   );
-};
+}
