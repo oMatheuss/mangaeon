@@ -48,7 +48,7 @@ export default async function Leitor({ params }: LeitorProps) {
   const origin = images.baseUrl.replace(/https?:\/\/(.*)/, '$1');
 
   return (
-    <div className='flex flex-col items-center mb-3'>
+    <div className='mb-3 flex flex-col items-center'>
       <AddViewed id={params.id} />
       <Paginas
         images={images.srcs.map((src) => `/mangadex/${secure}/${origin}${src}`)}

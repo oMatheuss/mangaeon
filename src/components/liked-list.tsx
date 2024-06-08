@@ -16,10 +16,10 @@ export const LikedList = () => {
     <>
       {liked.length === 0 && (
         <div className='flex flex-row items-center'>
-          <Frown className='h-8 w-8 mr-2 pb-1' /> Nada foi favoritado ainda!
+          <Frown className='mr-2 h-8 w-8 pb-1' /> Nada foi favoritado ainda!
         </div>
       )}
-      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-4'>
+      <div className='mb-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
         {liked.map((x) => (
           <LikedCard key={x.id} liked={x} onDelete={handleDelete} />
         ))}
@@ -36,27 +36,27 @@ interface LikedCardProps {
 const LikedCard = ({ liked, onDelete }: LikedCardProps) => {
   const handleDelete = () => onDelete(liked.id);
   return (
-    <div className='relative h-36 flex items-center w-full border border-base-content/20 rounded-bl-lg rounded-tr-lg shadow-md overflow-hidden'>
+    <div className='relative flex h-36 w-full items-center overflow-hidden rounded-bl-lg rounded-tr-lg border border-base-content/20 shadow-md'>
       <Link
-        className='group flex items-center bg-base-200 hover:bg-opacity-50 grow h-36'
+        className='group flex h-36 grow items-center bg-base-200 hover:bg-opacity-50'
         href={`/manga/${liked.id}`}
       >
         <div className='min-w-fit overflow-hidden'>
           <img
-            className='transition-transform group-hover:scale-110 object-cover max-w-fit h-36 w-24'
+            className='h-36 w-24 max-w-fit object-cover transition-transform group-hover:scale-110'
             src={liked.image}
             alt={`Imagem de capa de "${liked.name}"`}
           />
         </div>
         <div className='p-4'>
-          <h3 className='group-hover:underline font-semibold text-sm line-clamp-5'>
+          <h3 className='line-clamp-5 text-sm font-semibold group-hover:underline'>
             {liked.name}
           </h3>
         </div>
       </Link>
-      <div className='flex h-full flex-row float-right'>
+      <div className='float-right flex h-full flex-row'>
         <button
-          className='p-1 m-2 text-warning transition-colors hover:bg-warning/75 hover:text-warning-content rounded-full'
+          className='m-2 rounded-full p-1 text-warning transition-colors hover:bg-warning/75 hover:text-warning-content'
           onClick={handleDelete}
         >
           <span className='sr-only'>Excluir</span>

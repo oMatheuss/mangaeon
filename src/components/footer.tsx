@@ -3,24 +3,24 @@ import Link from 'next/link';
 
 export const Footer = () => {
   return (
-    <footer className='container px-3 sm:mx-auto my-8'>
+    <footer className='container my-8 px-3 sm:mx-auto'>
       <hr className='my-6 border-base-content/10 sm:mx-auto lg:my-4' />
-      <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2'>
-        <Link href='/' className='flex items-center mb-4 sm:mb-0'>
-          <BookOpen className='h-8 w-8 mr-3 stroke-current' />
-          <span className='self-center text-lg sm:text-2xl font-semibold'>
+      <div className='mb-2 flex flex-col sm:flex-row sm:items-center sm:justify-between'>
+        <Link href='/' className='mb-4 flex items-center sm:mb-0'>
+          <BookOpen className='mr-3 h-8 w-8 stroke-current' />
+          <span className='self-center text-lg font-semibold sm:text-2xl'>
             Mangá Éon
           </span>
         </Link>
-        <ul className='flex flex-wrap items-center text-sm font-medium mx-1 sm:mx-0'>
+        <ul className='mx-1 flex flex-wrap items-center text-sm font-medium sm:mx-0'>
           <li>
             <a
               href='#'
-              className='group mr-4 md:mr-6 flex items-center'
+              className='group mr-4 flex items-center md:mr-6'
               target='_blank'
             >
               <svg
-                className='w-4 h-4 mr-1'
+                className='mr-1 h-4 w-4'
                 width={24}
                 height={24}
                 viewBox='0 0 24 24'
@@ -38,20 +38,20 @@ export const Footer = () => {
           <li>
             <a
               href='https://github.com/oMatheuss/mangaeon'
-              className='group mr-4 md:mr-6 flex items-center'
+              className='group mr-4 flex items-center md:mr-6'
               target='_blank'
             >
-              <Github className='w-4 h-4 mr-1' />
+              <Github className='mr-1 h-4 w-4' />
               <span className='group-hover:underline'>Github</span>
             </a>
           </li>
           <li>
             <a
               href='https://mangadex.org'
-              className='group mr-4 md:mr-6 flex items-center'
+              className='group mr-4 flex items-center md:mr-6'
               target='_blank'
             >
-              <Mail className='w-4 h-4 mr-1' />
+              <Mail className='mr-1 h-4 w-4' />
               <span className='group-hover:underline'>MangaDex</span>
             </a>
           </li>

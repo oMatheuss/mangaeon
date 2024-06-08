@@ -24,7 +24,7 @@ export const ChapterList = ({ chapters }: ChapterListProps) => {
 
   return (
     <>
-      <h2 className='font-bold text-xl mt-4 mb-2'>Capítulos</h2>
+      <h2 className='mb-2 mt-4 text-xl font-bold'>Capítulos</h2>
       <ol className='mb-8 grid grid-cols-1 gap-8'>
         {groupedByChapter.map((group) => (
           <li key={group.number}>
@@ -57,19 +57,19 @@ const ChapterCardItem = ({ chapter }: ChapterCardProps) => {
   if (link === null) return;
 
   return (
-    <div className='border border-base-content/20 first:rounded-t last:rounded-b p-2 mb-1 last:mb-0 bg-base-200 shadow-md grow overflow-hidden'>
-      <div className='flex items-center grow'>
-        <div className='min-w-12 text-sm text-center bg-neutral text-neutral-content rounded mr-1 whitespace-nowrap inline-block'>
+    <div className='mb-1 grow overflow-hidden border border-base-content/20 bg-base-200 p-2 shadow-md first:rounded-t last:mb-0 last:rounded-b'>
+      <div className='flex grow items-center'>
+        <div className='mr-1 inline-block min-w-12 whitespace-nowrap rounded bg-neutral text-center text-sm text-neutral-content'>
           {chapter.translatedLanguage}
         </div>
         <ViewedIcon
           chapterId={chapter.chapterId}
-          className='inline w-4 h-4 mr-1'
+          className='mr-1 inline h-4 w-4'
         />
         <Link
           title={title}
           href={link}
-          className='hover:text-primary line-clamp-3 text-pretty'
+          className='line-clamp-3 text-pretty hover:text-primary'
           prefetch={false}
         >
           <h3 className='font-extrabold'>
@@ -77,19 +77,19 @@ const ChapterCardItem = ({ chapter }: ChapterCardProps) => {
           </h3>
         </Link>
       </div>
-      <div className='flex flex-wrap text-right justify-between gap-1'>
+      <div className='flex flex-wrap justify-between gap-1 text-right'>
         {chapter.scanlator && (
           <a
             href={chapter.scanlatorWebsite}
             target='_blank'
-            className='hover:text-secondary truncate'
+            className='truncate hover:text-secondary'
           >
-            <UsersIcon className='inline w-4 h-4 mr-1' />
+            <UsersIcon className='mr-1 inline h-4 w-4' />
             <span>{chapter.scanlator}</span>
           </a>
         )}
         <div className='whitespace-nowrap'>
-          <CalendarDaysIcon className='inline w-4 h-4 mr-1' />
+          <CalendarDaysIcon className='mr-1 inline h-4 w-4' />
           <span className='proportional-nums'>
             {chapter.publishAt.toLocaleDateString('pt-br', {
               day: '2-digit',

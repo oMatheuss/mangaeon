@@ -10,9 +10,9 @@ export const metadata: Metadata = {
 export default function Liked() {
   return (
     <>
-      <div className='flex mt-8 mb-4'>
-        <Star className='inline h-7 w-7 mr-2 text-yellow-300 fill-current' />
-        <h2 className='font-bold text-2xl'>Favoritos</h2>
+      <div className='mb-4 mt-8 flex'>
+        <Star className='mr-2 inline h-7 w-7 fill-current text-yellow-300' />
+        <h2 className='text-2xl font-bold'>Favoritos</h2>
       </div>
       <LikedList />
     </>

@@ -4,7 +4,7 @@ interface AlertProps {
 
 export const SuccessAlert = ({ text }: AlertProps) => {
   return (
-    <div className='mb-3 w-full bg-primary text-primary-content p-2 rounded text-center'>
+    <div className='mb-3 w-full rounded bg-primary p-2 text-center text-primary-content'>
       <span>{text}</span>
     </div>
   );
@@ -12,7 +12,7 @@ export const SuccessAlert = ({ text }: AlertProps) => {
 
 export const SecondaryAlert = ({ text }: AlertProps) => {
   return (
-    <div className='mb-3 w-full bg-secondary text-secondary-content p-2 rounded text-center'>
+    <div className='mb-3 w-full rounded bg-secondary p-2 text-center text-secondary-content'>
       <span>{text}</span>
     </div>
   );

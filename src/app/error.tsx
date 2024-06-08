@@ -9,7 +9,7 @@ export default function Error({
 }) {
   return (
     <div className='my-32 flex flex-col items-center text-center'>
-      <h2 className='mb-3 tracking-tight font-bold text-xl text-red-500'>
+      <h2 className='mb-3 text-xl font-bold tracking-tight text-red-500'>
         500 - Internal Server Error
       </h2>
       <p className='mb-1'>
@@ -17,7 +17,7 @@ export default function Error({
       </p>
       {error.digest && <p className='mb-1'>Digest: {error.digest}</p>}
       <button
-        className='text-blue-600 dark:text-blue-400 after:content-["_↗"]'
+        className='text-blue-600 after:content-["_↗"] dark:text-blue-400'
         onClick={reset}
       >
         Tentar de Novo

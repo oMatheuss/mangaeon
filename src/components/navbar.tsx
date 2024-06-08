@@ -46,20 +46,20 @@ export const Navbar = () => {
     <div className='h-14'>
       <nav
         ref={navRef}
-        className='fixed left-0 right-0 top-0 z-10 transition-transform -translate-y-[var(--nav-offset)]'
+        className='fixed left-0 right-0 top-0 z-10 -translate-y-[var(--nav-offset)] transition-transform'
       >
-        <div className='border-b border-b-base-content/10 w-full overflow-x-clip bg-base-200/90'>
-          <div className='max-w-screen-2xl flex items-center justify-between mx-auto p-2'>
+        <div className='w-full overflow-x-clip border-b border-b-base-content/10 bg-base-200/90'>
+          <div className='mx-auto flex max-w-screen-2xl items-center justify-between p-2'>
             <button
-              className='hidden pwa:inline-flex items-center w-10 h-10 justify-center rounded-lg hover:bg-base-content/10 focus:outline-none focus:ring-2'
+              className='hidden h-10 w-10 items-center justify-center rounded-lg hover:bg-base-content/10 focus:outline-none focus:ring-2 pwa:inline-flex'
               onClick={router.back}
             >
-              <ArrowLeft className='w-8 h-8' />
+              <ArrowLeft className='h-8 w-8' />
             </button>
 
-            <Link href='/' className='flex items-center py-2 px-3'>
-              <BookOpen className='w-6 h-6 sm:mr-2' />
-              <span className='font-bold sr-only sm:not-sr-only'>
+            <Link href='/' className='flex items-center px-3 py-2'>
+              <BookOpen className='h-6 w-6 sm:mr-2' />
+              <span className='sr-only font-bold sm:not-sr-only'>
                 MANGÁ ÉON
               </span>
             </Link>
@@ -71,10 +71,10 @@ export const Navbar = () => {
                     <Link
                       aria-current={pathname === link.to ? 'page' : undefined}
                       href={link.to}
-                      className='inline-flex items-center hover:text-primary-focus aria-[current]:text-primary py-2 px-3'
+                      className='hover:text-primary-focus inline-flex items-center px-3 py-2 aria-[current]:text-primary'
                     >
-                      <link.icon className='mr-2 stroke-3' />
-                      <div className='sr-only sm:not-sr-only pt-1'>
+                      <link.icon className='stroke-3 mr-2' />
+                      <div className='sr-only pt-1 sm:not-sr-only'>
                         {link.text}
                       </div>
                     </Link>

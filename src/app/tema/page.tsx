@@ -46,27 +46,27 @@ export const metadata: Metadata = {
 export default function Theme() {
   return (
     <>
-      <div className='flex mt-8 mb-4'>
-        <PaletteIcon className='inline h-7 w-7 mr-2 text-primary' />
-        <h2 className='font-bold text-2xl'>Temas</h2>
+      <div className='mb-4 mt-8 flex'>
+        <PaletteIcon className='mr-2 inline h-7 w-7 text-primary' />
+        <h2 className='text-2xl font-bold'>Temas</h2>
       </div>
-      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-4 font-sans'>
+      <div className='mb-4 grid grid-cols-1 gap-4 font-sans sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
         {themes.map((theme) => {
           return (
             <ThemeButton
               key={theme}
               theme={theme}
               data-theme={theme}
-              className='flex border border-base-content/20 hover:outline focus:outline outline-base-content/40 -outline-offset-2 rounded shadow cursor-pointer'
+              className='flex cursor-pointer rounded border border-base-content/20 shadow -outline-offset-2 outline-base-content/40 hover:outline focus:outline'
             >
-              <div className='basis-1/3 font-bold h-full p-3'>{theme}</div>
-              <div className='basis-1/3 bg-base-200 flex items-center justify-center h-full'>
-                <span className='bg-primary text-primary-content border border-primary-focus w-5 h-5 rounded font-bold'>
+              <div className='h-full basis-1/3 p-3 font-bold'>{theme}</div>
+              <div className='flex h-full basis-1/3 items-center justify-center bg-base-200'>
+                <span className='border-primary-focus h-5 w-5 rounded border bg-primary font-bold text-primary-content'>
                   P
                 </span>
               </div>
-              <div className='basis-1/3 bg-base-300 flex items-center justify-center h-full'>
-                <span className='bg-secondary text-secondary-content border border-secondary-focus w-5 h-5 rounded font-bold'>
+              <div className='flex h-full basis-1/3 items-center justify-center bg-base-300'>
+                <span className='border-secondary-focus h-5 w-5 rounded border bg-secondary font-bold text-secondary-content'>
                   S
                 </span>
               </div>

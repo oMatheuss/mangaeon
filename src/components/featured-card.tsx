@@ -11,33 +11,33 @@ export const FeaturedCard = ({ item, loading }: FeaturedCardProps) => {
   const link = `/manga/${item.id}`;
 
   return (
-    <li className='relative flex sm:justify-center items-center snap-center h-full w-full shrink-0'>
-      <div className='absolute w-full h-full z-[1] bg-gradient-to-b from-transparent to-base-300' />
+    <li className='relative flex h-full w-full shrink-0 snap-center items-center sm:justify-center'>
+      <div className='absolute z-[1] h-full w-full bg-gradient-to-b from-transparent to-base-300' />
       <Image
         src={item.cover}
         alt={`Imagem de ${item.title}`}
-        className='object-cover absolute w-full h-full z-[0] md:blur-sm'
+        className='absolute z-[0] h-full w-full object-cover md:blur-sm'
         fill
         loading={loading}
       />
 
-      <div className='flex w-[90%] h-[90%]'>
+      <div className='flex h-[90%] w-[90%]'>
         <Link
           href={link}
-          className='relative hidden sm:flex aspect-[2/3] w-auto h-full z-[2] self-center'
+          className='relative z-[2] hidden aspect-[2/3] h-full w-auto self-center sm:flex'
         >
           <Image
             src={item.cover}
             alt={`Imagem de ${item.title}`}
-            className='object-cover object-center rounded-md shadow-md'
+            className='rounded-md object-cover object-center shadow-md'
             width={192}
             height={288}
             loading={loading}
           />
         </Link>
-        <div className='text-base-content flex flex-col justify-end text-left p-2 sm:px-6 sm:py-4 z-[2]'>
+        <div className='z-[2] flex flex-col justify-end p-2 text-left text-base-content sm:px-6 sm:py-4'>
           <Link
-            className='font-extrabold text-3xl hover:underline line-clamp-3'
+            className='line-clamp-3 text-3xl font-extrabold hover:underline'
             href={link}
           >
             {item.title}

@@ -55,9 +55,9 @@ export default async function Manga({ params, searchParams }: MangaProps) {
 
   return (
     <div className='flex flex-col'>
-      <div className='relative items-center mt-6 border-separate'>
+      <div className='relative mt-6 border-separate items-center'>
         <Image
-          className='float-none sm:float-left object-cover aspect-[3/4] rounded m-auto mb-6 sm:m-0 sm:mr-3 sm:mb-3'
+          className='float-none m-auto mb-6 aspect-[3/4] rounded object-cover sm:float-left sm:m-0 sm:mb-3 sm:mr-3'
           src={manga.cover}
           alt={`Imagem de capa de ${manga.title}`}
           height={256}
@@ -65,14 +65,14 @@ export default async function Manga({ params, searchParams }: MangaProps) {
           loading='eager'
         />
         <div className='mb-3'>
-          <h1 className='sm:mt-3 text-3xl sm:text-5xl font-extrabold tracking-tight'>
+          <h1 className='text-3xl font-extrabold tracking-tight sm:mt-3 sm:text-5xl'>
             {manga.title}
           </h1>
-          <p className='font-bold text-base-content/70 mb-3'>
+          <p className='mb-3 font-bold text-base-content/70'>
             {manga.author}, {manga.artist}
           </p>
           <div
-            className='prose prose-hr:my-3 max-w-full text-justify'
+            className='prose max-w-full text-justify prose-hr:my-3'
             dangerouslySetInnerHTML={{ __html: descHtml }}
           />
         </div>
@@ -81,7 +81,7 @@ export default async function Manga({ params, searchParams }: MangaProps) {
         {manga.tags.sort().map((tag) => (
           <span
             key={tag}
-            className='mr-3 mb-3 text-xs break-keep p-2 rounded bg-neutral text-neutral-content max-w-fit'
+            className='mb-3 mr-3 max-w-fit break-keep rounded bg-neutral p-2 text-xs text-neutral-content'
           >
             {tag}
           </span>

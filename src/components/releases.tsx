@@ -12,7 +12,7 @@ export const Releases = ({ releases }: ReleasesProps) => {
   return (
     <>
       <SectionTitle text='Lançamentos' />
-      <ul className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 mb-4'>
+      <ul className='mb-4 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3'>
         {releases?.map((val, idx) => (
           <ReleaseCard key={`${val.id}-${idx}`} release={val} />
         ))}
@@ -29,7 +29,7 @@ const ReleaseCard = ({ release }: ReleaseCardProps) => {
   const linkSerie = `/manga/${release.id}`;
 
   return (
-    <li className='relative flex h-48 overflow-hidden bg-base-200 border border-base-content/20 rounded-lg shadow-lg'>
+    <li className='relative flex h-48 overflow-hidden rounded-lg border border-base-content/20 bg-base-200 shadow-lg'>
       <StarButton
         serie={{
           id: release.id,
@@ -37,18 +37,18 @@ const ReleaseCard = ({ release }: ReleaseCardProps) => {
           name: release.title,
         }}
       />
-      <div className='flex justify-center w-auto min-w-fit bg-base-200'>
+      <div className='flex w-auto min-w-fit justify-center bg-base-200'>
         <Image
           src={release.cover}
           alt={release.title}
-          className='w-32 h-48 object-cover rounded-r-lg'
+          className='h-48 w-32 rounded-r-lg object-cover'
           height={192}
           width={128}
           quality={100}
         />
       </div>
       <section className='flex flex-col overflow-hidden p-4'>
-        <h3 className='font-bold text-lg sm:text-xl max-h-24 max-w-fit line-clamp-3 tracking-tight'>
+        <h3 className='line-clamp-3 max-h-24 max-w-fit text-lg font-bold tracking-tight sm:text-xl'>
           <Link
             href={linkSerie}
             title={release.title}
@@ -57,17 +57,17 @@ const ReleaseCard = ({ release }: ReleaseCardProps) => {
             {release.title}
           </Link>
         </h3>
-        <p className='font-bold mt-auto text-base-content/75 text-sm truncate my-1'>
+        <p className='my-1 mt-auto truncate text-sm font-bold text-base-content/75'>
           {release.date.toLocaleString('pt-BR')}
         </p>
         <ul
           aria-label='Tags'
-          className='inline-flex space-x-2 h-6 overflow-y-hidden flex-wrap'
+          className='inline-flex h-6 flex-wrap space-x-2 overflow-y-hidden'
         >
           {release.tags.map((tag) => (
             <li
               key={tag}
-              className='text-xs whitespace-nowrap p-1 rounded bg-neutral text-neutral-content max-w-fit'
+              className='max-w-fit whitespace-nowrap rounded bg-neutral p-1 text-xs text-neutral-content'
             >
               {tag}
             </li>

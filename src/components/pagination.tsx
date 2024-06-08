@@ -34,17 +34,17 @@ export const Pagination = ({ page, total, limit }: PaginationProps) => {
   }
 
   return (
-    <div className='flex flex-row items-center justify-center flex-wrap gap-6'>
+    <div className='flex flex-row flex-wrap items-center justify-center gap-6'>
       {page < 2 ? (
-        <span className='flex items-center justify-center w-10 h-10 rounded-full opacity-50'>
-          <ArrowLeft className='w-8 h-8' aria-label='Página anterior' />
+        <span className='flex h-10 w-10 items-center justify-center rounded-full opacity-50'>
+          <ArrowLeft className='h-8 w-8' aria-label='Página anterior' />
         </span>
       ) : (
         <Link
           href={{ query: { page: (page - 1).toString() } }}
-          className='flex items-center justify-center w-10 h-10 rounded-full focus:outline-none hover:bg-base-content/10'
+          className='flex h-10 w-10 items-center justify-center rounded-full hover:bg-base-content/10 focus:outline-none'
         >
-          <ArrowLeft className='w-8 h-8' aria-label='Página anterior' />
+          <ArrowLeft className='h-8 w-8' aria-label='Página anterior' />
         </Link>
       )}
 
@@ -55,7 +55,7 @@ export const Pagination = ({ page, total, limit }: PaginationProps) => {
               <Link
                 key={x.number}
                 href={{ query: { page: x.number?.toString() } }}
-                className='flex items-center justify-center w-10 h-10 rounded-lg focus:outline-none hover:bg-base-content/10 aria-disabled:pointer-events-none aria-disabled:opacity-50'
+                className='flex h-10 w-10 items-center justify-center rounded-lg hover:bg-base-content/10 focus:outline-none aria-disabled:pointer-events-none aria-disabled:opacity-50'
               >
                 <span className='text-lg'>{x.number}</span>
               </Link>
@@ -64,16 +64,16 @@ export const Pagination = ({ page, total, limit }: PaginationProps) => {
             return (
               <div
                 key={x.number}
-                className='flex items-center justify-center w-10 h-10'
+                className='flex h-10 w-10 items-center justify-center'
               >
-                <MoreHorizontal className='w-8 h-8' />
+                <MoreHorizontal className='h-8 w-8' />
               </div>
             );
           case 'actual':
             return (
               <div
                 key={x.number}
-                className='flex items-center justify-center w-10 h-10 text-lg bg-primary text-primary-content rounded-lg'
+                className='flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-lg text-primary-content'
               >
                 {x.number}
               </div>
@@ -84,15 +84,15 @@ export const Pagination = ({ page, total, limit }: PaginationProps) => {
       })}
 
       {page > maxPage - 1 ? (
-        <span className='flex items-center justify-center w-10 h-10 rounded-full opacity-50'>
-          <ArrowRight className='w-8 h-8' aria-label='Proxima página' />
+        <span className='flex h-10 w-10 items-center justify-center rounded-full opacity-50'>
+          <ArrowRight className='h-8 w-8' aria-label='Proxima página' />
         </span>
       ) : (
         <Link
           href={{ query: { page: (page + 1).toString() } }}
-          className='flex items-center justify-center w-10 h-10 rounded-full focus:outline-none hover:bg-base-content/10'
+          className='flex h-10 w-10 items-center justify-center rounded-full hover:bg-base-content/10 focus:outline-none'
         >
-          <ArrowRight className='w-8 h-8' aria-label='Proxima página' />
+          <ArrowRight className='h-8 w-8' aria-label='Proxima página' />
         </Link>
       )}
     </div>

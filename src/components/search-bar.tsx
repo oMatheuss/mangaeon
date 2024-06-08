@@ -23,24 +23,24 @@ export const SearchBar = ({ defaultValue }: SearchBarProps) => {
       method='GET'
       action='/pesquisa'
       onSubmit={handleSearch}
-      className='w-full flex flex-row my-2 group border-base-content/20 rounded shadow'
+      className='group my-2 flex w-full flex-row rounded border-base-content/20 shadow'
     >
-      <div className='w-full relative border-inherit'>
-        <Search className='absolute w-6 h-6 top-2 left-2 pointer-events-none group-focus-within:text-primary' />
+      <div className='relative w-full border-inherit'>
+        <Search className='pointer-events-none absolute left-2 top-2 h-6 w-6 group-focus-within:text-primary' />
         <input
           defaultValue={defaultValue}
           type='search'
           name='q'
           placeholder='Pesquise uma obra'
-          className='placeholder:text-base-content/50 w-full border border-inherit border-e-0 bg-base-200 p-2 pl-10 rounded-s focus:border-primary focus:outline outline-2 outline-primary -outline-offset-2 caret-primary'
+          className='w-full rounded-s border border-e-0 border-inherit bg-base-200 p-2 pl-10 caret-primary outline-2 -outline-offset-2 outline-primary placeholder:text-base-content/50 focus:border-primary focus:outline'
         />
       </div>
       <button
         aria-label='Pesquisar'
         type='submit'
-        className='p-2 border border-inherit border-s-0 bg-base-200 rounded-e focus:outline outline-2 outline-primary -outline-offset-2'
+        className='rounded-e border border-s-0 border-inherit bg-base-200 p-2 outline-2 -outline-offset-2 outline-primary focus:outline'
       >
-        <CornerUpRight className='w-6 h-6' />
+        <CornerUpRight className='h-6 w-6' />
       </button>
     </form>
   );

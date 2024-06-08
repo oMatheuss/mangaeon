@@ -60,7 +60,7 @@ export const Paginas = ({ images }: PaginasProps) => {
   };
 
   return (
-    <div className='max-w-prose mx-auto flex flex-col'>
+    <div className='mx-auto flex max-w-prose flex-col'>
       {mapUntil(
         imagesStatus,
         (status, idx) => {
@@ -81,20 +81,20 @@ export const Paginas = ({ images }: PaginasProps) => {
             return (
               <div
                 key={idx}
-                className='my-3 flex flex-col justify-center items-center'
+                className='my-3 flex flex-col items-center justify-center'
               >
                 <span>Falha ao carregar página {idx + 1}</span>
                 <div className='flex flex-row space-x-3'>
                   <button
                     onClick={() => handleRetry(idx)}
-                    className='flex flex-row items-center p-2 mt-3 border rounded-sm'
+                    className='mt-3 flex flex-row items-center rounded-sm border p-2'
                   >
                     <RotateCcw className='mr-2' />
                     Atualizar
                   </button>
                   <button
                     onClick={() => handleSkip(idx)}
-                    className='flex flex-row items-center p-2 mt-3 border rounded-sm'
+                    className='mt-3 flex flex-row items-center rounded-sm border p-2'
                   >
                     <RefreshCwOff className='mr-2' />
                     Ignorar
@@ -113,7 +113,7 @@ export const Paginas = ({ images }: PaginasProps) => {
       )}
       {imagesStatus.length > 0 &&
         imagesStatus.every((status) => status !== ImageStatus.NOT_FETCHED) && (
-          <div className='my-3 flex flex-col justify-center items-center'>
+          <div className='my-3 flex flex-col items-center justify-center'>
             <span>Você chegou ao final do capítulo!</span>
           </div>
         )}
@@ -172,7 +172,7 @@ export const MangaPage = ({ img, page, onResolve }: MangaPageProps) => {
         onError={handleError}
       />
       {!status.resolved && (
-        <div className='my-3 flex flex-col justify-center items-center'>
+        <div className='my-3 flex flex-col items-center justify-center'>
           <Loader2 className='h-10 w-10 animate-spin' />
           <span>Carregando</span>
         </div>

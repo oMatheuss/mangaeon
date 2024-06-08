@@ -70,7 +70,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html suppressHydrationWarning lang='pt-BR' className={font.variable}>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: themeScript }}/>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body>
         <ClientProviders>

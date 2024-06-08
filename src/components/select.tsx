@@ -23,10 +23,10 @@ export const Select = ({
     onChange(e.target.value);
   };
   return (
-    <div className='relative h-full flex flex-row justify-between items-center group'>
+    <div className='group relative flex h-full flex-row items-center justify-between'>
       <select
         {...props}
-        className='bg-base-200 border border-base-content/20 shadow-lg rounded py-1 ps-2 pe-9 overflow-hidden appearance-none focus:border-indigo-600 focus:outline outline-2 outline-indigo-600 -outline-offset-2 caret-indigo-600'
+        className='appearance-none overflow-hidden rounded border border-base-content/20 bg-base-200 py-1 pe-9 ps-2 caret-indigo-600 shadow-lg outline-2 -outline-offset-2 outline-indigo-600 focus:border-indigo-600 focus:outline'
         value={value}
         onChange={handleOnChange}
       >

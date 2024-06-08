@@ -26,24 +26,24 @@ export default async function Lancamentos({ params }: LancamentosProps) {
   return (
     <>
       <Releases releases={releases} />
-      <section className='flex mt-3 justify-between'>
+      <section className='mt-3 flex justify-between'>
         <Link
           href={`${page - 1}`}
           data-visible={page > 1}
-          className='data-[visible=false]:hidden group w-10 h-10 flex items-center justify-center rounded hover:bg-base-content/10'
+          className='group flex h-10 w-10 items-center justify-center rounded hover:bg-base-content/10 data-[visible=false]:hidden'
         >
           <ArrowLeftCircle
             aria-label='Página anterior'
-            className='w-6 h-6 group-hover:stroke-primary-focus'
+            className='group-hover:stroke-primary-focus h-6 w-6'
           />
         </Link>
         <Link
           href={`${page + 1}`}
-          className='group w-10 h-10 flex items-center justify-center rounded hover:bg-base-content/10'
+          className='group flex h-10 w-10 items-center justify-center rounded hover:bg-base-content/10'
         >
           <ArrowRightCircle
             aria-label='Proxima página'
-            className='w-6 h-6 group-hover:stroke-primary-focus'
+            className='group-hover:stroke-primary-focus h-6 w-6'
           />
         </Link>
       </section>
