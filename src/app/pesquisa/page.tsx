@@ -13,11 +13,11 @@ export default async function Search({
   const series = await mangadex.search(query);
 
   return (
-    <>
+    <section>
       <SearchBar defaultValue={query || undefined} />
-      <div className='my-4 flex flex-col space-y-4'>
+      <ul className='my-4 flex flex-col space-y-4'>
         {series.map((serie) => (
-          <div
+          <li
             key={serie.id}
             className='relative flex h-36 w-full flex-row overflow-hidden rounded-box border border-base-content/20 bg-base-200 shadow-md md:h-48'
           >
@@ -63,9 +63,9 @@ export default async function Search({
                 ))}
               </div>
             </div>
-          </div>
+          </li>
         ))}
-      </div>
-    </>
+      </ul>
+    </section>
   );
 }
