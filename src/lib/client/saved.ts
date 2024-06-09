@@ -22,44 +22,24 @@ const store = localforage.createInstance({
   storeName: 'saved_mangas',
 });
 
-export const SavedMangas = {
-  async findAll() {
-    return this.filter(() => true);
-  },
-
-  async findById(mangaId: string) {
-    return await store.getItem<SavedManga>(mangaId);
-  },
-
-  async save(manga: SavedManga) {
-    return await store.setItem(manga.mangaId, manga);
-  },
-
-  async remove(mangaId: string) {
-    await store.removeItem(mangaId);
-  },
-
-  async filter(predicate: (value: SavedManga) => boolean) {
-    const result: SavedManga[] = [];
-    await store.iterate<SavedManga, any>((value) => {
-      if (predicate(value)) result.push(value);
-    });
-    result.sort((a, b) => a.includedAt.getTime() - b.includedAt.getTime());
-    return result;
-  },
-};
-
 export function useSavedManga(mangaId: string) {
   return useQuery({
     queryKey: ['local:manga', mangaId],
-    queryFn: () => SavedMangas.findById(mangaId),
+    queryFn: () => store.getItem<SavedManga>(mangaId),
   });
 }
 
 export function useMangaList() {
   return useQuery({
     queryKey: ['local:manga'],
-    queryFn: () => SavedMangas.findAll(),
+    queryFn: async () => {
+      const result: SavedManga[] = [];
+      await store.iterate<SavedManga, any>((value) => {
+        result.push(value);
+      });
+      result.sort((a, b) => a.includedAt.getTime() - b.includedAt.getTime());
+      return result;
+    },
   });
 }
 
@@ -83,11 +63,11 @@ export function useSaveMangaMutation() {
         referrerPolicy: 'no-referrer',
       }).then((x) => x.blob());
 
-      return await SavedMangas.save({
+      return await store.setItem(rest.mangaId, {
+        ...rest,
         status: 'Plan-To-Read',
         chaptersRead: [],
         coverImage,
-        ...rest,
       });
     },
     onSuccess: ({ mangaId }) =>
@@ -99,12 +79,35 @@ export function useRemoveMangaMutation(invalidateAll: boolean = false) {
   const qc = useQueryClient();
   return useMutation({
     mutationKey: ['local:manga'],
-    mutationFn: SavedMangas.remove,
+    mutationFn: (mangaId: string) => store.removeItem(mangaId),
     onSuccess: (_, mangaId) => {
       const queryKey = invalidateAll
         ? ['local:manga']
         : ['local:manga', mangaId];
       qc.invalidateQueries({ queryKey });
+    },
+  });
+}
+
+export function useExportSavedMangasToCsv() {
+  return useMutation({
+    mutationKey: ['local:manga'],
+    mutationFn: async () => {
+      const lines: string[] = [];
+
+      const header = 'Id,Título,Autor,Artista,Incluído em';
+      lines.push(header);
+
+      const buildLine = (manga: SavedManga) => {
+        const { mangaId, title, author, artist, includedAt } = manga;
+        return `${mangaId},"${title}","${author}","${artist}",${includedAt.toISOString()}`;
+      };
+
+      await store.iterate<SavedManga, any>((value) => {
+        lines.push(buildLine(value));
+      });
+
+      return lines.join('\n');
     },
   });
 }

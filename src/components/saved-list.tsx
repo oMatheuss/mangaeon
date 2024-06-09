@@ -4,13 +4,14 @@ import {
   type SavedManga,
   useMangaList,
   useRemoveMangaMutation,
+  useExportSavedMangasToCsv,
 } from '@/lib/client/saved';
 import {
   BookmarkCheckIcon,
   BookmarkMinusIcon,
   EllipsisVerticalIcon,
-  Frown,
-  StarOff,
+  FileDownIcon,
+  FrownIcon,
 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -23,7 +24,7 @@ export function SavedMangaList() {
     <>
       {list?.length === 0 && (
         <div className='flex flex-row items-center'>
-          <Frown className='mr-2 h-8 w-8 pb-1' /> Nada foi favoritado ainda!
+          <FrownIcon className='mr-2 h-8 w-8 pb-1' /> Nada foi favoritado ainda!
         </div>
       )}
       <div className='mb-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
@@ -35,6 +36,7 @@ export function SavedMangaList() {
           />
         ))}
       </div>
+      <Actions />
     </>
   );
 }
@@ -73,23 +75,52 @@ function Card({ saved, onDelete }: CardProps) {
       <div className='float-right flex h-full flex-col justify-around'>
         <button className='group p-2' onClick={onDelete}>
           <span className='sr-only'>Excluir</span>
-          <div className='rounded-badge bg-error/75 p-1 text-error-content opacity-80 transition-colors group-hover:opacity-100 group-active:opacity-50'>
+          <div className='rounded-btn bg-error/75 p-1 text-error-content opacity-80 transition-opacity group-hover:opacity-100 group-active:opacity-50'>
             <BookmarkMinusIcon className='h-5 w-5' />
           </div>
         </button>
         <button className='group p-2'>
           <span className='sr-only'>Editar</span>
-          <div className='rounded-badge bg-success/75 p-1 text-success-content opacity-80 transition-colors group-hover:opacity-100 group-active:opacity-50'>
+          <div className='rounded-btn bg-success/75 p-1 text-success-content opacity-80 transition-opacity group-hover:opacity-100 group-active:opacity-50'>
             <BookmarkCheckIcon className='h-5 w-5' />
           </div>
         </button>
         <button className='group p-2'>
           <span className='sr-only'>Opções</span>
-          <div className='rounded-badge bg-neutral/75 p-1 text-neutral-content opacity-80 transition-colors group-hover:opacity-100 group-active:opacity-50'>
+          <div className='rounded-btn bg-neutral/75 p-1 text-neutral-content opacity-80 transition-opacity group-hover:opacity-100 group-active:opacity-50'>
             <EllipsisVerticalIcon className='h-5 w-5' />
           </div>
         </button>
       </div>
     </div>
+  );
+}
+
+function Actions() {
+  const exportMut = useExportSavedMangasToCsv();
+  const handleExport = () => {
+    exportMut.mutate(undefined, {
+      onSuccess: (csv) => {
+        const link = document.createElement('a');
+        link.download = 'export.csv';
+        link.href = `data:text/csv;charset=utf-8,${window.encodeURI(csv)}`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      },
+    });
+  };
+
+  return (
+    <section className='mb-4 flex flex-wrap gap-2 rounded-box border border-base-content/20 bg-base-200 p-2'>
+      <button
+        onClick={handleExport}
+        disabled={exportMut.isPending}
+        className='flex rounded-btn bg-primary px-3 py-1 text-primary-content opacity-80 transition-opacity hover:opacity-100 active:opacity-50'
+      >
+        <FileDownIcon className='mr-1' />
+        <span className='font-medium'>Exportar</span>
+      </button>
+    </section>
   );
 }
