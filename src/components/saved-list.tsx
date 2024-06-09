@@ -5,7 +5,13 @@ import {
   useMangaList,
   useRemoveMangaMutation,
 } from '@/lib/client/saved';
-import { Frown, StarOff } from 'lucide-react';
+import {
+  BookmarkCheckIcon,
+  BookmarkMinusIcon,
+  EllipsisVerticalIcon,
+  Frown,
+  StarOff,
+} from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -57,19 +63,31 @@ function Card({ saved, onDelete }: CardProps) {
             />
           </div>
         )}
-        <div className='p-4'>
-          <h3 className='line-clamp-5 text-sm font-semibold group-hover:underline'>
-            {saved.title}
-          </h3>
+        <div className='flex h-full w-full flex-col justify-between p-4'>
+          <h3 className='line-clamp-5 text-sm font-semibold'>{saved.title}</h3>
+          <p className='self-end text-sm'>
+            {saved.includedAt.toLocaleString('pt-br')}
+          </p>
         </div>
       </Link>
-      <div className='float-right flex h-full flex-row'>
-        <button
-          className='m-2 rounded-badge p-1 text-warning transition-colors hover:bg-warning/75 hover:text-warning-content'
-          onClick={onDelete}
-        >
+      <div className='float-right flex h-full flex-col justify-around'>
+        <button className='group p-2' onClick={onDelete}>
           <span className='sr-only'>Excluir</span>
-          <StarOff className='h-5 w-5' />
+          <div className='rounded-badge bg-error/75 p-1 text-error-content opacity-80 transition-colors group-hover:opacity-100 group-active:opacity-50'>
+            <BookmarkMinusIcon className='h-5 w-5' />
+          </div>
+        </button>
+        <button className='group p-2'>
+          <span className='sr-only'>Editar</span>
+          <div className='rounded-badge bg-success/75 p-1 text-success-content opacity-80 transition-colors group-hover:opacity-100 group-active:opacity-50'>
+            <BookmarkCheckIcon className='h-5 w-5' />
+          </div>
+        </button>
+        <button className='group p-2'>
+          <span className='sr-only'>Opções</span>
+          <div className='rounded-badge bg-neutral/75 p-1 text-neutral-content opacity-80 transition-colors group-hover:opacity-100 group-active:opacity-50'>
+            <EllipsisVerticalIcon className='h-5 w-5' />
+          </div>
         </button>
       </div>
     </div>

@@ -1,8 +1,8 @@
 import type { Manga } from '@/types/manga';
 import Link from 'next/link';
-import { StarButton } from '@/components/star-button';
 import { SectionTitle } from '@/components/section-title';
 import Image from 'next/image';
+import { BookmarkButton } from './bookmark-button';
 
 interface ReleasesProps {
   releases: Manga[];
@@ -30,7 +30,7 @@ function ReleaseCard({ release }: ReleaseCardProps) {
 
   return (
     <li className='relative flex h-48 overflow-hidden rounded-box border border-base-content/20 bg-base-200 shadow-lg'>
-      <StarButton
+      <BookmarkButton
         manga={{
           mangaId: release.id,
           artist: release.artist,

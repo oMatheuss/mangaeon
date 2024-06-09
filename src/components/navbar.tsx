@@ -58,7 +58,7 @@ export const Navbar = () => {
             </button>
 
             <Link href='/' className='flex items-center px-3 py-2'>
-              <BookOpen className='h-6 w-6 sm:mr-2' />
+              <BookOpen aria-hidden={true} className='h-6 w-6 sm:mr-2' />
               <span className='sr-only font-bold sm:not-sr-only'>
                 MANGÁ ÉON
               </span>
@@ -73,7 +73,10 @@ export const Navbar = () => {
                       href={link.to}
                       className='rounded-btn px-3 py-2 hover:bg-base-content/10 aria-[current]:bg-primary aria-[current]:text-primary-content'
                     >
-                      <link.icon className='stroke-3 inline align-middle sm:mr-2' />
+                      <link.icon
+                        aria-hidden={true}
+                        className='stroke-3 inline align-middle sm:mr-2'
+                      />
                       <span className='sr-only pt-1 align-middle sm:not-sr-only'>
                         {link.text}
                       </span>

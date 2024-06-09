@@ -1,5 +1,5 @@
+import { BookmarkButton } from '@/components/bookmark-button';
 import { SearchBar } from '@/components/search-bar';
-import { StarButton } from '@/components/star-button';
 import { mangadex } from '@/lib/api/mangadex/api';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -21,7 +21,7 @@ export default async function Search({
             key={serie.id}
             className='relative flex h-36 w-full flex-row overflow-hidden rounded-box border border-base-content/20 bg-base-200 shadow-md md:h-48'
           >
-            <StarButton
+            <BookmarkButton
               manga={{
                 mangaId: serie.id,
                 artist: serie.artist,

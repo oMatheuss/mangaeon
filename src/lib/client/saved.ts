@@ -44,6 +44,7 @@ export const SavedMangas = {
     await store.iterate<SavedManga, any>((value) => {
       if (predicate(value)) result.push(value);
     });
+    result.sort((a, b) => a.includedAt.getTime() - b.includedAt.getTime());
     return result;
   },
 };
@@ -73,7 +74,14 @@ export function useSaveMangaMutation() {
     mutationKey: ['local:manga'],
     mutationFn: async (manga: MangaToSave) => {
       const { coverUri, ...rest } = manga;
-      const coverImage = await fetch(coverUri).then((x) => x.blob());
+
+      const secure = coverUri.includes('https') ? 'secure' : 'insecure';
+      const source = coverUri.replace(/https?:\/\/(.*)/, '$1');
+      const targetUrl = `/mangadex/${secure}/${source}`;
+
+      const coverImage = await fetch(targetUrl, {
+        referrerPolicy: 'no-referrer',
+      }).then((x) => x.blob());
 
       return await SavedMangas.save({
         status: 'Plan-To-Read',

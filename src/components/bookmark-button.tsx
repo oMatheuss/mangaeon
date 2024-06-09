@@ -1,0 +1,44 @@
+'use client';
+
+import {
+  useRemoveMangaMutation,
+  useSaveMangaMutation,
+  useSavedManga,
+  type MangaToSave,
+} from '@/lib/client/saved';
+import { BookmarkIcon } from 'lucide-react';
+
+interface StarButtonProps {
+  manga: MangaToSave;
+}
+
+export function BookmarkButton({ manga }: StarButtonProps) {
+  const save = useSaveMangaMutation();
+  const remove = useRemoveMangaMutation();
+
+  const { data } = useSavedManga(manga.mangaId);
+  const isActive = data !== null;
+
+  const handleClick = () =>
+    !isActive ? save.mutate(manga) : remove.mutate(manga.mangaId);
+
+  const isPending = save.isPending || remove.isPending;
+
+  return (
+    <button
+      role='checkbox'
+      aria-checked={isActive ? 'true' : isPending ? 'mixed' : 'false'}
+      className='group absolute left-0 top-0 p-2'
+      onClick={handleClick}
+      disabled={isPending}
+      aria-label='Favoritar'
+    >
+      <div className='rounded-badge bg-primary/75 p-1 text-primary-content opacity-80 transition-colors group-hover:opacity-100 group-active:opacity-50'>
+        <BookmarkIcon
+          aria-hidden={true}
+          className='h-5 w-5 group-aria-checked:fill-current'
+        />
+      </div>
+    </button>
+  );
+}
