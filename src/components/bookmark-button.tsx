@@ -33,7 +33,7 @@ export function BookmarkButton({ manga }: StarButtonProps) {
       disabled={isPending}
       aria-label='Favoritar'
     >
-      <div className='rounded-badge bg-primary/75 p-1 text-primary-content opacity-80 transition-colors group-hover:opacity-100 group-active:opacity-50'>
+      <div className='rounded-badge bg-primary/75 p-1 text-primary-content opacity-80 transition-colors group-enabled:group-hover:opacity-100 group-enabled:group-active:opacity-50 group-disabled:opacity-50'>
         <BookmarkIcon
           aria-hidden={true}
           className='h-5 w-5 group-aria-checked:fill-current'
