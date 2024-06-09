@@ -22,10 +22,14 @@ export default async function Search({
             className='relative flex h-36 w-full flex-row overflow-hidden rounded-box border border-base-content/20 bg-base-200 shadow-md md:h-48'
           >
             <StarButton
-              serie={{
-                id: serie.id,
-                image: serie.cover,
-                name: serie.title,
+              manga={{
+                mangaId: serie.id,
+                artist: serie.artist,
+                author: serie.author,
+                includedAt: new Date(),
+                tags: serie.tags,
+                title: serie.title,
+                coverUri: serie.cover,
               }}
             />
             <div className='mr-2 min-w-fit'>

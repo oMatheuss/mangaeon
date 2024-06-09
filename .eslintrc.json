@@ -1,7 +1,10 @@
 {
   "extends": "next/core-web-vitals",
-  "plugins": ["eslint-plugin-react-compiler"],
+  "plugins": ["eslint-plugin-react-compiler", "@tanstack/query"],
   "rules": {
-    "react-compiler/react-compiler": "error"
+    "react-compiler/react-compiler": "error",
+    "@tanstack/query/exhaustive-deps": "error",
+    "@tanstack/query/no-rest-destructuring": "warn",
+    "@tanstack/query/stable-query-client": "error"
   }
 }

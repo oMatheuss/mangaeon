@@ -1,24 +1,26 @@
 'use client';
 
-import { type Liked, useLiked } from '@/lib/client/liked';
+import {
+  useRemoveMangaMutation,
+  useSaveMangaMutation,
+  useSavedManga,
+  type MangaToSave,
+} from '@/lib/client/saved';
 import { Star } from 'lucide-react';
 
-interface HeartButtonProps {
-  serie: Liked;
+interface StarButtonProps {
+  manga: MangaToSave;
 }
 
-export const StarButton = ({ serie }: HeartButtonProps) => {
-  const liked = useLiked();
+export function StarButton({ manga }: StarButtonProps) {
+  const save = useSaveMangaMutation();
+  const remove = useRemoveMangaMutation();
 
-  const isActive = liked.exist(serie.id);
+  const { data } = useSavedManga(manga.mangaId);
+  const isActive = data !== null;
 
-  const handleClick = () => {
-    if (isActive) {
-      liked.del(serie.id);
-    } else {
-      liked.add(serie);
-    }
-  };
+  const handleClick = () =>
+    !isActive ? save.mutate(manga) : remove.mutate(manga.mangaId);
 
   return (
     <button
@@ -26,6 +28,7 @@ export const StarButton = ({ serie }: HeartButtonProps) => {
       aria-checked={isActive}
       className='group absolute left-0 top-0 inline-flex h-10 w-10 items-center justify-center rounded-br text-yellow-600'
       onClick={handleClick}
+      disabled={save.isPending || remove.isPending}
     >
       <Star
         aria-label='Favoritar'
@@ -34,4 +37,4 @@ export const StarButton = ({ serie }: HeartButtonProps) => {
       />
     </button>
   );
-};
+}

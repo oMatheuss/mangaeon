@@ -1,9 +1,9 @@
 import Link from 'next/link';
-import { HighLights } from '@/types/highlights';
 import Image from 'next/image';
+import { Manga } from '@/types/manga';
 
 interface FeaturedCardProps {
-  item: HighLights;
+  item: Manga;
   loading: 'eager' | 'lazy';
 }
 
@@ -43,7 +43,7 @@ export const FeaturedCard = ({ item, loading }: FeaturedCardProps) => {
             {item.title}
           </Link>
           <span className='text-sm'>
-            {item.date.toLocaleDateString('pt-BR')}
+            {item.updatedAt.toLocaleDateString('pt-BR')}
           </span>
         </div>
       </div>

@@ -1,40 +1,44 @@
-import type { Release } from '@/types/releases';
+import type { Manga } from '@/types/manga';
 import Link from 'next/link';
 import { StarButton } from '@/components/star-button';
 import { SectionTitle } from '@/components/section-title';
 import Image from 'next/image';
 
 interface ReleasesProps {
-  releases: Release[];
+  releases: Manga[];
 }
 
-export const Releases = ({ releases }: ReleasesProps) => {
+export function Releases({ releases }: ReleasesProps) {
   return (
-    <>
+    <section>
       <SectionTitle text='Lançamentos' />
       <ul className='grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3'>
-        {releases?.map((val, idx) => (
-          <ReleaseCard key={`${val.id}-${idx}`} release={val} />
+        {releases?.map((manga) => (
+          <ReleaseCard key={manga.id} release={manga} />
         ))}
       </ul>
-    </>
+    </section>
   );
-};
-
-interface ReleaseCardProps {
-  release: Release;
 }
 
-const ReleaseCard = ({ release }: ReleaseCardProps) => {
+interface ReleaseCardProps {
+  release: Manga;
+}
+
+function ReleaseCard({ release }: ReleaseCardProps) {
   const linkSerie = `/manga/${release.id}`;
 
   return (
     <li className='relative flex h-48 overflow-hidden rounded-box border border-base-content/20 bg-base-200 shadow-lg'>
       <StarButton
-        serie={{
-          id: release.id,
-          image: release.cover,
-          name: release.title,
+        manga={{
+          mangaId: release.id,
+          artist: release.artist,
+          author: release.author,
+          includedAt: new Date(),
+          tags: release.tags,
+          title: release.title,
+          coverUri: release.cover,
         }}
       />
       <div className='flex w-auto min-w-fit justify-center bg-base-200'>
@@ -58,7 +62,7 @@ const ReleaseCard = ({ release }: ReleaseCardProps) => {
           </Link>
         </h3>
         <p className='my-1 mt-auto truncate text-sm font-bold text-base-content/75'>
-          {release.date.toLocaleString('pt-BR')}
+          {release.updatedAt.toLocaleString('pt-BR')}
         </p>
         <ul
           aria-label='Tags'
@@ -87,4 +91,4 @@ const ReleaseCard = ({ release }: ReleaseCardProps) => {
       </section>
     </li>
   );
-};
+}

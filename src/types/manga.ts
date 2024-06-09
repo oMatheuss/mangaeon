@@ -6,6 +6,7 @@ export interface Manga {
   tags: string[];
   author: string;
   artist: string;
+  updatedAt: Date;
 }
 
 export interface Chapter {

@@ -1,4 +1,4 @@
-import { LikedList } from '@/components/liked-list';
+import { SavedMangaList } from '@/components/saved-list';
 import { Star } from 'lucide-react';
 import { Metadata } from 'next';
 
@@ -14,7 +14,7 @@ export default function Liked() {
         <Star className='mr-2 inline h-7 w-7 fill-current text-yellow-300' />
         <h2 className='text-2xl font-bold'>Favoritos</h2>
       </div>
-      <LikedList />
+      <SavedMangaList />
     </>
   );
 }

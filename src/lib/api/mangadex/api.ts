@@ -1,11 +1,7 @@
-import type { MostRead } from '@/types/most-read';
 import type { MangaData, MangaResponse } from './manga';
-import type { HighLights } from '@/types/highlights';
-import type { Release } from '@/types/releases';
-import type { Chapter, ChaptersWithPagination, Manga } from '@/types/manga';
 import type { ChapterData, ChapterResponse, FeedResponse } from './chapter';
-import type { Search } from '@/types/search';
 import type { PagesResponse } from './pages';
+import type { Chapter, ChaptersWithPagination, Manga } from '@/types/manga';
 import type { Images } from '@/types/images';
 
 const BASE_URL = 'https://api.mangadex.org';
@@ -41,6 +37,8 @@ const getReleases = async (page: number) => {
   const searchParams = url.searchParams;
 
   searchParams.append('includes[]', 'cover_art');
+  searchParams.append('includes[]', 'artist');
+  searchParams.append('includes[]', 'author');
   searchParams.append('order[updatedAt]', 'desc');
   searchParams.append('contentRating[]', 'safe');
   searchParams.append('contentRating[]', 'suggestive');
@@ -54,26 +52,7 @@ const getReleases = async (page: number) => {
 
   const response = await fetch(url, requestOptions);
   const json: MangaResponse = await response.json();
-  return json.data.map(extractReleases);
-};
-
-const extractReleases = (data: MangaData) => {
-  const id = data.id;
-  const title = mangaTitle(data);
-
-  const rels = data.relationships;
-  const coverImage =
-    rels.find((x) => x.type === 'cover_art')?.attributes?.fileName ?? '';
-  const cover = `${BASE_COVER_URL}/${id}/${coverImage}.256.jpg`;
-
-  const date = new Date(data.attributes.updatedAt);
-
-  const tags = data.attributes.tags
-    .filter((x) => x.type === 'tag')
-    .map((x) => x.attributes.name.en)
-    .filter(Boolean);
-
-  return { id, title, cover, date, tags } as Release;
+  return json.data.map(extractManga);
 };
 
 const getManga = async (id: string) => {
@@ -107,6 +86,7 @@ const extractManga = (data: MangaData) => {
     id: data.id,
     title: mangaTitle(data),
     description: mangaDesc(data),
+    updatedAt: new Date(data.attributes.updatedAt),
   };
 
   const rel = data.relationships;
@@ -262,37 +242,7 @@ const getSearch = async (query: string) => {
 
   const response = await fetch(url, requestOptions);
   const json: MangaResponse = await response.json();
-  return json.data.map((manga) => extractSearch(manga));
-};
-
-const extractSearch = (data: MangaData) => {
-  const id = data.id;
-  const title = mangaTitle(data);
-
-  const rels = data.relationships;
-  const coverImage =
-    rels.find((x) => x.type === 'cover_art')?.attributes?.fileName ?? '';
-  const cover = `${BASE_COVER_URL}/${id}/${coverImage}.256.jpg`;
-
-  const artist = rels.find((x) => x.type === 'artist')?.attributes?.name ?? '';
-  const author = rels.find((x) => x.type === 'author')?.attributes?.name ?? '';
-
-  const date = new Date(data.attributes.updatedAt);
-
-  const tags = data.attributes.tags
-    .filter((x) => x.type === 'tag')
-    .map((x) => x.attributes.name.en)
-    .filter(Boolean);
-
-  return <Search>{
-    id,
-    title,
-    cover,
-    date,
-    tags,
-    artist,
-    author,
-  };
+  return json.data.map(extractManga);
 };
 
 const getPages = async (id: string) => {
@@ -329,6 +279,8 @@ const getMostRead = async () => {
   const searchParams = url.searchParams;
 
   searchParams.append('includes[]', 'cover_art');
+  searchParams.append('includes[]', 'artist');
+  searchParams.append('includes[]', 'author');
   searchParams.append('order[followedCount]', 'desc');
   searchParams.append('contentRating[]', 'safe');
   searchParams.append('contentRating[]', 'suggestive');
@@ -339,20 +291,7 @@ const getMostRead = async () => {
   const response = await fetch(url, requestOptions);
   const json: MangaResponse = await response.json();
 
-  return json.data.map(extractMostRead);
-};
-
-const extractMostRead = (data: MangaData) => {
-  const id = data.id;
-  const title = mangaTitle(data);
-  const description = mangaDesc(data);
-
-  const coverImage =
-    data.relationships.filter((x) => x.type === 'cover_art')[0]?.attributes
-      ?.fileName ?? '';
-  const cover = `${BASE_COVER_URL}/${id}/${coverImage}.256.jpg`;
-
-  return <MostRead>{ title, cover, id, description };
+  return json.data.map(extractManga);
 };
 
 const getHighLights = async () => {
@@ -380,21 +319,7 @@ const getHighLights = async () => {
 
   const response = await fetch(url, requestOptions);
   const json: MangaResponse = await response.json();
-  return json.data.map(extractHighLights);
-};
-
-const extractHighLights = (data: MangaData) => {
-  const id = data.id;
-  const title = mangaTitle(data);
-
-  const coverImage =
-    data.relationships.filter((x) => x.type === 'cover_art')[0]?.attributes
-      ?.fileName ?? '';
-  const cover = `${BASE_COVER_URL}/${id}/${coverImage}.256.jpg`;
-
-  const date = new Date(data.attributes.updatedAt);
-
-  return <HighLights>{ id, title, cover, date };
+  return json.data.map(extractManga);
 };
 
 export const mangadex = {

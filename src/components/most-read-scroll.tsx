@@ -1,15 +1,15 @@
 import Link from 'next/link';
-import { MostRead } from '@/types/most-read';
 import Image from 'next/image';
 import { SectionTitle } from '@/components/section-title';
+import { Manga } from '@/types/manga';
 
 interface MostReadScrollProps {
-  items: MostRead[];
+  items: Manga[];
 }
 
-export const MostReadScroll = ({ items }: MostReadScrollProps) => {
+export function MostReadScroll({ items }: MostReadScrollProps) {
   return (
-    <>
+    <section>
       <SectionTitle text='Mais Procurados' />
       <div className='flex flex-col gap-4 lg:flex-row'>
         <ul className='grid w-full auto-cols-max grid-flow-col gap-x-3 overflow-x-auto pb-4'>
@@ -18,15 +18,15 @@ export const MostReadScroll = ({ items }: MostReadScrollProps) => {
           ))}
         </ul>
       </div>
-    </>
+    </section>
   );
-};
-
-interface MostReadCardProps {
-  item: MostRead;
 }
 
-const MostReadCard = ({ item }: MostReadCardProps) => {
+interface MostReadCardProps {
+  item: Manga;
+}
+
+function MostReadCard({ item }: MostReadCardProps) {
   const link = `/manga/${item.id}`;
   return (
     <li className='flex flex-col items-center overflow-hidden rounded-box border border-base-content/20 bg-base-200 shadow-lg'>
@@ -52,4 +52,4 @@ const MostReadCard = ({ item }: MostReadCardProps) => {
       </div>
     </li>
   );
-};
+}
