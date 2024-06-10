@@ -1,85 +1,89 @@
 'use client';
 
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { Loader2, RefreshCwOff, RotateCcw } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 interface PaginasProps {
   images: string[];
 }
 
-enum ImageStatus {
-  LOADING,
-  ERROR,
-  FINISHED,
-}
-
 export function Paginas({ images }: PaginasProps) {
-  const [status, setStatus] = useState(ImageStatus.LOADING);
-  const [cursor, setCursor] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  const handleResolve = (success: boolean, num: number) => {
-    if (success) {
-      if (cursor < images.length) {
-        setCursor(num + 1);
-        setStatus(ImageStatus.LOADING);
-      } else {
-        setStatus(ImageStatus.FINISHED);
-      }
-    } else {
-      setCursor(num - 1);
-      setStatus(ImageStatus.ERROR);
-    }
-  };
+  const {
+    data,
+    isLoading,
+    isError,
+    failureReason,
+    refetch,
+    fetchNextPage,
+    hasNextPage,
+  } = useInfiniteQuery({
+    queryKey: ['chapter_images', images],
+    queryFn: async ({ pageParam, signal }) => {
+      const url = images;
+      const res = await fetch(url[pageParam], {
+        referrerPolicy: 'no-referrer',
+        signal,
+      });
+      if (!res.ok) throw res;
+      const img = await res.blob();
+      return img;
+    },
+    initialPageParam: 0,
+    getNextPageParam: (_1, _2, last) =>
+      last + 1 < images.length ? last + 1 : null,
+    refetchOnWindowFocus: false,
+    staleTime: Infinity,
+  });
 
-  const handleRetry = () => {
-    setCursor((c) => c + 1);
-    setStatus(ImageStatus.LOADING);
-  };
+  useEffect(() => {
+    if (isLoading) return;
 
-  const handleIgnore = () => {
-    const next = cursor + 2;
-    if (next < images.length) {
-      setStatus(ImageStatus.LOADING);
-    } else {
-      setStatus(ImageStatus.FINISHED);
-    }
-    setCursor(next);
-  };
+    const observer = new IntersectionObserver((entries, _observer) => {
+      if (entries[0].isIntersecting) fetchNextPage();
+    });
+
+    const container = containerRef.current!;
+    const images = container.querySelectorAll('img');
+    const lastImage = images[images.length - 1];
+    if (lastImage) observer.observe(lastImage);
+
+    return () => observer.disconnect();
+  }, [fetchNextPage, isLoading, data]);
 
   return (
-    <div className='mx-auto flex max-w-prose flex-col'>
-      {images.slice(0, cursor + 1).map((img, idx) => (
+    <div ref={containerRef} className='mx-auto flex max-w-prose flex-col'>
+      {data?.pages.map((img, idx) => (
         // eslint-disable-next-line @next/next/no-img-element
         <img
           key={idx}
           sizes='(max-width: 65ch) 100vw, 65ch'
-          src={img}
+          src={URL.createObjectURL(img)}
           alt={`Página ${idx + 1}`}
-          onLoad={() => handleResolve(true, idx)}
-          onError={() => handleResolve(false, idx)}
-          loading='lazy'
           className='w-full object-contain'
         />
       ))}
 
-      {status === ImageStatus.LOADING ? (
+      {isLoading ? (
         <div className='my-3 flex flex-col items-center justify-center'>
           <Loader2 className='h-10 w-10 animate-spin' />
           <span>Carregando</span>
         </div>
-      ) : status === ImageStatus.ERROR ? (
+      ) : isError ? (
         <div className='my-3 flex flex-col items-center justify-center'>
-          <span>Falha ao carregar página {cursor + 1}</span>
+          <span>Falha ao carregar página: {failureReason?.message}</span>
           <div className='flex flex-row space-x-3'>
             <button
-              onClick={handleRetry}
+              onClick={() => refetch()}
               className='mt-3 flex flex-row items-center rounded-sm border p-2'
             >
               <RotateCcw className='mr-2' />
               Atualizar
             </button>
             <button
-              onClick={handleIgnore}
+              onClick={() => fetchNextPage()}
               className='mt-3 flex flex-row items-center rounded-sm border p-2'
             >
               <RefreshCwOff className='mr-2' />
@@ -87,7 +91,7 @@ export function Paginas({ images }: PaginasProps) {
             </button>
           </div>
         </div>
-      ) : status === ImageStatus.FINISHED ? (
+      ) : !hasNextPage ? (
         <div className='my-3 flex flex-col items-center justify-center'>
           <span>Você chegou ao final do capítulo!</span>
         </div>
