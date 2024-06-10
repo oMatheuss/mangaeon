@@ -7,10 +7,13 @@ import Link from 'next/link';
 export default async function Search({
   searchParams,
 }: {
-  searchParams: { q: string };
+  searchParams: { q: string; contentRating?: string };
 }) {
   const query = searchParams.q;
-  const series = await mangadex.search(query);
+  const contentRating = searchParams.contentRating
+    ? parseInt(searchParams.contentRating)
+    : 2;
+  const series = await mangadex.search(query, contentRating);
 
   return (
     <section>

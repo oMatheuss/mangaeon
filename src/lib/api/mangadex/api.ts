@@ -217,7 +217,7 @@ const extractChapter = (chap: ChapterData) => {
   return chapInfo as Chapter;
 };
 
-const getSearch = async (query: string) => {
+const getSearch = async (query: string, contentRating = 1) => {
   const requestOptions: RequestInit = {
     method: 'GET',
     redirect: 'follow',
@@ -233,10 +233,20 @@ const getSearch = async (query: string) => {
   searchParams.append('includes[]', 'artist');
   searchParams.append('order[rating]', 'desc');
 
-  searchParams.append('contentRating[]', 'safe');
-  searchParams.append('contentRating[]', 'suggestive');
-  searchParams.append('contentRating[]', 'erotica');
-  searchParams.append('contentRating[]', 'pornographic');
+  // ts ignore here because it needs to fall through
+  switch (contentRating) {
+    //@ts-ignore
+    case 4:
+      searchParams.append('contentRating[]', 'pornographic');
+    //@ts-ignore
+    case 3:
+      searchParams.append('contentRating[]', 'erotica');
+    //@ts-ignore
+    case 2:
+      searchParams.append('contentRating[]', 'suggestive');
+    default:
+      searchParams.append('contentRating[]', 'safe');
+  }
 
   searchParams.append('limit', '15');
 
