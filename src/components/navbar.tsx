@@ -57,7 +57,7 @@ export const Navbar = () => {
               <ArrowLeft className='h-8 w-8' />
             </button>
 
-            <Link href='/' className='flex items-center px-3 py-2'>
+            <Link href='/' className='flex items-center px-3 py-1.5'>
               <BookOpen aria-hidden={true} className='h-6 w-6 sm:mr-2' />
               <span className='sr-only font-bold sm:not-sr-only'>
                 MANGÁ ÉON
@@ -67,17 +67,14 @@ export const Navbar = () => {
             <ul className='flex gap-2'>
               {links.map((link) => {
                 return (
-                  <li key={link.to} className='inline-flex font-medium'>
+                  <li key={link.to}>
                     <Link
                       aria-current={pathname === link.to ? 'page' : undefined}
                       href={link.to}
-                      className='rounded-btn px-3 py-2 hover:bg-base-content/10 aria-[current]:bg-primary aria-[current]:text-primary-content'
+                      className='flex items-center rounded-btn px-3 py-1.5 font-medium hover:bg-base-content/10 aria-[current]:bg-primary aria-[current]:text-primary-content sm:gap-1'
                     >
-                      <link.icon
-                        aria-hidden={true}
-                        className='stroke-3 inline align-middle sm:mr-2'
-                      />
-                      <span className='sr-only pt-1 align-middle sm:not-sr-only'>
+                      <link.icon aria-hidden={true} />
+                      <span className='sr-only sm:not-sr-only'>
                         {link.text}
                       </span>
                     </Link>
