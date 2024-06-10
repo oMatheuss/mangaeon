@@ -35,7 +35,6 @@ function ReleaseCard({ release }: ReleaseCardProps) {
           mangaId: release.id,
           artist: release.artist,
           author: release.author,
-          includedAt: new Date(),
           tags: release.tags,
           title: release.title,
           coverUri: release.cover,
@@ -52,7 +51,7 @@ function ReleaseCard({ release }: ReleaseCardProps) {
         />
       </div>
       <section className='flex flex-col overflow-hidden p-4'>
-        <h3 className='line-clamp-3 max-h-24 max-w-fit text-lg font-bold tracking-tight sm:text-xl'>
+        <h3 className='line-clamp-3 text-lg font-bold tracking-tight sm:text-xl'>
           <Link
             href={linkSerie}
             title={release.title}

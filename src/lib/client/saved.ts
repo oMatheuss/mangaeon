@@ -44,7 +44,10 @@ export function useMangaList() {
 }
 
 export interface MangaToSave
-  extends Omit<SavedManga, 'status' | 'chaptersRead' | 'coverImage'> {
+  extends Omit<
+    SavedManga,
+    'status' | 'chaptersRead' | 'coverImage' | 'includedAt'
+  > {
   coverUri: string;
 }
 
@@ -63,11 +66,12 @@ export function useSaveMangaMutation() {
         referrerPolicy: 'no-referrer',
       }).then((x) => x.blob());
 
-      return await store.setItem(rest.mangaId, {
+      return await store.setItem<SavedManga>(rest.mangaId, {
         ...rest,
         status: 'Plan-To-Read',
         chaptersRead: [],
         coverImage,
+        includedAt: new Date(),
       });
     },
     onSuccess: ({ mangaId }) =>

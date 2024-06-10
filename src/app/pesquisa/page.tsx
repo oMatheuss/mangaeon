@@ -29,7 +29,6 @@ export default async function Search({
                 mangaId: serie.id,
                 artist: serie.artist,
                 author: serie.author,
-                includedAt: new Date(),
                 tags: serie.tags,
                 title: serie.title,
                 coverUri: serie.cover,
