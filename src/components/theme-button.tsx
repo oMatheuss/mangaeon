@@ -1,7 +1,5 @@
 'use client';
 
-import { useTheme } from '@/lib/client/theme';
-
 interface ThemeButtonProps
   extends React.DetailedHTMLProps<
     React.ButtonHTMLAttributes<HTMLButtonElement>,
@@ -15,8 +13,10 @@ export const ThemeButton = ({
   theme,
   ...props
 }: ThemeButtonProps) => {
-  const [, setTheme] = useTheme();
-  const handleChangeTheme = () => setTheme(theme);
+  const handleChangeTheme = () => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+  };
   return (
     <button onClick={handleChangeTheme} {...props}>
       {children}

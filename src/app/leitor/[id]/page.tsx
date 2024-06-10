@@ -1,4 +1,3 @@
-import { AddViewed } from '@/components/add-viewed';
 import { Paginas } from '@/components/paginas';
 import { mangadex } from '@/lib/api/mangadex/api';
 import type { Chapter, Manga } from '@/types/manga';
@@ -60,7 +59,6 @@ export default async function Leitor({ params }: LeitorProps) {
       <h2 className='mb-4 mt-2 text-pretty text-lg font-bold'>
         {getTitle(chapter)}
       </h2>
-      <AddViewed id={params.id} />
       <Paginas
         images={images.srcs.map((src) => `/mangadex/${secure}/${origin}${src}`)}
       />

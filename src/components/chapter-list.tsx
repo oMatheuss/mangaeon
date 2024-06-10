@@ -1,4 +1,3 @@
-import { ViewedIcon } from '@/components/viewed-icon';
 import { Chapter } from '@/types/manga';
 import { CalendarDaysIcon, UsersIcon } from 'lucide-react';
 import Link from 'next/link';
@@ -62,10 +61,6 @@ const ChapterCardItem = ({ chapter }: ChapterCardProps) => {
         <div className='mr-1 inline-block min-w-12 whitespace-nowrap rounded-badge bg-neutral text-center text-sm text-neutral-content'>
           {chapter.translatedLanguage}
         </div>
-        <ViewedIcon
-          chapterId={chapter.chapterId}
-          className='mr-1 inline h-4 w-4'
-        />
         <Link
           title={title}
           href={link}

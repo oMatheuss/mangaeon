@@ -6,7 +6,6 @@ import { Quicksand } from 'next/font/google';
 import { Footer } from '@/components/footer';
 import { Navbar } from '@/components/navbar';
 import { ClientProviders } from '@/components/client-providers';
-import { ThemeApplier } from '@/lib/client/theme';
 
 interface RootLayoutProps {
   children: React.ReactNode;
@@ -59,12 +58,7 @@ const font = Quicksand({
   variable: '--font-quicksand',
 });
 
-const themeScript = `
-let theme = localStorage["theme"];
-if (typeof theme === "string") {
-  theme = theme.slice(1, theme.length - 1);
-  document.documentElement.setAttribute("data-theme", theme);
-}`;
+const themeScript = `if (typeof localStorage["theme"] === "string") document.documentElement.setAttribute("data-theme", localStorage["theme"]);`;
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
@@ -74,7 +68,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
       </head>
       <body>
         <ClientProviders>
-          <ThemeApplier />
           <Navbar />
           <main className='container px-3 sm:mx-auto'>{children}</main>
           <Footer />

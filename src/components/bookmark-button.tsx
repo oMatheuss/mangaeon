@@ -17,7 +17,7 @@ export function BookmarkButton({ manga }: StarButtonProps) {
   const remove = useRemoveMangaMutation();
 
   const { data } = useSavedManga(manga.mangaId);
-  const isActive = data !== null;
+  const isActive = !!data;
 
   const handleClick = () =>
     !isActive ? save.mutate(manga) : remove.mutate(manga.mangaId);
