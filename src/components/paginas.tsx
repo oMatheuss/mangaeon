@@ -13,7 +13,7 @@ export function Paginas({ images }: PaginasProps) {
 
   const {
     data,
-    isLoading,
+    isFetching,
     isError,
     failureReason,
     refetch,
@@ -39,7 +39,7 @@ export function Paginas({ images }: PaginasProps) {
   });
 
   useEffect(() => {
-    if (isLoading) return;
+    if (isFetching) return;
 
     const observer = new IntersectionObserver((entries, _observer) => {
       if (entries[0].isIntersecting) fetchNextPage();
@@ -51,7 +51,7 @@ export function Paginas({ images }: PaginasProps) {
     if (lastImage) observer.observe(lastImage);
 
     return () => observer.disconnect();
-  }, [fetchNextPage, isLoading, data]);
+  }, [fetchNextPage, isFetching, data]);
 
   return (
     <div ref={containerRef} className='mx-auto flex max-w-prose flex-col'>
@@ -66,7 +66,7 @@ export function Paginas({ images }: PaginasProps) {
         />
       ))}
 
-      {isLoading ? (
+      {isFetching ? (
         <div className='my-3 flex flex-col items-center justify-center'>
           <Loader2 className='h-10 w-10 animate-spin' />
           <span>Carregando</span>
