@@ -27,7 +27,7 @@ export function SavedMangaList() {
           <FrownIcon className='mr-2 h-8 w-8 pb-1' /> Nada foi favoritado ainda!
         </div>
       )}
-      <div className='mb-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
+      <div className='mb-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4'>
         {list?.map((manga) => (
           <Card
             key={manga.mangaId}
