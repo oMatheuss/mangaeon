@@ -6,6 +6,8 @@ import { remark } from 'remark';
 import html from 'remark-html';
 import { Pagination } from '@/components/pagination';
 import { notFound } from 'next/navigation';
+import { BookmarkButton } from '@/components/bookmark-button';
+import { fromMangaToSaved } from '@/lib/client/utils';
 
 interface MangaProps {
   params: { id: string };
@@ -55,17 +57,20 @@ export default async function Manga({ params, searchParams }: MangaProps) {
 
   return (
     <div className='flex flex-col'>
-      <div className='relative mt-6 border-separate items-center'>
-        <Image
-          className='float-none m-auto mb-6 aspect-[3/4] rounded-box border border-base-content/20 object-cover shadow-md sm:float-left sm:m-0 sm:mb-3 sm:mr-3'
-          src={manga.cover}
-          alt={`Imagem de capa de ${manga.title}`}
-          height={256}
-          width={192}
-          loading='eager'
-        />
+      <div className='mt-6 border-separate text-center sm:text-left'>
+        <div className='relative float-none inline-block sm:float-left sm:mb-3 sm:mr-3'>
+          <BookmarkButton manga={fromMangaToSaved(manga)} />
+          <Image
+            className='aspect-[3/4] rounded-box border border-base-content/20 object-cover shadow-md'
+            src={manga.cover}
+            alt={`Imagem de capa de ${manga.title}`}
+            height={256}
+            width={192}
+            loading='eager'
+          />
+        </div>
         <div className='mb-3'>
-          <h1 className='text-3xl font-extrabold tracking-tight sm:mt-3 sm:text-5xl'>
+          <h1 className='text-3xl font-extrabold tracking-tight sm:text-5xl'>
             {manga.title}
           </h1>
           <p className='mb-3 font-bold text-base-content/70'>

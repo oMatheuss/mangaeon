@@ -1,3 +1,6 @@
+import type { Manga } from '@/types/manga';
+import type { MangaToSave } from './saved';
+
 export interface ErrorResponse {
   status: number;
   statusText: string;
@@ -21,4 +24,15 @@ export const mapUntil = <T, S>(
     if (condFn(arr[i], i, arr)) break;
   }
   return result;
+};
+
+export const fromMangaToSaved = (manga: Manga) => {
+  return {
+    artist: manga.artist,
+    author: manga.author,
+    coverUri: manga.cover,
+    mangaId: manga.id,
+    tags: manga.tags,
+    title: manga.title,
+  } as MangaToSave;
 };

@@ -1,6 +1,7 @@
 import { BookmarkButton } from '@/components/bookmark-button';
 import { SearchBar } from '@/components/search-bar';
 import { mangadex } from '@/lib/api/mangadex/api';
+import { fromMangaToSaved } from '@/lib/client/utils';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -24,16 +25,7 @@ export default async function Search({
             key={serie.id}
             className='relative flex h-36 w-full flex-row overflow-hidden rounded-box border border-base-content/20 bg-base-200 shadow-md md:h-48'
           >
-            <BookmarkButton
-              manga={{
-                mangaId: serie.id,
-                artist: serie.artist,
-                author: serie.author,
-                tags: serie.tags,
-                title: serie.title,
-                coverUri: serie.cover,
-              }}
-            />
+            <BookmarkButton manga={fromMangaToSaved(serie)} />
             <div className='mr-2 min-w-fit'>
               <Image
                 src={serie.cover}

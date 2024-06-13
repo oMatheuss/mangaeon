@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { SectionTitle } from '@/components/section-title';
 import Image from 'next/image';
 import { BookmarkButton } from './bookmark-button';
+import { fromMangaToSaved } from '@/lib/client/utils';
 
 interface ReleasesProps {
   releases: Manga[];
@@ -30,16 +31,7 @@ function ReleaseCard({ release }: ReleaseCardProps) {
 
   return (
     <li className='relative flex h-48 overflow-hidden rounded-box border border-base-content/20 bg-base-200 shadow-lg'>
-      <BookmarkButton
-        manga={{
-          mangaId: release.id,
-          artist: release.artist,
-          author: release.author,
-          tags: release.tags,
-          title: release.title,
-          coverUri: release.cover,
-        }}
-      />
+      <BookmarkButton manga={fromMangaToSaved(release)} />
       <div className='flex w-auto min-w-fit justify-center bg-base-200'>
         <Image
           src={release.cover}
