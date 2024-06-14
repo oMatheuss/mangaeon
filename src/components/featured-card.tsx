@@ -7,37 +7,38 @@ interface FeaturedCardProps {
   loading: 'eager' | 'lazy';
 }
 
-export const FeaturedCard = ({ item, loading }: FeaturedCardProps) => {
+export function FeaturedCard({ item, loading }: FeaturedCardProps) {
   const link = `/manga/${item.id}`;
 
   return (
     <li className='relative flex h-full w-full shrink-0 snap-center items-center sm:justify-center'>
-      <div className='absolute z-[1] h-full w-full bg-gradient-to-b from-transparent to-base-300' />
+      <div className='absolute z-[1] h-full w-full bg-gradient-to-b from-transparent to-base-100/40' />
       <Image
         src={item.cover}
         alt={`Imagem de ${item.title}`}
-        className='absolute z-[0] h-full w-full object-cover md:blur-sm'
+        className='absolute z-[0] h-full w-full overflow-hidden object-cover blur-sm'
         fill
         loading={loading}
+        quality={10}
       />
 
-      <div className='flex h-[90%] w-[90%]'>
+      <div className='z-[2] flex size-full sm:size-[90%]'>
         <Link
           href={link}
-          className='relative z-[2] hidden aspect-[2/3] h-full w-auto self-center sm:flex'
+          className='relative hidden aspect-[2/3] h-[14.25rem] shrink-0 self-center sm:flex'
         >
           <Image
             src={item.cover}
             alt={`Imagem de ${item.title}`}
             className='rounded-btn object-cover object-center shadow-md'
-            width={192}
-            height={288}
+            width={152}
+            height={228}
             loading={loading}
           />
         </Link>
-        <div className='z-[2] flex flex-col justify-end p-2 text-left text-base-content sm:px-6 sm:py-4'>
+        <div className='flex grow flex-col justify-end p-6 text-left text-base-content contrast-200'>
           <Link
-            className='line-clamp-3 text-3xl font-extrabold hover:underline'
+            className='line-clamp-3 text-balance text-3xl font-extrabold hover:underline'
             href={link}
           >
             {item.title}
@@ -49,4 +50,4 @@ export const FeaturedCard = ({ item, loading }: FeaturedCardProps) => {
       </div>
     </li>
   );
-};
+}
