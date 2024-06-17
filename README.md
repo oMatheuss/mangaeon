@@ -28,4 +28,3 @@ Pensando em fazer uma contribuição? Sinta-se livre para abrir uma [pull reques
 - Mais opções de filtro na pesquisa
 - Adicionar tratamento de erros com a api
 - Trocar biblioteca de interface com o IndexedDB (atual é muito limitada quanto a indexagem e tipo da chave primária)
--
