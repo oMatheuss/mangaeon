@@ -1,4 +1,4 @@
-import { Paginas } from '@/components/paginas';
+import { Viewer } from '@/components/viewers/viewer';
 import { mangadex } from '@/lib/api/mangadex/api';
 import type { Chapter, Manga } from '@/types/manga';
 import type { Metadata } from 'next';
@@ -10,14 +10,12 @@ interface LeitorProps {
 const getTitle = (chapter: Chapter & Manga) => {
   let title = '';
 
+  if (typeof chapter.volume === 'string' && /[0-9]+/.test(chapter.volume)) {
+    title += chapter.volume + ' - ';
+  }
+
   if (typeof chapter.number === 'string' && /[0-9]+/.test(chapter.number)) {
-    title += 'Cap. ';
-
-    if (typeof chapter.volume === 'string' && /[0-9]+/.test(chapter.volume)) {
-      title += chapter.volume + '.';
-    }
-
-    title += chapter.number;
+    title += 'Cap. ' + chapter.number;
     if (chapter.title) title += ' - ';
   }
 
@@ -53,15 +51,14 @@ export default async function Leitor({ params }: LeitorProps) {
   const images = await mangadex.pages(params.id);
   const secure = images.baseUrl.includes('https') ? 'secure' : 'insecure';
   const origin = images.baseUrl.replace(/https?:\/\/(.*)/, '$1');
+  const srcs = images.srcs.map((src) => `/mangadex/${secure}/${origin}${src}`);
 
   return (
     <div className='mb-3 flex flex-col items-center'>
       <h2 className='mb-4 mt-2 text-pretty text-lg font-bold'>
         {getTitle(chapter)}
       </h2>
-      <Paginas
-        images={images.srcs.map((src) => `/mangadex/${secure}/${origin}${src}`)}
-      />
+      <Viewer images={srcs} />
     </div>
   );
 }

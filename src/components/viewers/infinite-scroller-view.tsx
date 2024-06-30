@@ -8,7 +8,7 @@ interface PaginasProps {
   images: string[];
 }
 
-export function Paginas({ images }: PaginasProps) {
+export function InfiniteScrollerView({ images }: PaginasProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const {
@@ -21,15 +21,20 @@ export function Paginas({ images }: PaginasProps) {
     hasNextPage,
   } = useInfiniteQuery({
     queryKey: ['chapter_images', images],
-    queryFn: async ({ pageParam, signal }) => {
+    queryFn: async ({ pageParam }) => {
       const url = images;
-      const res = await fetch(url[pageParam], {
-        referrerPolicy: 'no-referrer',
-        signal,
+
+      const img = new Image();
+      const promise = new Promise<HTMLImageElement>((resolve, reject) => {
+        img.onload = () => resolve(img);
+        img.onerror = reject;
       });
-      if (!res.ok) throw res;
-      const img = await res.blob();
-      return img;
+
+      img.referrerPolicy = 'no-referrer';
+      img.sizes = '(max-width: 65ch) 100vw, 65ch';
+      img.src = url[pageParam];
+
+      return promise;
     },
     initialPageParam: 0,
     getNextPageParam: (_1, _2, last) =>
@@ -60,7 +65,8 @@ export function Paginas({ images }: PaginasProps) {
         <img
           key={idx}
           sizes='(max-width: 65ch) 100vw, 65ch'
-          src={URL.createObjectURL(img)}
+          src={img.src}
+          referrerPolicy='no-referrer'
           alt={`Página ${idx + 1}`}
           className='w-full object-contain'
         />
