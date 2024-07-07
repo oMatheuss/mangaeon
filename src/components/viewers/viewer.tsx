@@ -1,36 +1,39 @@
 'use client';
 
-import { useState } from 'react';
-import { Select } from '../select';
-import { InfiniteScrollerView } from './infinite-scroller-view';
-import { PageByPageView } from './page-by-page-view';
+import dynamic from 'next/dynamic';
+import { usePersistedState } from '@/hooks/use-persisted-state';
 
 interface ViewerProps {
   images: string[];
 }
 
+const PageByPageView = dynamic(
+  () => import('@/components/viewers/page-by-page-view'),
+  { ssr: false }
+);
+
+const InfiniteScrollerView = dynamic(
+  () => import('@/components/viewers/infinite-scroller-view'),
+  { ssr: false }
+);
+
+const ViewSelector = dynamic(
+  () => import('@/components/viewers/view-selector'),
+  { ssr: false }
+);
+
 export function Viewer({ images }: ViewerProps) {
-  const [viewerType, setViewerType] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('viewer-type') ?? '';
-    } else return '';
-  });
+  const [view, setView] = usePersistedState('infinite-scroller', 'viewer-type');
 
   const Viewer =
-    viewerType === 'page-by-page' ? PageByPageView : InfiniteScrollerView;
+    view === 'page-by-page' ? PageByPageView : InfiniteScrollerView;
 
   return (
     <>
-      <Select
-        value={viewerType}
-        onChange={(value) => {
-          setViewerType(value);
-          localStorage.setItem('viewer-type', value);
-        }}
-      >
-        <option value='page-by-page'>Por Página</option>
+      <ViewSelector value={view} onChange={setView}>
         <option value='infinite-scroller'>Rolagem</option>
-      </Select>
+        <option value='page-by-page'>Por Página</option>
+      </ViewSelector>
       <Viewer images={images} />
     </>
   );

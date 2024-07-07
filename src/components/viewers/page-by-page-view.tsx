@@ -13,7 +13,7 @@ interface PaginasProps {
   images: string[];
 }
 
-export function PageByPageView({ images }: PaginasProps) {
+export default function PageByPageView({ images }: PaginasProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [actualPage, setActualPage] = useState(0);
@@ -81,8 +81,6 @@ export function PageByPageView({ images }: PaginasProps) {
       const xPos = Math.floor((customWidth - customImgWidth) / 2);
 
       ctx.drawImage(img, xPos, 0, customImgWidth, customImgHeight);
-    } else {
-      console.log(data.pages[actualPage]);
     }
 
     if (actualPage === data.pages.length - 1 && !isFetching) {
@@ -93,17 +91,23 @@ export function PageByPageView({ images }: PaginasProps) {
   return (
     <div ref={containerRef} className='flex w-full max-w-prose flex-col'>
       <p>Página atual: {actualPage + 1}</p>
-      <canvas ref={canvasRef} className='h-full w-full' />
+      <canvas
+        ref={canvasRef}
+        className='h-full w-full'
+        aria-label='página atual'
+      />
 
       <div className='mt-3 flex flex-wrap gap-2'>
         <Button
           onClick={() => setActualPage(actualPage - 1)}
           disabled={actualPage === 0}
+          aria-label='página anterior'
         >
           <ArrowLeftIcon aria-hidden={true} />
         </Button>
         <Button
           onClick={() => setActualPage(actualPage + 1)}
+          aria-label='proxima página'
           disabled={
             (isFetching && actualPage === (data?.pages.length ?? 1) - 1) ||
             actualPage === total - 1
