@@ -24,20 +24,17 @@ const db = new Dexie(DB_NAME) as Dexie & {
   mangas: EntityTable<SavedManga, 'mangaId'>;
 };
 
-db.version(2).stores({
-  saved_mangas:
-    'mangaId,title,author,artist,tags,status,coverImage,chaptersRead,includedAt',
-});
-
 db.version(3)
   .stores({
-    saved_mangas: null,
     mangas:
       'mangaId,title,author,artist,tags,status,coverImage,chaptersRead,includedAt',
   })
   .upgrade(async (trans) => {
-    const data: SavedManga[] = await trans.table(TB_OLD_MANGAS).toArray();
-    await trans.table(TB_MANGAS).bulkAdd(data);
+    if (trans.storeNames.indexOf(TB_OLD_MANGAS) > -1) {
+      const data: SavedManga[] = await trans.table(TB_OLD_MANGAS).toArray();
+      await trans.table(TB_OLD_MANGAS).clear();
+      await trans.table(TB_MANGAS).bulkAdd(data);
+    }
   });
 
 export function useSavedManga(mangaId: string) {
