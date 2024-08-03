@@ -165,6 +165,7 @@ const getChapters = async (id: string, page: number = 0) => {
   }
 
   const response = await fetch(url, requestOptions);
+  if (!response.ok) throw response;
   const json: FeedResponse = await response.json();
 
   return <ChaptersWithPagination>{

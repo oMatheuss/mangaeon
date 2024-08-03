@@ -1,7 +1,7 @@
 'use client';
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import localforage from 'localforage';
+import Dexie, { type EntityTable } from 'dexie';
 
 export interface SavedManga {
   mangaId: string;
@@ -15,17 +15,25 @@ export interface SavedManga {
   includedAt: Date;
 }
 
-const store = localforage.createInstance({
-  driver: localforage.INDEXEDDB,
-  name: 'MangaEonDB',
-  version: 1.0,
-  storeName: 'saved_mangas',
+const DB_NAME = 'MangaEonDB';
+const TB_SAVED_MANGAS = 'saved_mangas';
+
+const db = new Dexie(DB_NAME) as Dexie & {
+  saved_mangas: EntityTable<SavedManga, 'mangaId'>;
+};
+
+db.version(1).stores({
+  saved_mangas:
+    'mangaId,title,author,artist,tags,status,coverImage,chaptersRead,includedAt',
 });
 
 export function useSavedManga(mangaId: string) {
   return useQuery({
     queryKey: ['local:manga', mangaId],
-    queryFn: () => store.getItem<SavedManga>(mangaId),
+    queryFn: async () => {
+      const result = await db.table<SavedManga>(TB_SAVED_MANGAS).get(mangaId);
+      return result ?? null;
+    },
   });
 }
 
@@ -33,10 +41,7 @@ export function useMangaList() {
   return useQuery({
     queryKey: ['local:manga'],
     queryFn: async () => {
-      const result: SavedManga[] = [];
-      await store.iterate<SavedManga, any>((value) => {
-        result.push(value);
-      });
+      const result = await db.table<SavedManga>(TB_SAVED_MANGAS).toArray();
       result.sort((a, b) => a.includedAt.getTime() - b.includedAt.getTime());
       return result;
     },
@@ -66,13 +71,16 @@ export function useSaveMangaMutation() {
         referrerPolicy: 'no-referrer',
       }).then((x) => x.blob());
 
-      return await store.setItem<SavedManga>(rest.mangaId, {
+      const toSave = {
         ...rest,
-        status: 'Plan-To-Read',
+        status: 'Plan-To-Read' as const,
         chaptersRead: [],
         coverImage,
         includedAt: new Date(),
-      });
+      };
+      await db.table<SavedManga>(TB_SAVED_MANGAS).put(toSave, manga.mangaId);
+
+      return toSave;
     },
     onSuccess: ({ mangaId }) =>
       qc.invalidateQueries({ queryKey: ['local:manga', mangaId] }),
@@ -83,7 +91,8 @@ export function useRemoveMangaMutation(invalidateAll: boolean = false) {
   const qc = useQueryClient();
   return useMutation({
     mutationKey: ['local:manga'],
-    mutationFn: (mangaId: string) => store.removeItem(mangaId),
+    mutationFn: (mangaId: string) =>
+      db.table<SavedManga>(TB_SAVED_MANGAS).delete(mangaId),
     onSuccess: (_, mangaId) => {
       const queryKey = invalidateAll
         ? ['local:manga']
@@ -107,7 +116,7 @@ export function useExportSavedMangasToCsv() {
         return `${mangaId},"${title}","${author}","${artist}",${includedAt.toISOString()}`;
       };
 
-      await store.iterate<SavedManga, any>((value) => {
+      await db.table<SavedManga>(TB_SAVED_MANGAS).each((value) => {
         lines.push(buildLine(value));
       });
 

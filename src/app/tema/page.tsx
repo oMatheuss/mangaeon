@@ -37,6 +37,8 @@ const themes = [
   'sunset',
 ];
 
+export const dynamic = 'force-static';
+
 export const metadata: Metadata = {
   title: 'Tema',
   description: 'Defina um tema para o site',

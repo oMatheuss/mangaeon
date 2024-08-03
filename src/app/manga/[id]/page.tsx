@@ -8,6 +8,7 @@ import { Pagination } from '@/components/pagination';
 import { notFound } from 'next/navigation';
 import { BookmarkButton } from '@/components/bookmark-button';
 import { fromMangaToSaved } from '@/lib/client/utils';
+import { isUUID } from '@/lib/uuid';
 
 interface MangaProps {
   params: { id: string };
@@ -17,6 +18,8 @@ interface MangaProps {
 export async function generateMetadata({
   params,
 }: MangaProps): Promise<Metadata> {
+  if (!isUUID(params.id)) return {};
+
   const manga = await mangadex.manga(params.id);
   return {
     metadataBase: new URL('https://mangaeon.com'),
@@ -37,13 +40,15 @@ export async function generateMetadata({
 }
 
 export default async function Manga({ params, searchParams }: MangaProps) {
+  if (!isUUID(params.id)) notFound();
+
   const manga = await mangadex.manga(params.id);
 
   let page: number;
   if (searchParams.page && !/\d+/.test(searchParams.page)) page = 1;
   else page = searchParams.page ? parseInt(searchParams.page) : 1;
 
-  if (page <= 0 || page * 96 > 10000) return notFound();
+  if (page <= 0 || page * 96 > 10000) notFound();
 
   const chaptersWithPagination = await mangadex.chapters(params.id, page);
   if (chaptersWithPagination.chapters.length === 0) return notFound();

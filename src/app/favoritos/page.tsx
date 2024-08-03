@@ -2,6 +2,8 @@ import { SavedMangaList } from '@/components/saved-list';
 import { LibraryIcon } from 'lucide-react';
 import { Metadata } from 'next';
 
+export const dynamic = 'force-static';
+
 export const metadata: Metadata = {
   title: 'Favoritos',
   robots: { index: false, follow: false },
