@@ -20,22 +20,28 @@ const DB_NAME = 'MangaEonDB';
 const TB_OLD_MANGAS = 'saved_mangas';
 const TB_MANGAS = 'mangas';
 
-const db = new Dexie(DB_NAME) as Dexie & {
+type DbType = Dexie & {
   mangas: EntityTable<SavedManga, 'mangaId'>;
 };
 
-db.version(3)
-  .stores({
-    mangas:
-      'mangaId,title,author,artist,tags,status,coverImage,chaptersRead,includedAt',
-  })
-  .upgrade(async (trans) => {
-    if (trans.storeNames.indexOf(TB_OLD_MANGAS) > -1) {
-      const data: SavedManga[] = await trans.table(TB_OLD_MANGAS).toArray();
-      await trans.table(TB_OLD_MANGAS).clear();
-      await trans.table(TB_MANGAS).bulkAdd(data);
-    }
-  });
+let db: DbType;
+
+if (typeof window !== 'undefined') {
+  db = new Dexie(DB_NAME) as DbType;
+
+  db.version(3)
+    .stores({
+      mangas:
+        'mangaId,title,author,artist,tags,status,coverImage,chaptersRead,includedAt',
+    })
+    .upgrade(async (trans) => {
+      if (trans.db.backendDB().objectStoreNames.contains(TB_OLD_MANGAS)) {
+        const data: SavedManga[] = await trans.table(TB_OLD_MANGAS).toArray();
+        await trans.table(TB_MANGAS).bulkAdd(data);
+        await trans.table(TB_OLD_MANGAS).clear();
+      }
+    });
+}
 
 export function useSavedManga(mangaId: string) {
   return useQuery({
