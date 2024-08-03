@@ -16,22 +16,35 @@ export interface SavedManga {
 }
 
 const DB_NAME = 'MangaEonDB';
-const TB_SAVED_MANGAS = 'saved_mangas';
+
+const TB_OLD_MANGAS = 'saved_mangas';
+const TB_MANGAS = 'mangas';
 
 const db = new Dexie(DB_NAME) as Dexie & {
-  saved_mangas: EntityTable<SavedManga, 'mangaId'>;
+  mangas: EntityTable<SavedManga, 'mangaId'>;
 };
 
-db.version(1).stores({
+db.version(2).stores({
   saved_mangas:
     'mangaId,title,author,artist,tags,status,coverImage,chaptersRead,includedAt',
 });
+
+db.version(3)
+  .stores({
+    saved_mangas: null,
+    mangas:
+      'mangaId,title,author,artist,tags,status,coverImage,chaptersRead,includedAt',
+  })
+  .upgrade(async (trans) => {
+    const data: SavedManga[] = await trans.table(TB_OLD_MANGAS).toArray();
+    await trans.table(TB_MANGAS).bulkAdd(data);
+  });
 
 export function useSavedManga(mangaId: string) {
   return useQuery({
     queryKey: ['local:manga', mangaId],
     queryFn: async () => {
-      const result = await db.table<SavedManga>(TB_SAVED_MANGAS).get(mangaId);
+      const result = await db.table<SavedManga>(TB_MANGAS).get(mangaId);
       return result ?? null;
     },
   });
@@ -41,7 +54,7 @@ export function useMangaList() {
   return useQuery({
     queryKey: ['local:manga'],
     queryFn: async () => {
-      const result = await db.table<SavedManga>(TB_SAVED_MANGAS).toArray();
+      const result = await db.table<SavedManga>(TB_MANGAS).toArray();
       result.sort((a, b) => a.includedAt.getTime() - b.includedAt.getTime());
       return result;
     },
@@ -78,7 +91,7 @@ export function useSaveMangaMutation() {
         coverImage,
         includedAt: new Date(),
       };
-      await db.table<SavedManga>(TB_SAVED_MANGAS).put(toSave, manga.mangaId);
+      await db.table<SavedManga>(TB_MANGAS).put(toSave, manga.mangaId);
 
       return toSave;
     },
@@ -92,7 +105,7 @@ export function useRemoveMangaMutation(invalidateAll: boolean = false) {
   return useMutation({
     mutationKey: ['local:manga'],
     mutationFn: (mangaId: string) =>
-      db.table<SavedManga>(TB_SAVED_MANGAS).delete(mangaId),
+      db.table<SavedManga>(TB_MANGAS).delete(mangaId),
     onSuccess: (_, mangaId) => {
       const queryKey = invalidateAll
         ? ['local:manga']
@@ -116,7 +129,7 @@ export function useExportSavedMangasToCsv() {
         return `${mangaId},"${title}","${author}","${artist}",${includedAt.toISOString()}`;
       };
 
-      await db.table<SavedManga>(TB_SAVED_MANGAS).each((value) => {
+      await db.table<SavedManga>(TB_MANGAS).each((value) => {
         lines.push(buildLine(value));
       });
 
