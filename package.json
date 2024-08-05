@@ -30,7 +30,7 @@
     "autoprefixer": "^10.4.20",
     "daisyui": "^4.12.10",
     "encoding": "^0.1.13",
-    "eslint": "^8.57.0",
+    "eslint": "^9.8.0",
     "eslint-config-next": "^14.2.5",
     "eslint-plugin-react-compiler": "^0.0.0-experimental-51a85ea-20240601",
     "postcss": "^8.4.40",
