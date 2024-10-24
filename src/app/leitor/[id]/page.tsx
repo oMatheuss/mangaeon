@@ -4,7 +4,7 @@ import type { Chapter, Manga } from '@/types/manga';
 import type { Metadata } from 'next';
 
 interface LeitorProps {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 const getTitle = (chapter: Chapter & Manga) => {
@@ -24,9 +24,8 @@ const getTitle = (chapter: Chapter & Manga) => {
   return title;
 };
 
-export async function generateMetadata({
-  params,
-}: LeitorProps): Promise<Metadata> {
+export async function generateMetadata(props: LeitorProps): Promise<Metadata> {
+  const params = await props.params;
   const chapter = await mangadex.chapter(params.id);
   const title = getTitle(chapter);
 
@@ -45,7 +44,8 @@ export async function generateMetadata({
   };
 }
 
-export default async function Leitor({ params }: LeitorProps) {
+export default async function Leitor(props: LeitorProps) {
+  const params = await props.params;
   const chapter = await mangadex.chapter(params.id);
 
   const images = await mangadex.pages(params.id);

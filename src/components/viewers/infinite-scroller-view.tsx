@@ -59,19 +59,18 @@ export default function InfiniteScrollerView({ images }: PaginasProps) {
   }, [fetchNextPage, isFetching, data]);
 
   return (
-    <div ref={containerRef} className='mx-auto flex max-w-prose flex-col'>
+    (<div ref={containerRef} className='mx-auto flex max-w-prose flex-col'>
       {data?.pages.map((img, idx) => (
         // eslint-disable-next-line @next/next/no-img-element
-        <img
+        (<img
           key={idx}
           sizes='(max-width: 65ch) 100vw, 65ch'
           src={img.src}
           referrerPolicy='no-referrer'
           alt={`Página ${idx + 1}`}
           className='w-full object-contain'
-        />
+        />)
       ))}
-
       {isFetching ? (
         <div className='my-3 flex flex-col items-center justify-center'>
           <Loader2 className='h-10 w-10 animate-spin' />
@@ -102,6 +101,6 @@ export default function InfiniteScrollerView({ images }: PaginasProps) {
           <span>Você chegou ao final do capítulo!</span>
         </div>
       ) : null}
-    </div>
+    </div>)
   );
 }
