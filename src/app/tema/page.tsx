@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { ThemeButton } from '@/components/theme-button';
+import { ThemeButton } from '@/components/ui/theme-button';
 import { PaletteIcon } from 'lucide-react';
 
 const themes = [

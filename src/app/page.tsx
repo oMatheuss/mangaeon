@@ -1,7 +1,7 @@
 import { FeaturedScroll } from '@/components/featured-scroll';
 import { MostReadScroll } from '@/components/most-read-scroll';
 import { Releases } from '@/components/releases';
-import { SearchBar } from '@/components/search-bar';
+import { SearchBar } from '@/components/ui/search-bar';
 import { mangadex } from '@/lib/api/mangadex/api';
 import { ArrowRightCircle } from 'lucide-react';
 import Link from 'next/link';

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { SectionTitle } from '@/components/section-title';
+import { SectionTitle } from '@/components/ui/section-title';
 import { Manga } from '@/types/manga';
 
 interface MostReadScrollProps {

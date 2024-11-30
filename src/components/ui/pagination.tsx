@@ -8,7 +8,8 @@ interface PaginationProps {
   offset: number;
 }
 
-export const Pagination = ({ page, total, limit }: PaginationProps) => {
+export function Pagination(props: PaginationProps) {
+  const { page, total, limit } = props;
   const actions = [];
 
   const maxPage = Math.ceil(total / limit);
@@ -97,4 +98,4 @@ export const Pagination = ({ page, total, limit }: PaginationProps) => {
       )}
     </div>
   );
-};
+}

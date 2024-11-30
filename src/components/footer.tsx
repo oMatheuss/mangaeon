@@ -1,16 +1,10 @@
 import { BookOpen, Mail } from 'lucide-react';
 import Link from 'next/link';
-import { GithubIcon } from '@/components/icons/github-icon';
-import { DiscordIcon } from '@/components/icons/discord-icon';
+import { MangadexIcon } from './icons/mangadex-icon';
 
 const links = [
-  { title: 'Discord', icon: DiscordIcon, href: '#' },
-  {
-    title: 'Github',
-    icon: GithubIcon,
-    href: 'https://github.com/oMatheuss/mangaeon',
-  },
-  { title: 'Mangadex', icon: Mail, href: 'https://mangadex.org' },
+  { title: 'Contact', icon: Mail, href: 'mailto:contato@mangaeon.com' },
+  { title: 'Mangadex', icon: MangadexIcon, href: 'https://mangadex.org' },
 ];
 
 export function Footer() {

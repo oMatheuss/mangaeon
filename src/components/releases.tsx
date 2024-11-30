@@ -1,6 +1,6 @@
 import type { Manga } from '@/types/manga';
 import Link from 'next/link';
-import { SectionTitle } from '@/components/section-title';
+import { SectionTitle } from '@/components/ui/section-title';
 import Image from 'next/image';
 import { BookmarkButton } from './bookmark-button';
 import { fromMangaToSaved } from '@/lib/client/utils';

@@ -1,11 +1,11 @@
 interface SectionTitleProps {
-  text: string;
+  text: React.ReactNode;
 }
 
-export const SectionTitle = (props: SectionTitleProps) => {
+export function SectionTitle(props: SectionTitleProps) {
   return (
     <div className='mb-4 mt-8 flex items-end justify-between border-b border-base-content/10'>
       <h2 className='text-xl font-bold sm:text-2xl'>{props.text}</h2>
     </div>
   );
-};
+}

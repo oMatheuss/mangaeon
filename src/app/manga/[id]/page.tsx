@@ -4,7 +4,7 @@ import { mangadex } from '@/lib/api/mangadex/api';
 import Image from 'next/image';
 import { remark } from 'remark';
 import html from 'remark-html';
-import { Pagination } from '@/components/pagination';
+import { Pagination } from '@/components/ui/pagination';
 import { notFound } from 'next/navigation';
 import { BookmarkButton } from '@/components/bookmark-button';
 import { fromMangaToSaved } from '@/lib/client/utils';

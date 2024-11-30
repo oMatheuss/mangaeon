@@ -7,7 +7,8 @@ interface SearchBarProps {
   defaultValue?: string;
 }
 
-export const SearchBar = ({ defaultValue }: SearchBarProps) => {
+export function SearchBar(props: SearchBarProps) {
+  const { defaultValue } = props;
   const router = useRouter();
 
   const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
@@ -44,4 +45,4 @@ export const SearchBar = ({ defaultValue }: SearchBarProps) => {
       </button>
     </form>
   );
-};
+}

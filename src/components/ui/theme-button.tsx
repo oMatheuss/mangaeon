@@ -8,18 +8,17 @@ interface ThemeButtonProps
   theme: string;
 }
 
-export const ThemeButton = ({
-  children,
-  theme,
-  ...props
-}: ThemeButtonProps) => {
+export function ThemeButton(props: ThemeButtonProps) {
+  const { children, theme, ...rest } = props;
+
   const handleChangeTheme = () => {
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem('theme', theme);
   };
+
   return (
-    <button onClick={handleChangeTheme} {...props}>
+    <button onClick={handleChangeTheme} {...rest}>
       {children}
     </button>
   );
-};
+}
