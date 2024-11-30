@@ -9,12 +9,21 @@ import {
 import {
   BookmarkCheckIcon,
   BookmarkMinusIcon,
+  DownloadIcon,
   EllipsisVerticalIcon,
   FileDownIcon,
   FrownIcon,
 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from '@/components/ui/dropdown';
+import { SmallIconButton } from '@/components/ui/small-icon-button';
+import { getFileExtension } from '@/lib/utils';
 
 export function SavedMangaList() {
   const { data: list } = useMangaList();
@@ -46,7 +55,8 @@ interface CardProps {
   onDelete: () => void;
 }
 
-function Card({ saved, onDelete }: CardProps) {
+function Card(props: CardProps) {
+  const { saved, onDelete } = props;
   return (
     <div className='relative flex h-36 w-full items-center overflow-hidden rounded-bl-btn rounded-tr-btn border border-base-content/20 shadow-md'>
       <Link
@@ -73,24 +83,27 @@ function Card({ saved, onDelete }: CardProps) {
         </div>
       </Link>
       <div className='float-right flex h-full flex-col justify-around'>
-        <button className='group p-2' onClick={onDelete}>
-          <span className='sr-only'>Excluir</span>
-          <div className='rounded-btn bg-error/75 p-1 text-error-content opacity-80 transition-opacity group-hover:opacity-100 group-active:opacity-60'>
-            <BookmarkMinusIcon className='size-5' />
-          </div>
-        </button>
-        <button className='group p-2'>
-          <span className='sr-only'>Editar</span>
-          <div className='rounded-btn bg-success/75 p-1 text-success-content opacity-80 transition-opacity group-hover:opacity-100 group-active:opacity-60'>
-            <BookmarkCheckIcon className='size-5' />
-          </div>
-        </button>
-        <button className='group p-2'>
-          <span className='sr-only'>Opções</span>
-          <div className='rounded-btn bg-neutral/75 p-1 text-neutral-content opacity-80 transition-opacity group-hover:opacity-100 group-active:opacity-60'>
-            <EllipsisVerticalIcon className='size-5' />
-          </div>
-        </button>
+        <SmallIconButton
+          icon={BookmarkMinusIcon}
+          sr='Excluir'
+          onClick={onDelete}
+          variant='destructive'
+        />
+        <SmallIconButton
+          icon={BookmarkCheckIcon}
+          sr='Editar'
+          variant='success'
+        />
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <SmallIconButton
+              icon={EllipsisVerticalIcon}
+              sr='Opções'
+              variant='secondary'
+            />
+          </DropdownMenuTrigger>
+          <OptionsDropdown manga={saved} />
+        </DropdownMenu>
       </div>
     </div>
   );
@@ -122,5 +135,27 @@ function Actions() {
         <span className='font-medium'>Exportar</span>
       </button>
     </section>
+  );
+}
+
+interface OptionsDropdownProps {
+  manga: SavedManga;
+}
+
+function OptionsDropdown(props: OptionsDropdownProps) {
+  const { manga } = props;
+  const fileExt = getFileExtension(manga.coverImage.type);
+  return (
+    <DropdownMenuContent>
+      <DropdownMenuItem asChild>
+        <a
+          download={`${manga.title}.${fileExt}`}
+          href={window.URL.createObjectURL(manga.coverImage)}
+        >
+          <DownloadIcon aria-hidden={true} />
+          <span>Download Art</span>
+        </a>
+      </DropdownMenuItem>
+    </DropdownMenuContent>
   );
 }
