@@ -60,23 +60,23 @@ function Card(props: CardProps) {
   return (
     <div className='relative flex h-36 w-full items-center overflow-hidden rounded-bl-btn rounded-tr-btn border border-base-content/20 shadow-md'>
       <Link
-        className='group flex h-36 grow items-center bg-base-200 hover:bg-opacity-50'
+        className='group flex h-36 grow appearance-none items-center bg-base-200 outline-none hover:bg-opacity-50'
         href={`/manga/${saved.mangaId}`}
       >
-        {saved.coverImage && (
-          <div className='min-w-fit overflow-hidden'>
-            <Image
-              unoptimized
-              className='h-36 w-24 max-w-fit object-cover transition-transform group-hover:scale-110'
-              width={256}
-              height={384}
-              src={window.URL.createObjectURL(saved.coverImage)}
-              alt={`Imagem de capa de "${saved.title}"`}
-            />
-          </div>
-        )}
+        <div className='min-w-fit overflow-hidden'>
+          <Image
+            unoptimized
+            className='h-36 w-24 max-w-fit object-cover transition-transform group-hover:scale-110'
+            width={256}
+            height={384}
+            src={window.URL.createObjectURL(saved.coverImage)}
+            alt={`Imagem de capa de "${saved.title}"`}
+          />
+        </div>
         <div className='flex h-full w-full flex-col justify-between p-4'>
-          <h3 className='line-clamp-4 text-sm font-semibold'>{saved.title}</h3>
+          <h3 className='line-clamp-4 text-sm font-semibold group-focus-visible:underline'>
+            {saved.title}
+          </h3>
           <p className='self-end text-sm'>
             {saved.includedAt.toLocaleString('pt-br')}
           </p>
