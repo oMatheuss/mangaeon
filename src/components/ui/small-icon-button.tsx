@@ -33,7 +33,7 @@ interface SmallIconButtonProps
 
 const SmallIconButton = forwardRef<HTMLButtonElement, SmallIconButtonProps>(
   (props: SmallIconButtonProps, ref) => {
-    const { icon: Icon, className, variant, asChild, ...rest } = props;
+    const { icon: Icon, className, variant, sr, asChild, ...rest } = props;
     const Comp = asChild ? Slot : 'button';
 
     return (
@@ -42,7 +42,7 @@ const SmallIconButton = forwardRef<HTMLButtonElement, SmallIconButtonProps>(
         {...rest}
         ref={ref}
       >
-        <span className='sr-only'>Excluir</span>
+        <span className='sr-only'>{sr}</span>
         <div className={buttonVariants({ variant })}>
           <Icon aria-hidden={true} className='size-5' />
         </div>
