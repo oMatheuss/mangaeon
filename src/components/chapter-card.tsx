@@ -21,16 +21,16 @@ const ChapterCard = forwardRef<HTMLDivElement, ChapterCardProps>(
 
     return (
       <div {...rest} ref={ref}>
-        <div className='flex grow items-center'>
+        <h3 className='truncate font-extrabold'>
           <Link
             title={title}
             href={link}
-            className='truncate text-pretty hover:underline'
+            className='hover:underline'
             prefetch={false}
           >
-            <h3 className='font-extrabold'>{title}</h3>
+            {title}
           </Link>
-        </div>
+        </h3>
         <div className='flex flex-wrap justify-between gap-1 text-right'>
           {chapter.scanlator && (
             <a
