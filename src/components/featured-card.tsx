@@ -15,7 +15,7 @@ export function FeaturedCard({ item, loading }: FeaturedCardProps) {
       <div className='absolute z-[1] h-full w-full bg-gradient-to-b from-transparent to-base-100/40' />
       <Image
         src={item.cover}
-        alt={`Imagem de ${item.title}`}
+        alt=''
         className='absolute z-[0] h-full w-full overflow-hidden object-cover blur-sm'
         fill
         loading={loading}

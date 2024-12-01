@@ -38,7 +38,7 @@ export async function generateMetadata({
       description: chapter.description,
       type: 'book',
       locale: chapter.translatedLanguage,
-      releaseDate: chapter.publishAt.toISOString(),
+      releaseDate: chapter.publishAt,
       tags: chapter.tags,
     },
     robots: { index: false, follow: false },

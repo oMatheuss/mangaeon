@@ -123,7 +123,7 @@ function extractChapter(chap: ChapterData) {
     number: attrs.chapter,
     volume: attrs.volume,
     chapterTitle: attrs.title,
-    publishAt: new Date(attrs.publishAt),
+    publishAt: attrs.publishAt,
     pages: attrs.pages,
     translatedLanguage: attrs.translatedLanguage,
     externalUrl: attrs.externalUrl,

@@ -14,7 +14,7 @@ export interface Chapter {
   chapterTitle: string;
   number: string;
   volume: string;
-  publishAt: Date;
+  publishAt: string;
   pages: number;
   translatedLanguage: string;
   scanlator: string;
