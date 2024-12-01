@@ -13,6 +13,7 @@ interface GroupedChapters {
   number: string;
   chapters: Chapter[];
   default: string;
+  isPreferredLang: boolean;
 }
 
 const orderByLang = (a: Chapter, b: Chapter) => {
@@ -22,30 +23,38 @@ const orderByLang = (a: Chapter, b: Chapter) => {
   return priorityA - priorityB;
 };
 
-export function ChapterList(props: ChapterListProps) {
-  const { page, data } = props;
-
-  const grouped = data.chapters.reduce((prev, curr) => {
+const groupByChapter = (data: Chapter[], preferredLang: string) =>
+  data.reduce((prev, curr) => {
     const group = prev.find((x) => x.number === curr.number);
 
     if (group) {
       group.chapters.push(curr);
-      if (curr.translatedLanguage == 'pt-br') group.default = curr.chapterId;
+      if (!group.isPreferredLang && curr.translatedLanguage === preferredLang) {
+        group.default = curr.chapterId;
+        group.isPreferredLang = true;
+      }
     } else {
       prev.push({
         number: curr.number,
         chapters: [curr],
         default: curr.chapterId,
+        isPreferredLang: curr.translatedLanguage === preferredLang,
       });
     }
 
     return prev;
   }, [] as GroupedChapters[]);
 
+const PREFERRED_LANG = 'pt-br';
+
+export function ChapterList(props: ChapterListProps) {
+  const { page, data } = props;
+  const grouped = groupByChapter(data.chapters, PREFERRED_LANG);
+
   return (
     <>
       <h2 className='mb-2 mt-4 text-xl font-bold'>Capítulos</h2>
-      <ol className='mb-8 grid grid-cols-1 gap-2 md:grid-cols-2 xl:grid-cols-3'>
+      <div className='mb-8 grid grid-cols-1 gap-2 md:grid-cols-2 xl:grid-cols-3'>
         {grouped.map((group) => (
           <Tabs.Root key={group.number} defaultValue={group.default}>
             <Tabs.List className='flex shrink-0 flex-wrap items-center overflow-x-auto rounded-t-box border border-base-content/20 bg-base-200'>
@@ -76,7 +85,7 @@ export function ChapterList(props: ChapterListProps) {
             ))}
           </Tabs.Root>
         ))}
-      </ol>
+      </div>
       <Pagination limit={data.limit} total={data.total} page={page} />
     </>
   );
