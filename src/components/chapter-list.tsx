@@ -12,51 +12,43 @@ interface ChapterListProps {
 interface GroupedChapters {
   number: string;
   chapters: Chapter[];
-  default: string;
-  isPreferredLang: boolean;
 }
 
+const DEFAULT_ORDER: Record<string, number> = { 'pt-br': 1, en: 2, 'es-la': 3 };
+
 const orderByLang = (a: Chapter, b: Chapter) => {
-  const order = { 'pt-br': 1, en: 2, 'es-la': 3 } as Record<string, number>;
-  const priorityA = order[a.translatedLanguage] || 4;
-  const priorityB = order[b.translatedLanguage] || 4;
+  const priorityA = DEFAULT_ORDER[a.translatedLanguage] || 4;
+  const priorityB = DEFAULT_ORDER[b.translatedLanguage] || 4;
   return priorityA - priorityB;
 };
 
-const groupByChapter = (data: Chapter[], preferredLang: string) =>
+const groupByChapter = (data: Chapter[]) =>
   data.reduce((prev, curr) => {
     const group = prev.find((x) => x.number === curr.number);
 
-    if (group) {
-      group.chapters.push(curr);
-      if (!group.isPreferredLang && curr.translatedLanguage === preferredLang) {
-        group.default = curr.chapterId;
-        group.isPreferredLang = true;
-      }
-    } else {
-      prev.push({
-        number: curr.number,
-        chapters: [curr],
-        default: curr.chapterId,
-        isPreferredLang: curr.translatedLanguage === preferredLang,
-      });
-    }
+    if (group) group.chapters.push(curr);
+    else prev.push({ number: curr.number, chapters: [curr] });
 
     return prev;
   }, [] as GroupedChapters[]);
 
-const PREFERRED_LANG = 'pt-br';
+const sortCharpterTranslations = (grouped: GroupedChapters[]) => {
+  for (const group of grouped) group.chapters.sort(orderByLang);
+  return grouped;
+};
+
+const firstChapterId = (group: GroupedChapters) => group.chapters[0].chapterId;
 
 export function ChapterList(props: ChapterListProps) {
   const { page, data } = props;
-  const grouped = groupByChapter(data.chapters, PREFERRED_LANG);
+  const grouped = sortCharpterTranslations(groupByChapter(data.chapters));
 
   return (
     <>
       <h2 className='mb-2 mt-4 text-xl font-bold'>Capítulos</h2>
       <div className='mb-8 grid grid-cols-1 gap-2 md:grid-cols-2 xl:grid-cols-3'>
         {grouped.map((group) => (
-          <Tabs.Root key={group.number} defaultValue={group.default}>
+          <Tabs.Root key={group.number} defaultValue={firstChapterId(group)}>
             <Tabs.List className='flex shrink-0 flex-wrap items-center overflow-x-auto rounded-t-box border border-base-content/20 bg-base-200'>
               <div className='h-10 rounded-r-btn bg-secondary px-4 py-1.5'>
                 <h4 className='text-lg font-semibold text-secondary-content'>
