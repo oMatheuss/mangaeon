@@ -31,12 +31,12 @@ const ChapterCard = forwardRef<HTMLDivElement, ChapterCardProps>(
             {title}
           </Link>
         </h3>
-        <div className='flex flex-wrap justify-between gap-1 text-right'>
+        <div className='flex flex-nowrap justify-between gap-1 text-right'>
           {chapter.scanlator && (
             <a
               href={chapter.scanlatorWebsite}
               target='_blank'
-              className='truncate underline-offset-2 hover:underline'
+              className='truncate underline-offset-4 hover:underline'
             >
               <UsersIcon className='mr-1 inline size-5' />
               <span className='align-middle'>{chapter.scanlator}</span>
