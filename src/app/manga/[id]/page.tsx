@@ -5,15 +5,14 @@ import { isUUID } from '@/lib/uuid';
 import { MangaHeader } from '@/components/manga-header';
 
 interface MangaProps {
-  params: { id: string };
-  searchParams: { page?: string };
+  params: Promise<{ id: string }>;
+  searchParams: Promise<{ page?: string }>;
 }
 
 export const revalidate = 86400;
 
-export async function generateMetadata({
-  params,
-}: MangaProps): Promise<Metadata> {
+export async function generateMetadata(props: MangaProps): Promise<Metadata> {
+  const params = await props.params;
   if (!isUUID(params.id)) return {};
 
   const manga = await mangadex.manga(params.id);
@@ -36,7 +35,7 @@ export async function generateMetadata({
 }
 
 export default async function Manga(props: MangaProps) {
-  const { params } = props;
+  const params = await props.params;
   if (!isUUID(params.id)) notFound();
   const manga = await mangadex.manga(params.id);
 

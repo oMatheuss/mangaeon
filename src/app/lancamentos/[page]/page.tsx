@@ -8,16 +8,18 @@ import { notFound } from 'next/navigation';
 export const revalidate = 21600;
 
 interface LancamentosProps {
-  params: { page: string };
+  params: Promise<{ page: string }>;
 }
 
-export function generateMetadata({ params }: LancamentosProps): Metadata {
+export async function generateMetadata(props: LancamentosProps): Promise<Metadata> {
+  const params = await props.params;
   return {
     title: `Lançamentos: ${params.page}`,
   };
 }
 
-export default async function Lancamentos({ params }: LancamentosProps) {
+export default async function Lancamentos(props: LancamentosProps) {
+  const params = await props.params;
   const page = parseInt(params.page);
   if (!page || !isFinite(page) || page <= 0) return notFound();
 

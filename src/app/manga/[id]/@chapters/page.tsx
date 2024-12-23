@@ -3,12 +3,15 @@ import { mangadex } from '@/lib/api/mangadex/api';
 import { notFound } from 'next/navigation';
 
 interface MangaProps {
-  params: { id: string };
-  searchParams: { page?: string };
+  params: Promise<{ id: string }>;
+  searchParams: Promise<{ page?: string }>;
 }
 
 export default async function Chapters(props: MangaProps) {
-  const { params, searchParams } = props;
+  const [params, searchParams] = await Promise.all([
+    props.params,
+    props.searchParams,
+  ]);
   const _page = searchParams.page;
   const page = _page && /\d+/.test(_page) ? parseInt(_page) : 1;
 

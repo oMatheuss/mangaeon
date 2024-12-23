@@ -5,11 +5,12 @@ import { fromMangaToSaved } from '@/lib/client/utils';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default async function Search({
-  searchParams,
-}: {
-  searchParams: { q: string; contentRating?: string };
-}) {
+interface SearchProps {
+  searchParams: Promise<{ q: string; contentRating?: string }>;
+}
+
+export default async function Search(props: SearchProps) {
+  const searchParams = await props.searchParams;
   const query = searchParams.q;
   const contentRating = searchParams.contentRating
     ? parseInt(searchParams.contentRating)
