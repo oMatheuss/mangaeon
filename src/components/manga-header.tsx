@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { remark } from 'remark';
 import html from 'remark-html';
 import { BookmarkButton } from '@/components/bookmark-button';
-import { fromMangaToSaved } from '@/lib/client/utils';
+import { fromMangaToSaved } from '@/lib/utils';
 import type { Manga } from '@/types/manga';
 
 interface MangaHeaderProps {

@@ -1,7 +1,7 @@
 import { BookmarkButton } from '@/components/bookmark-button';
 import { SearchBar } from '@/components/ui/search-bar';
 import { mangadex } from '@/lib/api/mangadex/api';
-import { fromMangaToSaved } from '@/lib/client/utils';
+import { fromMangaToSaved } from '@/lib/utils';
 import Image from 'next/image';
 import Link from 'next/link';
 

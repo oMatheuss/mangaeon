@@ -118,7 +118,7 @@ function extractManga(data: MangaData) {
 function extractChapter(chap: ChapterData) {
   const attrs = chap.attributes;
 
-  const chapInfo = <Partial<Chapter>>{
+  const chapInfo = {
     chapterId: chap.id,
     number: attrs.chapter,
     volume: attrs.volume,
@@ -127,7 +127,7 @@ function extractChapter(chap: ChapterData) {
     pages: attrs.pages,
     translatedLanguage: attrs.translatedLanguage,
     externalUrl: attrs.externalUrl,
-  };
+  } as Partial<Chapter>;
 
   const rels = chap.relationships ?? [];
   for (const rel of rels) {
@@ -172,6 +172,7 @@ export const mangadex = {
     searchParams.append('availableTranslatedLanguage[]', 'pt-br');
     searchParams.append('availableTranslatedLanguage[]', 'pt');
     searchParams.append('hasAvailableChapters', 'true');
+    searchParams.append('limit', '25');
 
     const res = await apiGet<MangaResponse>(url);
     return res.data.map(extractManga);
@@ -224,7 +225,7 @@ export const mangadex = {
 
     const res = await apiGet<FeedResponse>(url);
 
-    return <ChaptersWithPagination>{
+    return {
       chapters: res.data
         .map((chap) => extractChapter(chap))
         // sort by volume and chapter number
@@ -237,7 +238,7 @@ export const mangadex = {
       limit: res.limit,
       offset: res.offset,
       total: res.total,
-    };
+    } as ChaptersWithPagination;
   },
   async chapter(id: string) {
     const url = new URL(`/chapter/${id}`, BASE_URL);

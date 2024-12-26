@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { SectionTitle } from '@/components/ui/section-title';
 import Image from 'next/image';
 import { BookmarkButton } from './bookmark-button';
-import { fromMangaToSaved } from '@/lib/client/utils';
+import { fromMangaToSaved } from '@/lib/utils';
 
 interface ReleasesProps {
   releases: Manga[];
