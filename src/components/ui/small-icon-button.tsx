@@ -2,7 +2,6 @@ import { cn } from '@/lib/utils';
 import { Slot } from '@radix-ui/react-slot';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { type LucideIcon } from 'lucide-react';
-import { forwardRef } from 'react';
 
 const buttonVariants = cva(
   'rounded-btn p-1 transition-opacity group-hover:opacity-100 group-active:opacity-60 disabled:pointer-events-none group-focus-visible:outline outline-2 outline-offset-2',
@@ -29,27 +28,26 @@ interface SmallIconButtonProps
   icon: LucideIcon;
   sr?: string;
   asChild?: boolean;
+  ref?: React.Ref<HTMLButtonElement>;
 }
 
-const SmallIconButton = forwardRef<HTMLButtonElement, SmallIconButtonProps>(
-  (props: SmallIconButtonProps, ref) => {
-    const { icon: Icon, className, variant, sr, asChild, ...rest } = props;
-    const Comp = asChild ? Slot : 'button';
+function SmallIconButton(props: SmallIconButtonProps) {
+  const { icon: Icon, className, variant, sr, asChild, ref, ...rest } = props;
+  const Comp = asChild ? Slot : 'button';
 
-    return (
-      <Comp
-        className={cn('group appearance-none p-2 outline-none', className)}
-        {...rest}
-        ref={ref}
-      >
-        <span className='sr-only'>{sr}</span>
-        <div className={buttonVariants({ variant })}>
-          <Icon aria-hidden={true} className='size-5' />
-        </div>
-      </Comp>
-    );
-  }
-);
+  return (
+    <Comp
+      className={cn('group appearance-none p-2 outline-none', className)}
+      {...rest}
+      ref={ref}
+    >
+      <span className='sr-only'>{sr}</span>
+      <div className={buttonVariants({ variant })}>
+        <Icon aria-hidden={true} className='size-5' />
+      </div>
+    </Comp>
+  );
+}
 
 SmallIconButton.displayName = 'SmallIconButton';
 
