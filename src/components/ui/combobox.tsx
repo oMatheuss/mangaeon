@@ -9,6 +9,7 @@ import {
 import { CheckIcon, ChevronDownIcon, XIcon } from 'lucide-react';
 import {
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useId,
@@ -344,7 +345,7 @@ function ComboboxInput(props: ComboboxInputProps) {
     onChange(ev);
   };
 
-  const updateInputValue = () => {
+  const updateInputValue = useCallback(() => {
     if (typeof value === 'string' || typeof value === 'number') {
       const selector = `#${CSS.escape(id)} > option[value="${value}"]`;
       const item = document.querySelector(selector);
@@ -354,9 +355,9 @@ function ComboboxInput(props: ComboboxInputProps) {
       }
     }
     setInputValue('');
-  };
+  }, [id, setInputValue, value]);
 
-  useEffect(() => updateInputValue(), [value]);
+  useEffect(() => updateInputValue(), [value, updateInputValue]);
 
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     if (e.relatedTarget && e.relatedTarget.id === `listbox-${id}`) {
@@ -422,7 +423,7 @@ function ComboboxMultipleInput(props: ComboboxInputProps) {
     onChange(ev);
   };
 
-  useEffect(() => setInputValue(''), [value]);
+  useEffect(() => setInputValue(''), [setInputValue, value]);
 
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     if (e.relatedTarget && e.relatedTarget.id === `listbox-${id}`) {
@@ -514,7 +515,7 @@ function ComboboxTags(props: ComboboxTagsProps) {
       if (label) _tags.push({ l: label, v: val });
     }
     setTags(_tags);
-  }, [values]);
+  }, [values, selectId]);
 
   return tags.map(({ l, v }) => (
     <li
