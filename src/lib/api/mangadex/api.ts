@@ -1,7 +1,14 @@
 import type { MangaData, MangaResponse } from './manga';
+import type { TagData, TagResponse } from './tag';
 import type { ChapterData, ChapterResponse, FeedResponse } from './chapter';
 import type { PagesResponse } from './pages';
-import type { Chapter, ChaptersWithPagination, Manga } from '@/types/manga';
+import type {
+  Chapter,
+  ChaptersWithPagination,
+  Manga,
+  SearchParams,
+  Tag,
+} from '@/types/manga';
 import type { Images } from '@/types/images';
 import { notFound } from 'next/navigation';
 
@@ -158,6 +165,14 @@ function extractPages(pages: PagesResponse): Images {
   };
 }
 
+function extractTag(tag: TagData): Tag {
+  return {
+    id: tag.id,
+    name: tag.attributes.name.en,
+    group: tag.attributes.group,
+  };
+}
+
 export const mangadex = {
   async mostRead() {
     const url = new URL('/manga', BASE_URL);
@@ -309,16 +324,26 @@ export const mangadex = {
     const res = await apiGet<MangaResponse>(url);
     return res.data.map(extractManga);
   },
-  async search(query: string, contentRating = 1) {
+  async tags() {
+    const url = new URL('/manga/tag', BASE_URL);
+    const res = await apiGet<TagResponse>(url, {
+      next: { revalidate: 604800 },
+    });
+    return res.data.map(extractTag);
+  },
+  async search(params: SearchParams) {
     const url = new URL('/manga', BASE_URL);
     const searchParams = url.searchParams;
 
-    searchParams.append('title', query);
+    if (params.title) searchParams.append('title', params.title);
 
     searchParams.append('includes[]', 'cover_art');
     searchParams.append('includes[]', 'author');
     searchParams.append('includes[]', 'artist');
-    searchParams.append('order[rating]', 'desc');
+
+    const contentRating = params.contentRating
+      ? parseInt(params.contentRating)
+      : 1;
 
     // ts ignore here because it needs to fall through
     switch (contentRating) {
@@ -333,6 +358,24 @@ export const mangadex = {
         searchParams.append('contentRating[]', 'suggestive');
       default:
         searchParams.append('contentRating[]', 'safe');
+    }
+
+    if (params.includeTag) {
+      if (typeof params.includeTag === 'string') {
+        searchParams.append('includedTags[]', params.includeTag);
+      } else {
+        for (const tag of params.includeTag) {
+          searchParams.append('includedTags[]', tag);
+        }
+      }
+    }
+
+    if (params.updatedAtSince) {
+      searchParams.append(
+        'updatedAtSince',
+        params.updatedAtSince + 'T00:00:00'
+      );
+      searchParams.append('order[updatedAt]', 'desc');
     }
 
     searchParams.append('limit', '15');

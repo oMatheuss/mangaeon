@@ -9,6 +9,13 @@ export interface Manga {
   updatedAt: Date;
 }
 
+export interface SearchParams {
+  title?: string;
+  contentRating?: string;
+  updatedAtSince?: string;
+  includeTag?: string | string[];
+}
+
 export interface Chapter {
   chapterId: string;
   chapterTitle: string;
@@ -30,4 +37,10 @@ interface Pagination {
   limit: number;
   offset: number;
   total: number;
+}
+
+export interface Tag {
+  id: string;
+  name: string;
+  group: string;
 }

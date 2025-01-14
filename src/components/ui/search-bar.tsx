@@ -1,7 +1,5 @@
-'use client';
-
 import { CornerUpRight, Search } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import Form from 'next/form';
 
 interface SearchBarProps {
   defaultValue?: string;
@@ -9,40 +7,30 @@ interface SearchBarProps {
 
 export function SearchBar(props: SearchBarProps) {
   const { defaultValue } = props;
-  const router = useRouter();
-
-  const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    const searchParams = new URLSearchParams();
-    searchParams.set('q', formData.get('q') as string);
-    router.push('/pesquisa?' + searchParams.toString());
-  };
 
   return (
-    <form
-      method='GET'
+    <Form
       action='/pesquisa'
-      onSubmit={handleSearch}
-      className='group my-4 flex w-full flex-row rounded-btn border-base-content/20 shadow hover:border-base-content/50'
+      className='group my-4 flex w-full rounded-btn border-base-content/20 shadow hover:border-base-content/50'
     >
       <div className='relative w-full border-inherit'>
-        <Search className='pointer-events-none absolute left-2 top-2 h-6 w-6 group-focus-within:text-primary' />
+        <Search className='pointer-events-none absolute left-2 top-2 size-6 group-focus-within:text-primary' />
         <input
           defaultValue={defaultValue}
           type='search'
-          name='q'
+          name='title'
+          spellCheck={false}
           placeholder='Pesquise uma obra'
-          className='w-full rounded-s-btn border border-e-0 border-inherit bg-base-200 p-2 pl-10 caret-primary outline-2 -outline-offset-2 outline-primary placeholder:text-base-content/50 focus:border-primary focus:outline'
+          className='box-border h-10 w-full appearance-none rounded-s-btn border border-e-0 border-inherit bg-base-200 p-2 pl-10 caret-primary outline-2 -outline-offset-2 outline-primary placeholder:text-base-content/50 focus:border-primary focus:outline'
         />
       </div>
       <button
         aria-label='Pesquisar'
         type='submit'
-        className='rounded-e-btn border border-s-0 border-inherit bg-base-200 p-2 outline-2 -outline-offset-2 outline-primary focus:outline'
+        className='box-border size-10 appearance-none rounded-e-btn border border-l-0 border-inherit bg-base-200 p-2 outline-2 -outline-offset-2 outline-primary focus:outline'
       >
-        <CornerUpRight className='h-6 w-6' />
+        <CornerUpRight className='size-6' />
       </button>
-    </form>
+    </Form>
   );
 }
