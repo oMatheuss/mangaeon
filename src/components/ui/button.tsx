@@ -1,16 +1,16 @@
 import { cva, type VariantProps } from 'class-variance-authority';
 
 const buttonVariants = cva(
-  'rounded-btn inline-flex gap-2 items-center px-3 h-10 transition-opacity hover:opacity-100 active:opacity-60 focus-visible:outline outline-2 outline-offset-2',
+  'inline-flex h-10 items-center gap-2 rounded-btn px-3 outline-2 outline-offset-2 transition-[opacity,transform] hover:opacity-75 focus-visible:outline disabled:cursor-not-allowed disabled:opacity-50 motion-safe:enabled:active:scale-95',
   {
     variants: {
       variant: {
-        default: 'bg-primary/75 text-primary-content outline-primary',
-        success: 'bg-success/75 text-success-content outline-success',
-        destructive: 'bg-error/75 text-error-content outline-error',
-        warning: 'bg-warning/75 text-warning-content outline-warning',
-        secondary: 'bg-secondary/75 text-secondary-content outline-secondary',
-        neutral: 'bg-neutral/75 text-neutral-content outline-neutral',
+        default: 'bg-primary text-primary-content outline-primary',
+        success: 'bg-success text-success-content outline-success',
+        destructive: 'bg-error text-error-content outline-error',
+        warning: 'bg-warning text-warning-content outline-warning',
+        secondary: 'bg-secondary text-secondary-content outline-secondary',
+        neutral: 'bg-neutral text-neutral-content outline-neutral',
       },
     },
     defaultVariants: {
