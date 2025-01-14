@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { mangadex } from '@/lib/api/mangadex/api';
 import { notFound } from 'next/navigation';
-import { isUUID } from '@/lib/uuid';
+import { isUUID } from '@/lib/utils';
 import { MangaHeader } from '@/components/manga-header';
 
 interface MangaProps {
