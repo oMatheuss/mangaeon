@@ -19,7 +19,7 @@ export function SearchForm(props: SearchFormProps) {
   return (
     <Form replace scroll action='/pesquisa'>
       <fieldset className='mb-3 grid grid-cols-1 gap-2 lg:grid-cols-3'>
-        <div>
+        <div className='lg:col-span-2'>
           <label htmlFor={`title-${id}`}>Título</label>
           <Input
             id={`title-${id}`}
@@ -38,19 +38,6 @@ export function SearchForm(props: SearchFormProps) {
           />
         </div>
         <div>
-          <label htmlFor={`includeTag-${id}`}>Incluir Tags</label>
-          <Combobox
-            id={`includeTag-${id}`}
-            name='includeTag'
-            multiple
-            defaultValue={intoArray(searchParams.includeTag)}
-          >
-            {tags.map((x) => (
-              <ComboboxItem key={x.id} value={x.id} label={x.name} />
-            ))}
-          </Combobox>
-        </div>
-        <div>
           <label htmlFor={`contentRating-${id}`}>Classificação</label>
           <Combobox
             id={`contentRating-${id}`}
@@ -61,6 +48,19 @@ export function SearchForm(props: SearchFormProps) {
             <ComboboxItem value='2' label='Sugestivo' />
             <ComboboxItem value='3' label='Erótico' />
             <ComboboxItem value='4' label='Pornográfico' />
+          </Combobox>
+        </div>
+        <div className='lg:col-span-2'>
+          <label htmlFor={`includeTag-${id}`}>Incluir Tags</label>
+          <Combobox
+            id={`includeTag-${id}`}
+            name='includeTag'
+            multiple
+            defaultValue={intoArray(searchParams.includeTag)}
+          >
+            {tags.map((x) => (
+              <ComboboxItem key={x.id} value={x.id} label={x.name} />
+            ))}
           </Combobox>
         </div>
       </fieldset>
