@@ -341,20 +341,16 @@ export const mangadex = {
     searchParams.append('includes[]', 'author');
     searchParams.append('includes[]', 'artist');
 
-    const contentRating = params.contentRating
-      ? parseInt(params.contentRating)
-      : 1;
-
     // ts ignore here because it needs to fall through
-    switch (contentRating) {
+    switch (params.contentRating) {
       //@ts-ignore
-      case 4:
+      case '4':
         searchParams.append('contentRating[]', 'pornographic');
       //@ts-ignore
-      case 3:
+      case '3':
         searchParams.append('contentRating[]', 'erotica');
       //@ts-ignore
-      case 2:
+      case '2':
         searchParams.append('contentRating[]', 'suggestive');
       default:
         searchParams.append('contentRating[]', 'safe');

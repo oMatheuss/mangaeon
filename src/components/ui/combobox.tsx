@@ -520,7 +520,7 @@ function ComboboxTags(props: ComboboxTagsProps) {
   return tags.map(({ l, v }) => (
     <li
       key={v}
-      className='flex h-6 items-center rounded-btn bg-primary px-1 text-primary-content'
+      className='flex h-6 items-center rounded-badge bg-neutral px-2 text-neutral-content'
     >
       <span className='block break-keep text-xs'>{l}</span>
       <button

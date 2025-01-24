@@ -12,7 +12,7 @@ export function getFileExtension(mimeType: string) {
   if (_mime.includes('jpg') || _mime.includes('jpeg')) {
     return 'jpg';
   } else if (_mime.includes('png')) {
-    return 'pnj';
+    return 'png';
   } else if (_mime.includes('webp')) {
     return 'webp';
   } else if (_mime.includes('avif')) {
