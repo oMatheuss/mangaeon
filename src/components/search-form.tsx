@@ -42,12 +42,12 @@ export function SearchForm(props: SearchFormProps) {
           <Combobox
             id={`contentRating-${id}`}
             name='contentRating'
-            defaultValue={searchParams.contentRating ?? '1'}
+            multiple
+            defaultValue={intoArray(searchParams.contentRating)}
           >
-            <ComboboxItem value='1' label='Seguro' />
-            <ComboboxItem value='2' label='Sugestivo' />
-            <ComboboxItem value='3' label='Erótico' />
-            <ComboboxItem value='4' label='Pornográfico' />
+            <ComboboxItem value='safe' label='Seguro' />
+            <ComboboxItem value='suggestive' label='Sugestivo' />
+            <ComboboxItem value='erotica' label='Erótico' />
           </Combobox>
         </div>
         <div className='lg:col-span-2'>

@@ -11,8 +11,8 @@ export interface Manga {
 
 export interface SearchParams {
   title?: string;
-  contentRating?: string;
   updatedAtSince?: string;
+  contentRating?: string | string[];
   includeTag?: string | string[];
 }
 
