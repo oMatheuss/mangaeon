@@ -1,7 +1,9 @@
 import { Viewer } from '@/components/viewers/viewer';
 import { mangadex } from '@/lib/api/mangadex/api';
+import { isTakenDown } from '@/lib/data/manga';
 import type { Chapter, Manga } from '@/types/manga';
 import type { Metadata } from 'next';
+import { redirect } from 'next/navigation';
 
 interface LeitorProps {
   params: Promise<{ id: string }>;
@@ -47,6 +49,9 @@ export async function generateMetadata(props: LeitorProps): Promise<Metadata> {
 export default async function Leitor(props: LeitorProps) {
   const params = await props.params;
   const chapter = await mangadex.chapter(params.id);
+
+  const tk = await isTakenDown(chapter.id);
+  if (tk) redirect('/dmca');
 
   const images = await mangadex.pages(params.id);
   const secure = images.baseUrl.includes('https') ? 'secure' : 'insecure';

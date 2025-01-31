@@ -28,3 +28,5 @@ dist-ssr
 next-env.d.ts
 
 .env*
+
+db.sqlite
