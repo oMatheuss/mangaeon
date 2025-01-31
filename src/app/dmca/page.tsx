@@ -1,6 +1,12 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 
 export const dynamic = 'force-static';
+
+export const metadata: Metadata = {
+  title: 'DMCA',
+  robots: { index: false, follow: false },
+};
 
 export default function Dmca() {
   return (
