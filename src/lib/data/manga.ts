@@ -19,6 +19,7 @@ export async function save(manga: MangaEnity) {
     'INSERT INTO Manga (id, title, cover_url, tk) VALUES (?, ?, ?, ?)';
   const { id, title, cover_url, tk } = manga;
   await db.run(sql, id, title, cover_url, tk);
+  return manga;
 }
 
 export async function isTakenDown(mangaId: string) {

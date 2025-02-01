@@ -20,11 +20,11 @@ export async function POST(request: NextRequest) {
     });
   }
 
-  const manga = await findOne(mangaId);
+  let manga = await findOne(mangaId);
 
   if (!manga) {
     const _manga = await mangadex.manga(mangaId);
-    await save({
+    manga = await save({
       id: _manga.id,
       title: _manga.title,
       cover_url: _manga.cover,
