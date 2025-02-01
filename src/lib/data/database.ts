@@ -20,11 +20,16 @@ export async function openDb() {
   console.log('Database migration completed successfully.');
 
   if (process.env.NEXT_MANUAL_SIG_HANDLE) {
-    process.on('SIGTERM', () => {
+    process.on('SIGTERM', async () => {
       console.log('SIGTERM signal: closing db connection.');
-      global._db?.close().then(() => {
+      try {
+        await global._db?.close();
         console.log('Database connection closed gracefully.');
-      });
+        process.exit(0);
+      } catch (err) {
+        console.error(err);
+        process.exit(1);
+      }
     });
   }
 
