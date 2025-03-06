@@ -11,6 +11,7 @@ import type {
 } from '@/types/manga';
 import type { Images } from '@/types/images';
 import { notFound } from 'next/navigation';
+import Bottleneck from 'bottleneck';
 
 const DEFAULT_REQ_OPTS: RequestInit = {
   headers: {
@@ -67,12 +68,21 @@ function checkResponse(res: Response): void | never {
   throw error;
 }
 
+const limiter = new Bottleneck({
+  maxConcurrent: 2, // max 5 concurrent
+  minTime: 200, // 5 per second
+  highWater: 50, // max 10 seconds
+  strategy: Bottleneck.strategy.LEAK,
+});
+
+const limitedFetch = limiter.wrap(fetch);
+
 async function apiGet<T>(url: URL, init: RequestInit = {}): Promise<T> {
   const request = new Request(url, {
     ...DEFAULT_REQ_OPTS,
     ...init,
   });
-  const response = await fetch(request);
+  const response = await limitedFetch(request);
   checkResponse(response);
   const json = await response.json();
   return json as T;
