@@ -44,8 +44,8 @@ function checkResponse(res: Response): void | never {
       const retryAfter = res.headers.get('X-RateLimit-Retry-After');
       if (retryAfter) {
         const unixTimeRetry = parseInt(retryAfter);
-        const dateRetry = new Date(unixTimeRetry);
-        error.message += `Tente novamente após ${dateRetry.toLocaleTimeString('pt-BR')}`;
+        const dateRetry = new Date(unixTimeRetry * 1000);
+        error.message += `Tente novamente após ${dateRetry.toLocaleString('pt-BR')}`;
       } else {
         error.message += 'Tente novamente mais tarde.';
       }
@@ -83,6 +83,10 @@ function getRateLimiter() {
   });
 
   limiter.on('error', console.error);
+  limiter.on('failed', (_err, info) => {
+    console.error('Job failed:', info.options.id);
+    console.log('Job status:', limiter.counts());
+  });
 
   global._rateLimiter = limiter;
 
@@ -92,7 +96,7 @@ function getRateLimiter() {
 const jobOptions = { expiration: 5000 };
 
 async function apiGet<T>(url: URL, init: RequestInit = {}): Promise<T> {
-  const request = new Request(url, Object.assign(init, DEFAULT_REQ_OPTS));
+  const request = new Request(url, { ...DEFAULT_REQ_OPTS, ...init });
   const response = await getRateLimiter().schedule(jobOptions, fetch, request);
   checkResponse(response);
   const json = await response.json();
