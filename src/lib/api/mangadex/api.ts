@@ -76,11 +76,13 @@ function getRateLimiter() {
   if (typeof global._rateLimiter !== 'undefined') return global._rateLimiter;
 
   const limiter = new Bottleneck({
-    maxConcurrent: 2, // max 2 concurrent
+    maxConcurrent: 5, // max 5 concurrent
     minTime: 200, // 5 per second
-    highWater: 50, // max 10 seconds
+    highWater: 20,
     strategy: Bottleneck.strategy.LEAK,
   });
+
+  limiter.on('error', console.error);
 
   global._rateLimiter = limiter;
 
@@ -91,9 +93,7 @@ const jobOptions = { expiration: 5000 };
 
 async function apiGet<T>(url: URL, init: RequestInit = {}): Promise<T> {
   const request = new Request(url, Object.assign(init, DEFAULT_REQ_OPTS));
-  const response = await getRateLimiter().schedule(jobOptions, () =>
-    fetch(request)
-  );
+  const response = await getRateLimiter().schedule(jobOptions, fetch, request);
   checkResponse(response);
   const json = await response.json();
   return json as T;
