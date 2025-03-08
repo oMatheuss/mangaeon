@@ -11,7 +11,7 @@ import type {
 } from '@/types/manga';
 import type { Images } from '@/types/images';
 import { notFound } from 'next/navigation';
-import Bottleneck from 'bottleneck';
+import PQueue from 'p-queue';
 
 const DEFAULT_REQ_OPTS: RequestInit = {
   headers: {
@@ -69,35 +69,36 @@ function checkResponse(res: Response): void | never {
 }
 
 declare global {
-  var _rateLimiter: Bottleneck | undefined;
+  var _rateLimiter: PQueue | undefined;
 }
 
 function getRateLimiter() {
   if (typeof global._rateLimiter !== 'undefined') return global._rateLimiter;
 
-  const limiter = new Bottleneck({
-    maxConcurrent: 5, // max 5 concurrent
-    minTime: 200, // 5 per second
-    highWater: 20,
-    strategy: Bottleneck.strategy.LEAK,
+  const limiter = new PQueue({
+    concurrency: 5, // max 5 concurrent
+    interval: 400,
+    intervalCap: 2,
+    timeout: 3000,
+    throwOnTimeout: true,
   });
 
   limiter.on('error', console.error);
-  limiter.on('failed', (_err, info) => {
-    console.error('Job failed:', info.options.id);
-    console.log('Job status:', limiter.counts());
-  });
 
   global._rateLimiter = limiter;
 
   return limiter;
 }
 
-const jobOptions = { expiration: 5000 };
-
 async function apiGet<T>(url: URL, init: RequestInit = {}): Promise<T> {
   const request = new Request(url, { ...DEFAULT_REQ_OPTS, ...init });
-  const response = await getRateLimiter().schedule(jobOptions, fetch, request);
+
+  const limiter = getRateLimiter();
+  const response = await limiter.add(() => fetch(request));
+
+  if (!(response instanceof Response))
+    throw Error('apiGet: PQueue did not returned a Response');
+
   checkResponse(response);
   const json = await response.json();
   return json as T;
