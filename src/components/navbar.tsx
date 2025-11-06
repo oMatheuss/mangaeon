@@ -7,8 +7,8 @@ import { usePathname, useRouter } from 'next/navigation';
 
 const links = [
   { icon: Home, text: 'Home', to: '/' },
-  { icon: Heart, text: 'Favoritos', to: '/favoritos' },
-  { icon: Palette, text: 'Tema', to: '/tema' },
+  { icon: Heart, text: 'Favorites', to: '/favorites' },
+  { icon: Palette, text: 'Themes', to: '/theme' },
 ];
 
 export const Navbar = () => {

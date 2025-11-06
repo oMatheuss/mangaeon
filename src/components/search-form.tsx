@@ -17,7 +17,7 @@ export function SearchForm(props: SearchFormProps) {
   const id = useId();
 
   return (
-    <Form replace scroll action='/pesquisa'>
+    <Form replace scroll action='/search'>
       <fieldset className='mb-3 grid grid-cols-1 gap-2 lg:grid-cols-3'>
         <div className='lg:col-span-2'>
           <label htmlFor={`title-${id}`}>Título</label>

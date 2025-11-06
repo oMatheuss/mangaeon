@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Releases } from '@/components/releases';
+import { ReleaseList } from '@/components/releases-list';
 import { mangadex } from '@/lib/api/mangadex/api';
 import { ArrowLeftCircle, ArrowRightCircle } from 'lucide-react';
 import Link from 'next/link';
@@ -7,30 +7,33 @@ import { notFound } from 'next/navigation';
 
 export const revalidate = 21600;
 
-interface LancamentosProps {
-  params: Promise<{ page: string }>;
+interface ReleasesProps {
+  searchParams: Promise<{ page: string }>;
 }
 
-export async function generateMetadata(props: LancamentosProps): Promise<Metadata> {
-  const params = await props.params;
+export async function generateMetadata(
+  props: ReleasesProps
+): Promise<Metadata> {
+  const params = await props.searchParams;
   return {
-    title: `Lançamentos: ${params.page}`,
+    title: `Releases: ${params.page}`,
   };
 }
 
-export default async function Lancamentos(props: LancamentosProps) {
-  const params = await props.params;
-  const page = parseInt(params.page);
-  if (!page || !isFinite(page) || page <= 0) return notFound();
+export default async function Releases(props: ReleasesProps) {
+  const params = await props.searchParams;
+  let page = parseInt(params.page);
+  if (!page) page = 1;
+  if (!isFinite(page) || page <= 0) return notFound();
 
   const releases = await mangadex.releases(page);
 
   return (
     <>
-      <Releases releases={releases} />
+      <ReleaseList releases={releases} />
       <section className='mt-3 flex justify-between'>
         <Link
-          href={`${page - 1}`}
+          href={{ query: { page: page - 1 } }}
           data-visible={page > 1}
           className='group flex h-10 w-10 items-center justify-center rounded-btn hover:bg-base-content/10 data-[visible=false]:hidden'
         >
@@ -40,7 +43,7 @@ export default async function Lancamentos(props: LancamentosProps) {
           />
         </Link>
         <Link
-          href={`${page + 1}`}
+          href={{ query: { page: page + 1 } }}
           className='group flex h-10 w-10 items-center justify-center rounded-btn hover:bg-base-content/10'
         >
           <ArrowRightCircle

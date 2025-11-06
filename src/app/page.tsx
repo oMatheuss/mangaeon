@@ -1,6 +1,6 @@
 import { FeaturedScroll } from '@/components/featured-scroll';
 import { MostReadScroll } from '@/components/most-read-scroll';
-import { Releases } from '@/components/releases';
+import { ReleaseList } from '@/components/releases-list';
 import { SearchBar } from '@/components/ui/search-bar';
 import { mangadex } from '@/lib/api/mangadex/api';
 import { ArrowRightCircle } from 'lucide-react';
@@ -17,7 +17,7 @@ export default async function Home() {
       <SearchBar />
       <FeaturedScroll />
       <MostReadScroll items={mostRead} />
-      <Releases releases={releases} />
+      <ReleaseList releases={releases} />
       <NextPageButton />
     </div>
   );
@@ -26,7 +26,7 @@ export default async function Home() {
 const NextPageButton = () => (
   <div className='mt-3 flex justify-end'>
     <Link
-      href='/lancamentos/2'
+      href='/releases?page=2'
       className='group flex h-10 w-10 items-center justify-center rounded-btn hover:bg-base-content/10'
     >
       <ArrowRightCircle

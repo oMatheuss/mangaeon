@@ -10,7 +10,7 @@ export function SearchBar(props: SearchBarProps) {
 
   return (
     <Form
-      action='/pesquisa'
+      action='/search'
       className='group my-4 flex w-full rounded-btn border-base-content/20 shadow hover:border-base-content/50'
     >
       <div className='relative w-full border-inherit'>

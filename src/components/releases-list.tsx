@@ -9,7 +9,7 @@ interface ReleasesProps {
   releases: Manga[];
 }
 
-export function Releases({ releases }: ReleasesProps) {
+export function ReleaseList({ releases }: ReleasesProps) {
   return (
     <section>
       <SectionTitle text='Lançamentos' />

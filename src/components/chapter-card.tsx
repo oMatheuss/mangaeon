@@ -11,7 +11,9 @@ const ChapterCard = forwardRef<HTMLDivElement, ChapterCardProps>(
   (props, ref) => {
     const { chapter, ...rest } = props;
     const link =
-      chapter.pages > 0 ? `/leitor/${chapter.chapterId}` : chapter.externalUrl;
+      chapter.pages > 0
+        ? `/reader?id=${chapter.chapterId}`
+        : chapter.externalUrl;
     const title = chapter.chapterTitle
       ? chapter.chapterTitle
       : `Capítulo ${chapter.number}`;
