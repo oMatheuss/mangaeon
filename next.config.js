@@ -10,12 +10,9 @@ const config = {
     ],
     minimumCacheTTL: 86400,
     formats: ['image/avif', 'image/webp'],
+    qualities: [100, 80, 10],
   },
   rewrites: async () => {
-    /**
-     * Attention!!!
-     * In prod, set reverse proxy like nginx
-     */
     return [
       {
         source: '/mangadex/secure/:origin/:path*',
