@@ -1,9 +1,8 @@
-import { BookOpen, Mail } from 'lucide-react';
+import { BookOpen } from 'lucide-react';
 import Link from 'next/link';
 import { MangadexIcon } from './icons/mangadex-icon';
 
 const links = [
-  { title: 'Contact', icon: Mail, href: 'mailto:contato@mangaeon.com' },
   { title: 'Mangadex', icon: MangadexIcon, href: 'https://mangadex.org' },
 ];
 

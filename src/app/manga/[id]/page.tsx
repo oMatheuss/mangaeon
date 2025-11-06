@@ -17,7 +17,6 @@ export async function generateMetadata(props: MangaProps): Promise<Metadata> {
 
   const manga = await mangadex.manga(params.id);
   return {
-    metadataBase: new URL('https://mangaeon.com'),
     title: manga.title,
     openGraph: {
       title: manga.title,

@@ -4,8 +4,6 @@ Site para leitura de manga/manhuas/comics.
 
 ## Geral
 
-Uma versão funcionando deste projeto pode ser encontrado em **[MangaEon](https://mangaeon.com)**.
-
 **Aviso:** As obras contidas na página são de autoria de terceiros. Todo material disponibiliado é carregado a partir da api do **[MangaDex](https://api.mangadex.org)**
 **Disclaimer:** The works contained on the page are authored by third parties. All material available is loaded from the **[MangaDex](https://api.mangadex.org) API**
 

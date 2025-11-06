@@ -30,7 +30,6 @@ export async function generateMetadata(props: LeitorProps): Promise<Metadata> {
   const title = getTitle(chapter);
 
   return {
-    metadataBase: new URL('https://mangaeon.com'),
     title,
     openGraph: {
       title,
