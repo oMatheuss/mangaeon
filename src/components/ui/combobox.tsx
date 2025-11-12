@@ -569,7 +569,7 @@ function ComboboxList(props: ComboboxListProps) {
   const { children, onInteractOutside, ref, id } = props;
   return (
     <PopoverContent
-      className='z-50 overflow-y-auto rounded-btn border border-base-content/30 bg-base-200 shadow-md data-[side="bottom"]:animate-slideDownAndFade data-[side="top"]:animate-slideUpAndFade'
+      className='z-20 overflow-y-auto rounded-box border border-base-content/30 bg-base-200 shadow-md data-[side="bottom"]:animate-slideDownAndFade data-[side="top"]:animate-slideUpAndFade'
       style={{
         transformOrigin: 'var(--radix-popover-content-transform-origin)',
         width: 'var(--radix-popover-trigger-width)',
