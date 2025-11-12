@@ -39,9 +39,6 @@ export const metadata: Metadata = {
     'mobile-web-app-capable': 'yes',
   },
   manifest: '/site.webmanifest',
-  verification: {
-    google: 'CFeJ-y3WPijLH_DeRueZt7i9eudIAuUjLi7YUKq5Vlc',
-  },
 };
 
 export const viewport: Viewport = {
@@ -58,7 +55,12 @@ const font = Quicksand({
   variable: '--font-quicksand',
 });
 
-const themeScript = `if (typeof localStorage["theme"] === "string") document.documentElement.setAttribute("data-theme", localStorage["theme"]);`;
+const themeScript = `if (typeof localStorage["theme"] === "string")
+  document.documentElement.setAttribute("data-theme", localStorage["theme"]);
+window.addEventListener("storage", (event) => {
+  if (event.key === "theme")
+    document.documentElement.setAttribute("data-theme", event.newValue);
+});`;
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
