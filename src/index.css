@@ -15,6 +15,10 @@
     -webkit-tap-highlight-color: transparent;
   }
 
+  .lucide {
+    @apply size-6;
+  }
+
   @media not all and (pointer: coarse) {
     ::-webkit-scrollbar {
       @apply h-2 w-2;

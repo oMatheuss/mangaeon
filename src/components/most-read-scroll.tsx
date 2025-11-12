@@ -10,7 +10,7 @@ interface MostReadScrollProps {
 export function MostReadScroll({ items }: MostReadScrollProps) {
   return (
     <section>
-      <SectionTitle text='Mais Procurados' />
+      <SectionTitle text='Most Read' />
       <div className='flex flex-col gap-4 lg:flex-row'>
         <ul className='grid w-full auto-cols-max grid-flow-col gap-x-3 overflow-x-auto pb-4'>
           {items.map((item) => (

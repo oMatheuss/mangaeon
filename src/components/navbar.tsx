@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowLeft, BookOpen, Heart, Home, Palette } from 'lucide-react';
+import { ArrowLeft, BookOpen, Heart, Home, Settings } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
@@ -8,7 +8,7 @@ import { usePathname, useRouter } from 'next/navigation';
 const links = [
   { icon: Home, text: 'Home', to: '/' },
   { icon: Heart, text: 'Favorites', to: '/favorites' },
-  { icon: Palette, text: 'Themes', to: '/theme' },
+  { icon: Settings, text: 'Settings', to: '/settings' },
 ];
 
 export const Navbar = () => {
@@ -49,7 +49,7 @@ export const Navbar = () => {
         className='fixed left-0 right-0 top-0 z-10 -translate-y-[var(--nav-offset)] transition-transform'
       >
         <div className='w-full overflow-x-clip border-b border-b-base-content/10 bg-base-200/90'>
-          <div className='mx-auto flex max-w-screen-2xl items-center justify-between p-2'>
+          <div className='container mx-auto flex items-center justify-between p-2'>
             <button
               className='hidden h-10 w-10 items-center justify-center rounded-lg hover:bg-base-content/10 focus:outline-none focus:ring-2 pwa:inline-flex'
               onClick={router.back}
