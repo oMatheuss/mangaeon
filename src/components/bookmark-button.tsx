@@ -28,12 +28,12 @@ export function BookmarkButton({ manga }: StarButtonProps) {
     <button
       role='checkbox'
       aria-checked={isActive ? 'true' : isPending ? 'mixed' : 'false'}
-      className='group absolute left-0 top-0 p-2'
+      className='group absolute top-0 left-0 p-2'
       onClick={handleClick}
       disabled={isPending}
       aria-label='Favoritar'
     >
-      <div className='rounded-badge bg-primary/75 p-1 text-primary-content opacity-80 transition-opacity group-enabled:group-hover:opacity-100 group-enabled:group-active:opacity-60 group-disabled:opacity-60'>
+      <div className='rounded-selector bg-primary/75 text-primary-content p-1 opacity-80 transition-opacity group-hover:group-enabled:opacity-100 group-active:group-enabled:opacity-60 group-disabled:opacity-60'>
         <BookmarkIcon
           aria-hidden={true}
           className='size-5 group-aria-checked:fill-current'

@@ -28,13 +28,13 @@ interface SearchResultItemProps {
 function SearchResultItem(props: SearchResultItemProps) {
   const { serie } = props;
   return (
-    <li className='relative flex h-48 w-full flex-row overflow-hidden rounded-box border border-base-content/20 bg-base-200 shadow-md'>
+    <li className='rounded-box border-base-content/20 bg-base-200 relative flex h-48 w-full flex-row overflow-hidden border shadow-md'>
       <BookmarkButton manga={fromMangaToSaved(serie)} />
       <div className='mr-2 min-w-fit'>
         <Image
           src={serie.cover}
           alt={`Image de capa de ${serie.title}`}
-          className='h-48 w-32 rounded-r-box object-cover'
+          className='rounded-r-box h-48 w-32 object-cover'
           width={192}
           height={256}
         />
@@ -46,7 +46,7 @@ function SearchResultItem(props: SearchResultItemProps) {
               {serie.title}
             </Link>
           </h2>
-          <h3 className='truncate text-xs font-bold text-base-content/75'>
+          <h3 className='text-base-content/75 truncate text-xs font-bold'>
             {serie.author}; {serie.artist}
           </h3>
         </div>
@@ -56,7 +56,7 @@ function SearchResultItem(props: SearchResultItemProps) {
           {serie.tags.map((tag) => (
             <span
               key={tag}
-              className='max-w-fit whitespace-nowrap rounded-badge bg-neutral px-2 py-1 text-xs text-neutral-content'
+              className='rounded-selector bg-neutral text-neutral-content max-w-fit px-2 py-1 text-xs whitespace-nowrap'
             >
               {tag}
             </span>

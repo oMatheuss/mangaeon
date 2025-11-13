@@ -27,7 +27,7 @@ export function DropdownMenuContent(
         ref={ref}
         sideOffset={sideOffset}
         className={cn(
-          'z-50 min-w-32 overflow-hidden rounded-btn border border-base-content/20 bg-base-200 p-1 text-base-content shadow-md will-change-[opacity,transform] data-[side=bottom]:animate-slideUpAndFade data-[side=left]:animate-slideRightAndFade data-[side=right]:animate-slideLeftAndFade data-[side=top]:animate-slideDownAndFade',
+          'rounded-field border-base-content/20 bg-base-200 text-base-content data-[side=bottom]:animate-slide-up-and-fade data-[side=left]:animate-slide-right-and-fade data-[side=right]:animate-slide-left-and-fade data-[side=top]:animate-slide-down-and-fade z-50 min-w-32 overflow-hidden border p-1 shadow-md will-change-[opacity,transform]',
           className
         )}
         {...rest}
@@ -45,7 +45,7 @@ export function DropdownMenuItem(
     <Item
       ref={ref}
       className={cn(
-        'relative flex cursor-default select-none items-center gap-2 rounded-btn px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-content data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
+        'rounded-field focus:bg-accent focus:text-accent-content relative flex cursor-default items-center gap-2 px-2 py-1.5 text-sm outline-hidden transition-colors select-none data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
         className
       )}
       {...rest}

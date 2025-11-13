@@ -46,12 +46,12 @@ export const Navbar = () => {
     <div className='h-14'>
       <nav
         ref={navRef}
-        className='fixed left-0 right-0 top-0 z-10 -translate-y-[var(--nav-offset)] transition-transform'
+        className='fixed top-0 right-0 left-0 z-10 -translate-y-(--nav-offset) transition-transform'
       >
-        <div className='w-full overflow-x-clip border-b border-b-base-content/10 bg-base-200/90'>
+        <div className='border-b-base-content/10 bg-base-200/90 w-full overflow-x-clip border-b'>
           <div className='container mx-auto flex items-center justify-between p-2'>
             <button
-              className='hidden h-10 w-10 items-center justify-center rounded-lg hover:bg-base-content/10 focus:outline-none focus:ring-2 pwa:inline-flex'
+              className='hover:bg-base-content/10 pwa:inline-flex hidden size-10 items-center justify-center rounded-lg focus:ring-2 focus:outline-hidden'
               onClick={router.back}
             >
               <ArrowLeft className='h-8 w-8' />
@@ -71,7 +71,7 @@ export const Navbar = () => {
                     <Link
                       aria-current={pathname === link.to ? 'page' : undefined}
                       href={link.to}
-                      className='flex items-center rounded-btn px-3 py-1.5 font-medium hover:bg-base-content/10 aria-[current]:bg-primary aria-[current]:text-primary-content sm:gap-1'
+                      className='rounded-field hover:bg-base-content/10 aria-[current]:bg-primary aria-[current]:text-primary-content flex items-center px-3 py-1.5 font-medium sm:gap-1'
                     >
                       <link.icon aria-hidden={true} />
                       <span className='sr-only sm:not-sr-only'>

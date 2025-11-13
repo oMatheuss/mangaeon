@@ -58,9 +58,9 @@ interface CardProps {
 function Card(props: CardProps) {
   const { saved, onDelete } = props;
   return (
-    <div className='relative flex h-36 w-full items-center overflow-hidden rounded-bl-btn rounded-tr-btn border border-base-content/20 shadow-md'>
+    <div className='rounded-bl-field rounded-tr-field border-base-content/20 relative flex h-36 w-full items-center overflow-hidden border shadow-md'>
       <Link
-        className='group flex h-36 grow appearance-none items-center bg-base-200 outline-none hover:bg-opacity-50'
+        className='group bg-base-200 flex h-36 grow appearance-none items-center outline-hidden'
         href={`/manga/${saved.mangaId}`}
       >
         <div className='min-w-fit overflow-hidden'>
@@ -125,11 +125,11 @@ function Actions() {
   };
 
   return (
-    <section className='mb-4 flex flex-wrap gap-2 rounded-box border border-base-content/20 bg-base-200 p-2'>
+    <section className='rounded-box border-base-content/20 bg-base-200 mb-4 flex flex-wrap gap-2 border p-2'>
       <button
         onClick={handleExport}
         disabled={exportMut.isPending}
-        className='flex rounded-btn bg-primary px-3 py-1 text-primary-content opacity-80 transition-opacity hover:opacity-100 active:opacity-60'
+        className='rounded-field bg-primary text-primary-content flex px-3 py-1 opacity-80 transition-opacity hover:opacity-100 active:opacity-60'
       >
         <FileDownIcon className='mr-1' />
         <span className='font-medium'>Exportar</span>

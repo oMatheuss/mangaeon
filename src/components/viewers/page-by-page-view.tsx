@@ -147,7 +147,7 @@ function Button({
 }: React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
     <button
-      className='flex h-9 items-center rounded-btn bg-primary p-2 text-primary-content hover:bg-primary/80 active:bg-primary/60 disabled:bg-primary/50'
+      className='rounded-field bg-primary text-primary-content hover:bg-primary/80 active:bg-primary/60 disabled:bg-primary/50 flex h-9 items-center p-2'
       {...rest}
     >
       {children}

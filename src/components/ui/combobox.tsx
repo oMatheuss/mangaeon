@@ -383,7 +383,7 @@ function ComboboxInput(props: ComboboxInputProps) {
         id={inputId ?? `input-${id}`}
         ref={ref}
         type='text'
-        className='pr-10 [&:has(+button:hover)]:border-base-content/50'
+        className='[&:has(+button:hover)]:border-base-content/50 pr-10'
         role='combobox'
         autoComplete='off'
         autoCorrect='off'
@@ -402,7 +402,7 @@ function ComboboxInput(props: ComboboxInputProps) {
         id={`button-${id}`}
         disabled={disabled}
         onPointerDownCapture={handlePointerDownCapture}
-        className='absolute right-0 top-0 shrink-0 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50'
+        className='absolute top-0 right-0 shrink-0 focus:outline-hidden disabled:cursor-not-allowed disabled:opacity-50'
       />
     </PopoverAnchor>
   );
@@ -452,12 +452,12 @@ function ComboboxMultipleInput(props: ComboboxInputProps) {
     <PopoverAnchor
       role='combobox'
       aria-haspopup={true}
-      className='relative min-h-10 w-full cursor-text rounded-btn border border-base-content/20 bg-base-200 pl-4 pr-10 leading-none shadow outline-2 -outline-offset-2 outline-primary focus-within:border-primary focus-within:outline hover:border-base-content/50 hover:focus-within:border-primary'
+      className='rounded-field border-base-content/20 bg-base-200 outline-primary focus-within:border-primary hover:border-base-content/50 hover:focus-within:border-primary relative min-h-10 w-full cursor-text border pr-10 pl-4 leading-none shadow-sm -outline-offset-2 focus-within:outline-2'
       aria-expanded={expanded}
       aria-labelledby={rest['aria-labelledby']}
       onPointerDownCapture={handlePointerDownCapture}
     >
-      <ul className='my-[.4375rem] flex w-full flex-wrap gap-1'>
+      <ul className='my-1.75 flex w-full flex-wrap gap-1'>
         <ComboboxTags
           values={value as string[]}
           selectId={id}
@@ -468,7 +468,7 @@ function ComboboxMultipleInput(props: ComboboxInputProps) {
             id={inputId ?? `input-${id}`}
             ref={ref}
             type='text'
-            className='size-full min-w-0 appearance-none bg-base-200 outline-none placeholder:text-base-content/50'
+            className='bg-base-200 placeholder:text-base-content/50 size-full min-w-0 appearance-none outline-hidden'
             role='searchbox'
             aria-autocomplete='list'
             autoCapitalize='none'
@@ -489,7 +489,7 @@ function ComboboxMultipleInput(props: ComboboxInputProps) {
       <ComboboxTrigger
         id={`button-${id}`}
         disabled={disabled}
-        className='absolute right-0 top-[-1px] shrink-0 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50'
+        className='absolute -top-px right-0 shrink-0 focus:outline-hidden disabled:cursor-not-allowed disabled:opacity-50'
       />
     </PopoverAnchor>
   );
@@ -520,9 +520,9 @@ function ComboboxTags(props: ComboboxTagsProps) {
   return tags.map(({ l, v }) => (
     <li
       key={v}
-      className='flex h-6 items-center rounded-badge bg-neutral px-2 text-neutral-content'
+      className='rounded-selector bg-neutral text-neutral-content flex h-6 items-center px-2'
     >
-      <span className='block break-keep text-xs'>{l}</span>
+      <span className='block text-xs break-keep'>{l}</span>
       <button
         type='button'
         tabIndex={-1}
@@ -546,10 +546,10 @@ interface ComboboxTriggerProps
 function ComboboxTrigger(props: ComboboxTriggerProps) {
   return (
     <PopoverTrigger tabIndex={-1} type='button' {...props}>
-      <div className='m-2 size-6 rounded-btn bg-primary p-1'>
+      <div className='rounded-field bg-primary m-2 size-6 p-1'>
         <ChevronDownIcon
           aria-hidden={true}
-          className='size-4 text-primary-content'
+          className='text-primary-content size-4'
         />
       </div>
     </PopoverTrigger>
@@ -569,7 +569,7 @@ function ComboboxList(props: ComboboxListProps) {
   const { children, onInteractOutside, ref, id } = props;
   return (
     <PopoverContent
-      className='z-20 overflow-y-auto rounded-box border border-base-content/30 bg-base-200 shadow-md data-[side="bottom"]:animate-slideDownAndFade data-[side="top"]:animate-slideUpAndFade'
+      className='rounded-box border-base-content/30 bg-base-200 data-[side="bottom"]:animate-slide-down-and-fade data-[side="top"]:animate-slide-up-and-fade z-20 overflow-y-auto border shadow-md'
       style={{
         transformOrigin: 'var(--radix-popover-content-transform-origin)',
         width: 'var(--radix-popover-trigger-width)',
@@ -622,7 +622,7 @@ export function ComboboxItem(props: ComboboxItemProps) {
       data-value={value}
       onMouseDown={ctx.onMouseDown}
       onMouseOver={ctx.onMouseOver}
-      className='group relative flex w-full cursor-default items-center text-balance rounded-btn py-1.5 pl-8 pr-2 text-sm aria-hidden:hidden data-[active=true]:bg-accent data-[active=true]:text-accent-content'
+      className='group rounded-field data-[active=true]:bg-accent data-[active=true]:text-accent-content relative flex w-full cursor-default items-center py-1.5 pr-2 pl-8 text-sm text-balance aria-hidden:hidden'
     >
       <span className='invisible absolute left-2 flex h-3.5 w-3.5 items-center justify-center group-aria-selected:visible'>
         <CheckIcon className='size-4' />

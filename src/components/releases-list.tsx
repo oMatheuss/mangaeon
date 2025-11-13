@@ -30,13 +30,13 @@ function ReleaseCard({ release }: ReleaseCardProps) {
   const linkSerie = `/manga/${release.id}`;
 
   return (
-    <li className='relative flex h-48 overflow-hidden rounded-box border border-base-content/20 bg-base-200 shadow-lg'>
+    <li className='rounded-box border-base-content/20 bg-base-200 relative flex h-48 overflow-hidden border shadow-lg'>
       <BookmarkButton manga={fromMangaToSaved(release)} />
-      <div className='flex w-auto min-w-fit justify-center bg-base-200'>
+      <div className='bg-base-200 flex w-auto min-w-fit justify-center'>
         <Image
           src={release.cover}
           alt={release.title}
-          className='h-48 w-32 rounded-r-box object-cover'
+          className='rounded-r-box h-48 w-32 object-cover'
           height={192}
           width={128}
           quality={100}
@@ -52,7 +52,7 @@ function ReleaseCard({ release }: ReleaseCardProps) {
             {release.title}
           </Link>
         </h3>
-        <p className='my-1 mt-auto truncate text-sm font-bold text-base-content/75'>
+        <p className='text-base-content/75 my-1 mt-auto truncate text-sm font-bold'>
           {release.updatedAt.toLocaleString('pt-BR')}
         </p>
         <ul
@@ -62,13 +62,13 @@ function ReleaseCard({ release }: ReleaseCardProps) {
           {release.tags.map((tag) => (
             <li
               key={tag}
-              className='max-w-fit whitespace-nowrap rounded-badge bg-neutral px-2 py-1 text-xs text-neutral-content'
+              className='rounded-selector bg-neutral text-neutral-content max-w-fit px-2 py-1 text-xs whitespace-nowrap'
             >
               {tag}
             </li>
           ))}
         </ul>
-        {/* <nav className='mt-auto inline-flex flex-wrap h-[2.25rem] overflow-hidden text-sm font-semibold text-gray-700'>
+        {/* <nav className='mt-auto inline-flex flex-wrap h-9 overflow-hidden text-sm font-semibold text-gray-700'>
           {release.chapters.map((chap) => (
             <Link
               key={chap.number}

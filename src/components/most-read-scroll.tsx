@@ -31,7 +31,7 @@ function MostReadCard({ item }: MostReadCardProps) {
   return (
     <li className='flex flex-col items-center overflow-hidden rounded-box border border-base-content/20 bg-base-200 shadow-lg'>
       <Link href={link}>
-        <div className='overflow-hidden border-b border-base-content/20 shadow'>
+        <div className='overflow-hidden border-b border-base-content/20 shadow-sm'>
           <Image
             src={item.cover}
             alt={`Image de ${item.title}.`}

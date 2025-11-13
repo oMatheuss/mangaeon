@@ -33,7 +33,7 @@ export function ThemeSelector() {
             <div className='mr-2 inline-block align-middle'>
               <div
                 data-theme={item}
-                className='grid shrink-0 grid-cols-2 gap-0.5 rounded-md bg-base-100 p-1 shadow-sm'
+                className='grid shrink-0 grid-cols-2 gap-0.5 rounded-md bg-base-100 p-1 shadow-xs'
               >
                 <div className='size-1 rounded-full bg-base-content'></div>
                 <div className='size-1 rounded-full bg-primary'></div>

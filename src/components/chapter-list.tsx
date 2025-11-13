@@ -45,13 +45,13 @@ export function ChapterList(props: ChapterListProps) {
 
   return (
     <>
-      <h2 className='mb-2 mt-4 text-xl font-bold'>Capítulos</h2>
+      <h2 className='mt-4 mb-2 text-xl font-bold'>Capítulos</h2>
       <div className='mb-8 grid grid-cols-1 gap-2 md:grid-cols-2 xl:grid-cols-3'>
         {grouped.map((group) => (
           <Tabs.Root key={group.number} defaultValue={firstChapterId(group)}>
-            <Tabs.List className='flex shrink-0 flex-wrap items-center overflow-x-auto rounded-t-box border border-base-content/20 bg-base-200'>
-              <div className='h-10 rounded-r-btn bg-secondary px-4 py-1.5'>
-                <h4 className='text-lg font-semibold text-secondary-content'>
+            <Tabs.List className='rounded-t-box border-base-content/20 bg-base-200 flex shrink-0 flex-wrap items-center overflow-x-auto border'>
+              <div className='rounded-r-field bg-secondary h-10 px-4 py-1.5'>
+                <h4 className='text-secondary-content text-lg font-semibold'>
                   {group.number}
                 </h4>
               </div>
@@ -59,9 +59,9 @@ export function ChapterList(props: ChapterListProps) {
                 <Tabs.Trigger
                   key={chap.chapterId}
                   value={chap.chapterId}
-                  className='group flex h-10 w-20 shrink-0 px-4 py-2 outline-none'
+                  className='group flex h-10 w-20 shrink-0 px-4 py-2 outline-hidden'
                 >
-                  <div className='w-full rounded-btn outline-2 outline-offset-2 outline-primary group-focus-visible:outline group-data-[state=active]:bg-primary group-data-[state=active]:text-primary-content'>
+                  <div className='rounded-field outline-primary group-data-[state=active]:bg-primary group-data-[state=active]:text-primary-content w-full outline-offset-2 group-focus-visible:outline-2'>
                     {chap.translatedLanguage}
                   </div>
                 </Tabs.Trigger>
@@ -70,7 +70,7 @@ export function ChapterList(props: ChapterListProps) {
             {group.chapters.map((chap) => (
               <Tabs.Content key={chap.chapterId} value={chap.chapterId} asChild>
                 <ChapterCard
-                  className='h-20 w-full overflow-hidden border border-t-0 border-base-content/20 bg-base-200 px-4 py-3 shadow-md outline-2 outline-offset-2 outline-primary last:rounded-b-box focus-visible:outline'
+                  className='border-base-content/20 bg-base-200 outline-primary last:rounded-b-box h-20 w-full overflow-hidden border border-t-0 px-4 py-3 shadow-md outline-offset-2 focus-visible:outline-2'
                   chapter={chap}
                 />
               </Tabs.Content>

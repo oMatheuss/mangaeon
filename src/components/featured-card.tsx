@@ -12,33 +12,33 @@ export function FeaturedCard({ item, loading }: FeaturedCardProps) {
 
   return (
     <li className='relative flex h-full w-full shrink-0 snap-center items-center sm:justify-center'>
-      <div className='absolute z-[1] h-full w-full bg-gradient-to-b from-transparent to-base-100/40' />
+      <div className='to-base-100/40 absolute z-1 h-full w-full bg-linear-to-b from-transparent' />
       <Image
         src={item.cover}
         alt=''
-        className='absolute z-[0] h-full w-full overflow-hidden object-cover blur-sm'
+        className='absolute z-0 h-full w-full overflow-hidden object-cover blur-xs'
         fill
         loading={loading}
         quality={10}
       />
 
-      <div className='z-[2] flex size-full sm:size-[90%]'>
+      <div className='z-2 flex size-full sm:size-[90%]'>
         <Link
           href={link}
-          className='relative hidden aspect-[2/3] h-[14.25rem] shrink-0 self-center sm:flex'
+          className='relative hidden aspect-2/3 h-57 shrink-0 self-center sm:flex'
         >
           <Image
             src={item.cover}
             alt={`Imagem de ${item.title}`}
-            className='rounded-btn object-cover object-center shadow-md'
+            className='rounded-field object-cover object-center shadow-md'
             width={152}
             height={228}
             loading={loading}
           />
         </Link>
-        <div className='flex grow flex-col justify-end p-6 text-left text-base-content contrast-200'>
+        <div className='text-base-content flex grow flex-col justify-end p-6 text-left contrast-200'>
           <Link
-            className='line-clamp-3 text-balance text-3xl font-extrabold hover:underline'
+            className='line-clamp-3 text-3xl font-extrabold text-balance hover:underline'
             href={link}
           >
             {item.title}

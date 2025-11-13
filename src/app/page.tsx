@@ -27,7 +27,7 @@ const NextPageButton = () => (
   <div className='mt-3 flex justify-end'>
     <Link
       href='/releases?page=2'
-      className='group flex h-10 w-10 items-center justify-center rounded-btn hover:bg-base-content/10'
+      className='group rounded-field hover:bg-base-content/10 flex h-10 w-10 items-center justify-center'
     >
       <ArrowRightCircle
         aria-label='Proxima página'

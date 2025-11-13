@@ -4,7 +4,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { type LucideIcon } from 'lucide-react';
 
 const buttonVariants = cva(
-  'rounded-btn p-1 transition-opacity group-hover:opacity-100 group-active:opacity-60 disabled:pointer-events-none group-focus-visible:outline outline-2 outline-offset-2',
+  'rounded-field p-1 transition-opacity group-hover:opacity-100 group-active:opacity-60 disabled:pointer-events-none group-focus-visible:outline-2 outline-offset-2',
   {
     variants: {
       variant: {
@@ -37,7 +37,7 @@ function SmallIconButton(props: SmallIconButtonProps) {
 
   return (
     <Comp
-      className={cn('group appearance-none p-2 outline-none', className)}
+      className={cn('group appearance-none p-2 outline-hidden', className)}
       {...rest}
       ref={ref}
     >

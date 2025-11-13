@@ -35,7 +35,7 @@ export default async function Releases(props: ReleasesProps) {
         <Link
           href={{ query: { page: page - 1 } }}
           data-visible={page > 1}
-          className='group flex h-10 w-10 items-center justify-center rounded-btn hover:bg-base-content/10 data-[visible=false]:hidden'
+          className='group rounded-field hover:bg-base-content/10 flex h-10 w-10 items-center justify-center data-[visible=false]:hidden'
         >
           <ArrowLeftCircle
             aria-label='Página anterior'
@@ -44,7 +44,7 @@ export default async function Releases(props: ReleasesProps) {
         </Link>
         <Link
           href={{ query: { page: page + 1 } }}
-          className='group flex h-10 w-10 items-center justify-center rounded-btn hover:bg-base-content/10'
+          className='group rounded-field hover:bg-base-content/10 flex h-10 w-10 items-center justify-center'
         >
           <ArrowRightCircle
             aria-label='Proxima página'

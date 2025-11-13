@@ -42,7 +42,7 @@ export function Pagination(props: PaginationProps) {
       ) : (
         <Link
           href={{ query: { page: (page - 1).toString() } }}
-          className='flex h-10 w-10 items-center justify-center rounded-full hover:bg-base-content/10 focus:outline-none'
+          className='hover:bg-base-content/10 flex h-10 w-10 items-center justify-center rounded-full focus:outline-hidden'
         >
           <ArrowLeft className='h-8 w-8' aria-label='Página anterior' />
         </Link>
@@ -55,7 +55,7 @@ export function Pagination(props: PaginationProps) {
               <Link
                 key={x.number}
                 href={{ query: { page: x.number?.toString() } }}
-                className='flex h-10 w-10 items-center justify-center rounded-btn hover:bg-base-content/10 focus:outline-none aria-disabled:pointer-events-none aria-disabled:opacity-50'
+                className='rounded-field hover:bg-base-content/10 flex h-10 w-10 items-center justify-center focus:outline-hidden aria-disabled:pointer-events-none aria-disabled:opacity-50'
               >
                 <span className='text-lg'>{x.number}</span>
               </Link>
@@ -73,7 +73,7 @@ export function Pagination(props: PaginationProps) {
             return (
               <div
                 key={x.number}
-                className='flex h-10 w-10 items-center justify-center rounded-btn bg-primary text-lg text-primary-content'
+                className='rounded-field bg-primary text-primary-content flex h-10 w-10 items-center justify-center text-lg'
               >
                 {x.number}
               </div>
@@ -90,7 +90,7 @@ export function Pagination(props: PaginationProps) {
       ) : (
         <Link
           href={{ query: { page: (page + 1).toString() } }}
-          className='flex h-10 w-10 items-center justify-center rounded-full hover:bg-base-content/10 focus:outline-none'
+          className='hover:bg-base-content/10 flex h-10 w-10 items-center justify-center rounded-full focus:outline-hidden'
         >
           <ArrowRight className='h-8 w-8' aria-label='Proxima página' />
         </Link>

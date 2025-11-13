@@ -83,14 +83,14 @@ export default function InfiniteScrollerView({ images }: PaginasProps) {
           <div className='flex flex-row space-x-3'>
             <button
               onClick={() => refetch()}
-              className='mt-3 flex flex-row items-center rounded-sm border p-2'
+              className='mt-3 flex flex-row items-center rounded-xs border p-2'
             >
               <RotateCcw className='mr-2' />
               Atualizar
             </button>
             <button
               onClick={() => fetchNextPage()}
-              className='mt-3 flex flex-row items-center rounded-sm border p-2'
+              className='mt-3 flex flex-row items-center rounded-xs border p-2'
             >
               <RefreshCwOff className='mr-2' />
               Ignorar

@@ -35,7 +35,7 @@ export default function ViewSelector({
         {...props}
         id={inputId}
         suppressHydrationWarning
-        className='w-full cursor-pointer appearance-none overflow-hidden rounded-btn border border-base-content/20 bg-base-200 py-1 pe-8 ps-2 caret-primary shadow outline-2 -outline-offset-2 outline-primary focus:outline'
+        className='rounded-field border-base-content/20 bg-base-200 caret-primary outline-primary w-full cursor-pointer appearance-none overflow-hidden border py-1 ps-2 pe-8 shadow-sm -outline-offset-2 focus:outline-2'
         value={value}
         data-value={value}
         onChange={(e) => onChange(e.target.value)}

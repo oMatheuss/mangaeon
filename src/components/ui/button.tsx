@@ -1,7 +1,7 @@
 import { cva, type VariantProps } from 'class-variance-authority';
 
 const buttonVariants = cva(
-  'inline-flex h-10 items-center gap-2 rounded-btn px-3 outline-2 outline-offset-2 transition-[opacity,transform] hover:opacity-75 focus-visible:outline disabled:cursor-not-allowed disabled:opacity-50 motion-safe:enabled:active:scale-95',
+  'inline-flex h-10 items-center gap-2 rounded-field px-3 focus-visible:outline-2 outline-offset-2 transition-[opacity,transform] hover:opacity-75 disabled:cursor-not-allowed disabled:opacity-50 motion-safe:enabled:active:scale-95',
   {
     variants: {
       variant: {
