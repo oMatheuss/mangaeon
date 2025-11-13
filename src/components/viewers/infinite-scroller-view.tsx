@@ -8,7 +8,7 @@ interface PaginasProps {
   images: string[];
 }
 
-export default function InfiniteScrollerView({ images }: PaginasProps) {
+export function InfiniteScrollerView({ images }: PaginasProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const {

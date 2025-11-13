@@ -1,19 +1,17 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export function usePersistedState(
   defaultValue: string,
   key: string
 ): [string, (value: string) => void] {
-  const [value, _setValue] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const _value = localStorage.getItem(key);
-      return _value !== null ? _value : defaultValue;
-    } else {
-      return defaultValue;
-    }
-  });
+  const [value, _setValue] = useState(defaultValue);
+
+  useEffect(() => {
+    const _value = localStorage.getItem(key);
+    _setValue(_value !== null ? _value : defaultValue);
+  }, []);
 
   const setValue = (value: string) => {
     _setValue(value);

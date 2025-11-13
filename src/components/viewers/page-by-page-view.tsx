@@ -13,7 +13,7 @@ interface PaginasProps {
   images: string[];
 }
 
-export default function PageByPageView({ images }: PaginasProps) {
+export function PageByPageView({ images }: PaginasProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [actualPage, setActualPage] = useState(0);
